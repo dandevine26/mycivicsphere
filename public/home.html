@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Civic Sphere — Civic Power, Put to Work</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:   #0D1F3C;
+    --cobalt: #1A3A6B;
+    --sky:    #2E6FBB;
+    --gold:   #C8A84B;
+    --cream:  #F5F0E8;
+    --off:    #FAF8F4;
+    --dark:   #2A2A2A;
+    --mid:    #6B7280;
+    --rule:   rgba(200,168,75,0.3);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--off);
+    color: var(--dark);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.9rem 3rem;
+    background: #0D1F3C;
+    backdrop-filter: blur(10px);
+  }
+  .nav-rainbow {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(to right,
+      #1A8A7B 8.33%,   /* 01 Rule of Law - teal */
+      #27AE60 16.66%,  /* 02 Transparency - green */
+      #7D9B3A 25%,     /* 03 Accountability - olive */
+      #E67E22 33.33%,  /* 04 Participation - orange */
+      #E05A3A 41.66%,  /* 05 Consensus - red-orange */
+      #7D3C98 50%,     /* 06 Equity - purple */
+      #A93226 58.33%,  /* 07 Effectiveness - dark red */
+      #7B8EC8 66.66%,  /* 08 Responsiveness - slate blue */
+      #7D6608 75%,     /* 09 Strategic Vision - olive brown */
+      #D4AC0D 83.33%,  /* 10 Ethical Leadership - gold */
+      #1A3A5C 91.66%,  /* 11 Separation - dark navy */
+      #2E86C1 100%     /* 12 Local Power - sky blue */
+    );
+  }
+  .nav-brand {
+    display: flex; align-items: center; gap: 0.85rem;
+    text-decoration: none;
+  }
+  .nav-brand-logo {
+    width: 38px; height: 38px;
+    flex-shrink: 0;
+  }
+  .nav-brand-logo svg { width: 100%; height: 100%; }
+  .nav-brand-info {
+    display: flex; flex-direction: column; gap: 0;
+  }
+  .nav-brand-name {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.05rem; font-weight: 500;
+    color: white; letter-spacing: 0.02em;
+    line-height: 1.2;
+  }
+  .nav-brand-sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.6rem; font-weight: 400;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.2;
+  }
+  .nav-links { display: flex; gap: 2.2rem; list-style: none; align-items: center; }
+  .nav-links a {
+    font-size: 0.82rem; font-weight: 400;
+    color: rgba(255,255,255,0.85); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: white; }
+  .nav-vote {
+    padding: 0.55rem 1.4rem;
+    background: var(--gold); color: var(--navy);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem; font-weight: 500;
+    border-radius: 4px;
+    text-decoration: none; white-space: nowrap;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .nav-vote:hover { background: #d4b060; transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    background: var(--navy);
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: flex-start;
+    padding: 8rem 5rem 6rem;
+  }
+
+  .hero-grid-bg {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(200,168,75,0.04) 59px, rgba(200,168,75,0.04) 60px),
+      repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(200,168,75,0.04) 59px, rgba(200,168,75,0.04) 60px);
+  }
+
+  .hero-glow {
+    position: absolute; top: -200px; right: -200px;
+    width: 700px; height: 700px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,168,75,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.8rem; letter-spacing: 0.35em;
+    color: var(--gold); margin-bottom: 1.2rem;
+    opacity: 1; animation: fadeUp 0.8s 0.2s forwards;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 6vw, 6.5rem);
+    font-weight: 700; line-height: 1.0;
+    color: var(--cream); margin-bottom: 0.5rem;
+    opacity: 1; animation: fadeUp 0.8s 0.4s forwards;
+  }
+  .hero-title .accent { color: var(--gold); display: block; }
+  .hero-rule {
+    width: 60px; height: 2px; background: var(--gold);
+    margin: 1.5rem 0;
+    opacity: 1; animation: fadeUp 0.8s 0.6s forwards;
+  }
+  .hero-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    font-style: italic; font-weight: 400;
+    color: rgba(245,240,232,0.7);
+    line-height: 1.6; max-width: 520px;
+    margin-bottom: 2.5rem;
+    opacity: 1; animation: fadeUp 0.8s 0.7s forwards;
+  }
+  .hero-ctas {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    opacity: 1; animation: fadeUp 0.8s 0.9s forwards;
+  }
+  .btn-gold {
+    padding: 0.85rem 2rem;
+    background: var(--gold); color: var(--navy);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    display: inline-block;
+  }
+  .btn-gold:hover { background: #d4b060; transform: translateY(-2px); }
+  .btn-ghost {
+    padding: 0.85rem 2rem;
+    background: transparent; color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid rgba(245,240,232,0.25);
+    transition: border-color 0.2s, color 0.2s, transform 0.2s;
+    display: inline-block;
+  }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+  .hero-register {
+    position: absolute; bottom: 3rem; right: 5rem;
+    display: flex; align-items: center; gap: 1rem;
+    opacity: 1; animation: fadeIn 1s 1.2s forwards;
+  }
+  .hero-register a {
+    font-size: 0.78rem; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--gold); text-decoration: none;
+    border-bottom: 1px solid rgba(200,168,75,0.4);
+    padding-bottom: 2px;
+    transition: border-color 0.2s;
+  }
+  .hero-register a:hover { border-color: var(--gold); }
+  .hero-register-flag { font-size: 1.4rem; }
+
+  /* ── SECTION BASICS ── */
+  section { padding: 6rem 0; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 3rem; }
+  .section-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.78rem; letter-spacing: 0.35em;
+    color: var(--gold); display: block; margin-bottom: 0.6rem;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 700; color: var(--navy);
+    line-height: 1.15; margin-bottom: 0.75rem;
+  }
+  .section-title.light { color: var(--cream); }
+  .gold-rule {
+    width: 48px; height: 2px;
+    background: var(--gold); margin-bottom: 2.5rem;
+  }
+
+  .reveal {
+    opacity: 1; transform: none;
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.hidden {
+    opacity: 0; transform: translateY(28px);
+  }
+  .reveal.hidden.visible { opacity: 1; transform: none; }
+
+  /* ── MISSION ── */
+  #mission { background: var(--cream); }
+  .mission-grid {
+    display: grid; grid-template-columns: 1fr 1.5fr;
+    gap: 5rem; align-items: center;
+  }
+  .mission-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; font-weight: 400; font-style: italic;
+    color: var(--navy); line-height: 1.5;
+    border-left: 3px solid var(--gold);
+    padding-left: 1.5rem; margin-bottom: 2rem;
+  }
+  .mission-links { display: flex; flex-direction: column; gap: 0.75rem; }
+  .mission-link {
+    font-size: 0.78rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--cobalt); text-decoration: none;
+    display: flex; align-items: center; gap: 0.5rem;
+    transition: color 0.2s;
+  }
+  .mission-link::before { content: '→'; color: var(--gold); }
+  .mission-link:hover { color: var(--sky); }
+  .mission-body p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem; line-height: 1.85;
+    color: var(--dark); margin-bottom: 1.2rem;
+  }
+  .mission-body strong { font-weight: 600; color: var(--navy); }
+
+  /* ── 12 POINTS ── */
+  #points { background: var(--navy); }
+  .points-intro {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem; font-style: italic;
+    color: rgba(245,240,232,0.7);
+    line-height: 1.8; max-width: 640px;
+    margin-bottom: 3rem;
+  }
+  .points-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5px;
+    background: rgba(200,168,75,0.15);
+    border: 1.5px solid rgba(200,168,75,0.15);
+  }
+  .point-card {
+    display: block;
+    text-decoration: none;
+    background: var(--cobalt);
+    padding: 1.75rem 1.5rem;
+    transition: background 0.3s;
+    position: relative; overflow: hidden; cursor: default;
+  }
+  .point-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px; background: var(--gold);
+    transform: scaleX(0); transition: transform 0.3s;
+    transform-origin: left;
+  }
+  .point-card:hover { background: rgba(46,111,187,0.45); }
+  .point-card:hover::before { transform: scaleX(1); }
+  .point-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem; color: var(--gold);
+    line-height: 1; display: block; margin-bottom: 0.4rem;
+  }
+  .point-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem; font-weight: 600;
+    color: var(--cream); margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+  .point-tagline {
+    font-size: 0.78rem; font-weight: 300;
+    color: rgba(245,240,232,0.6);
+    line-height: 1.65;
+  }
+
+  /* ── SLIDES ── */
+  #slides { background: var(--off); }
+  .slides-intro {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-style: italic;
+    color: var(--mid); line-height: 1.75;
+    max-width: 580px; margin-bottom: 3rem;
+  }
+  .slides-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .slide-card {
+    background: white;
+    border: 1px solid rgba(0,0,0,0.06);
+    overflow: hidden;
+    transition: box-shadow 0.3s, transform 0.3s;
+    position: relative;
+  }
+  .slide-card::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 3px; background: var(--gold);
+    transform: scaleX(0); transition: transform 0.3s;
+    transform-origin: left;
+  }
+  .slide-card:hover { box-shadow: 0 8px 28px rgba(0,0,0,0.1); transform: translateY(-3px); }
+  .slide-card:hover::after { transform: scaleX(1); }
+  .slide-card img { width: 100%; display: block; aspect-ratio: 16/9; object-fit: cover; }
+  .slide-card-label {
+    padding: 0.75rem 1rem;
+    font-size: 0.78rem; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--navy);
+    border-top: 1px solid rgba(0,0,0,0.05);
+  }
+
+  /* ── ABOUT ── */
+  #about { background: var(--cream); }
+  .about-grid {
+    display: grid; grid-template-columns: 1.4fr 1fr;
+    gap: 5rem; align-items: start;
+  }
+  .about-body p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem; line-height: 1.85;
+    color: var(--dark); margin-bottom: 1.2rem;
+  }
+  .about-body strong { font-weight: 600; color: var(--navy); }
+  .about-sidebar {}
+  .about-stat-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1.5px; background: rgba(200,168,75,0.2);
+    border: 1.5px solid rgba(200,168,75,0.2);
+    margin-bottom: 2rem;
+  }
+  .about-stat {
+    background: var(--navy); padding: 1.5rem 1rem;
+    text-align: center;
+  }
+  .about-stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem; color: var(--gold);
+    line-height: 1; display: block;
+  }
+  .about-stat-label {
+    font-size: 0.7rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: rgba(245,240,232,0.6); display: block;
+    margin-top: 0.3rem;
+  }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--navy); }
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 5rem; align-items: start;
+  }
+  .contact-intro {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-style: italic;
+    color: rgba(245,240,232,0.7);
+    line-height: 1.8; margin-bottom: 2rem;
+  }
+  .contact-item {
+    display: flex; align-items: center; gap: 1rem;
+    font-size: 0.9rem; color: rgba(245,240,232,0.85);
+    margin-bottom: 0.85rem;
+  }
+  .contact-icon {
+    width: 34px; height: 34px; flex-shrink: 0;
+    background: rgba(200,168,75,0.15);
+    border: 1px solid rgba(200,168,75,0.25);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem;
+  }
+  .contact-item a { color: rgba(245,240,232,0.85); text-decoration: none; transition: color 0.2s; }
+  .contact-item a:hover { color: var(--gold); }
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.35rem; }
+  .form-label {
+    font-size: 0.68rem; font-weight: 500;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: rgba(200,168,75,0.8);
+  }
+  .form-input, .form-textarea {
+    background: rgba(26,58,107,0.5);
+    border: 1px solid rgba(200,168,75,0.2);
+    padding: 0.7rem 1rem; color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem; font-weight: 300;
+    outline: none; width: 100%;
+    transition: border-color 0.2s;
+  }
+  .form-input:focus, .form-textarea:focus { border-color: var(--gold); }
+  .form-input::placeholder, .form-textarea::placeholder { color: rgba(245,240,232,0.3); }
+  .form-textarea { height: 120px; resize: vertical; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #08142A; padding: 1.8rem 3rem;
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid rgba(200,168,75,0.1);
+  }
+  .footer-copy { font-size: 0.75rem; color: rgba(245,240,232,0.3); }
+  .footer-links { display: flex; gap: 2rem; }
+  .footer-links a {
+    font-size: 0.73rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: rgba(245,240,232,0.3); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--gold); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; } to { opacity: 1; }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1.2rem; }
+    #hero { padding: 7rem 2rem 5rem; }
+    .hero-register { right: 2rem; }
+    .container { padding: 0 1.5rem; }
+    .mission-grid, .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .points-grid { grid-template-columns: repeat(2, 1fr); }
+    .slides-grid { grid-template-columns: repeat(2, 1fr); }
+    .form-row { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+  @media (max-width: 600px) {
+    .points-grid { grid-template-columns: 1fr; }
+    .slides-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+  }
+
+  /* ── SERVICES DROPDOWN ── */
+  .nav-dropdown { position: relative; }
+  .nav-dropdown-trigger {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem; font-weight: 400;
+    color: rgba(255,255,255,0.85);
+    padding: 0;
+    letter-spacing: 0;
+    transition: color 0.2s;
+    display: flex; align-items: center; gap: 0.35rem;
+  }
+  .nav-dropdown-trigger:hover { color: white; }
+  .nav-dropdown.open .nav-dropdown-trigger { color: var(--gold); }
+  .nav-dropdown-menu {
+    display: none;
+    position: absolute; top: calc(100% + 8px); left: 50%;
+    transform: translateX(-50%);
+    background: #0D1F3C;
+    border: 1px solid rgba(200,168,75,0.2);
+    border-top: 2px solid var(--gold);
+    min-width: 230px;
+    z-index: 200;
+    padding: 0.5rem 0;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  }
+  .nav-dropdown.open .nav-dropdown-menu { display: block; }
+  .nav-dropdown-menu a {
+    display: block;
+    padding: 0.6rem 1.25rem;
+    font-size: 0.78rem; font-weight: 400;
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+    border-left: 2px solid transparent;
+  }
+  .nav-dropdown-menu a:hover {
+    background: rgba(200,168,75,0.08);
+    color: var(--gold);
+    border-left-color: var(--gold);
+  }
+  .nav-dropdown-divider {
+    height: 1px;
+    background: rgba(200,168,75,0.15);
+    margin: 0.4rem 0;
+  }
+  .nav-dropdown-label {
+    padding: 0.3rem 1.25rem 0.1rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.6rem; letter-spacing: 0.3em;
+    color: rgba(200,168,75,0.5);
+  }
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-rainbow"></div>
+  <a href="https://www.mycivicsphere.com" class="nav-brand">
+    <div class="nav-brand-logo">
+      <svg viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg">
+        <!-- Hexagon background -->
+        <polygon points="19,2 34,10.5 34,27.5 19,36 4,27.5 4,10.5" fill="#1A3A6B" stroke="#2E6FBB" stroke-width="1"/>
+        <!-- Connection lines -->
+        <line x1="19" y1="8" x2="19" y2="30" stroke="rgba(200,168,75,0.5)" stroke-width="0.5"/>
+        <line x1="8" y1="14" x2="30" y2="24" stroke="rgba(200,168,75,0.5)" stroke-width="0.5"/>
+        <line x1="30" y1="14" x2="8" y2="24" stroke="rgba(200,168,75,0.5)" stroke-width="0.5"/>
+        <!-- Colored dots around hexagon -->
+        <circle cx="19" cy="4"  r="2.5" fill="#1A8A7B"/>
+        <circle cx="30" cy="10" r="2.5" fill="#27AE60"/>
+        <circle cx="33" cy="19" r="2.5" fill="#E67E22"/>
+        <circle cx="30" cy="28" r="2.5" fill="#7D3C98"/>
+        <circle cx="19" cy="34" r="2.5" fill="#7B8EC8"/>
+        <circle cx="8"  cy="28" r="2.5" fill="#D4AC0D"/>
+        <circle cx="5"  cy="19" r="2.5" fill="#1A3A5C"/>
+        <circle cx="8"  cy="10" r="2.5" fill="#2E86C1"/>
+        <!-- Center dot -->
+        <circle cx="19" cy="19" r="3" fill="white"/>
+      </svg>
+    </div>
+    <div class="nav-brand-info">
+      <span class="nav-brand-name">CivicSphere</span>
+      <span class="nav-brand-sub">Direct Democracy Platform</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#points">Governance</a></li>
+    <li><a href="#slides">Framework</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li class="nav-dropdown">
+      <button class="nav-dropdown-trigger" onclick="toggleDropdown(this)" type="button">Services ▾</button>
+      <div class="nav-dropdown-menu">
+        <div class="nav-dropdown-label">For Campaigns</div>
+        <a href="civicsphere-campaigns.html">Campaign Services</a>
+        <div class="nav-dropdown-divider"></div>
+        <div class="nav-dropdown-label">For Nonprofits</div>
+        <a href="civicsphere-nonprofits.html">Nonprofit Services</a>
+        <div class="nav-dropdown-divider"></div>
+        <div class="nav-dropdown-label">Client Tools</div>
+        <a href="civicsphere-portal.html">Client Portal</a>
+        <a href="governance-assessment-landing.html">Governance Assessment</a>
+        <div class="nav-dropdown-divider"></div>
+        <div class="nav-dropdown-label">Documents</div>
+        <a href="civic-dual-entity-structure.html">Entity Structure</a>
+      </div>
+    </li>
+    <li><a href="/content">Content</a></li>
+    <li><a href="/civestor">Civestor</a></li>
+    <li><a href="/board/recruitment">Board Recruitment</a></li>
+    <li><a href="/board/tracker">Board Tracker</a></li>
+    <li><a href="https://vote.gov" target="_blank" class="nav-vote">Vote Now →</a></li>
+  </ul>
+</nav>
+
+<script>
+function toggleDropdown(btn) {
+  var li = btn.closest('.nav-dropdown');
+  var isOpen = li.classList.contains('open');
+  document.querySelectorAll('.nav-dropdown').forEach(function(d) {
+    d.classList.remove('open');
+  });
+  if (!isOpen) li.classList.add('open');
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.nav-dropdown')) {
+    document.querySelectorAll('.nav-dropdown').forEach(function(d) {
+      d.classList.remove('open');
+    });
+  }
+});
+</script>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <span class="hero-eyebrow">Nonpartisan · Civic Education · Good Governance</span>
+  <h1 class="hero-title">
+    Civic<span class="accent">Sphere</span>
+  </h1>
+  <div class="hero-rule"></div>
+  <p class="hero-tagline">
+    Civic power, put to work — for every community,<br>at every level of democracy.
+  </p>
+  <div class="hero-ctas">
+    <a href="#points" class="btn-gold">Explore the 12 Points</a>
+    <a href="#about" class="btn-ghost">About Civic Sphere</a>
+  </div>
+  <div class="hero-register">
+    <span class="hero-register-flag">🇺🇸</span>
+    <a href="https://vote.gov" target="_blank">Register to Vote →</a>
+  </div>
+</section>
+
+<!-- MISSION -->
+<section id="mission">
+  <div class="container">
+    <div class="mission-grid reveal">
+      <div class="mission-sidebar">
+        <blockquote class="mission-quote">
+          "Good governance is not a destination — it is a practice."
+        </blockquote>
+        <div class="mission-links">
+          <a href="https://www.americancivicpower.com" target="_blank" class="mission-link">American Civic Power</a>
+          <a href="https://www.danielpdevine.com" target="_blank" class="mission-link">danielpdevine.com</a>
+          <a href="https://vote.gov" target="_blank" class="mission-link">Register to Vote</a>
+        </div>
+      </div>
+      <div class="mission-body">
+        <span class="section-label">Our Mission</span>
+        <h2 class="section-title">Strengthening Democracy at Every Level</h2>
+        <div class="gold-rule"></div>
+        <p>
+          <strong>Civic Sphere</strong> is a nonpartisan civic engagement platform dedicated to strengthening democratic participation and good governance at every level of civic life — from neighborhood associations to national institutions.
+        </p>
+        <p>
+          We equip citizens, civic leaders, and communities with the knowledge, tools, and connections needed to hold institutions accountable and build a stronger democracy. Our flagship framework — the <strong>12 Points of Good Governance</strong> — provides an accessible, nonpartisan standard against which citizens can evaluate their government.
+        </p>
+        <p>
+          Civic Sphere is the civic technology companion to <strong>American Civic Power</strong>, founded by Long Island civic advocate and organizer <strong>Daniel P. Devine</strong>.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 12 POINTS -->
+<section id="points">
+  <div class="container">
+    <span class="section-label">The Framework</span>
+    <h2 class="section-title light">12 Points of Good Governance</h2>
+    <div class="gold-rule"></div>
+    <p class="points-intro">
+      Each principle is both an aspiration and a standard — a guide for civic leaders working to build the communities they believe in, and a benchmark against which existing institutions can be measured and held accountable.
+    </p>
+    <div class="points-grid reveal">
+      <a class="point-card" href="#slide-01">
+        <span class="point-num">01</span>
+        <div class="point-name">Rule of Law</div>
+        <p class="point-tagline">Laws apply equally to everyone, including those in power, and are enforced fairly and impartially.</p>
+      </a>
+      <a class="point-card" href="#slide-02">
+        <span class="point-num">02</span>
+        <div class="point-name">Transparency</div>
+        <p class="point-tagline">Government decisions, processes, and finances are open and accessible to the public.</p>
+      </a>
+      <a class="point-card" href="#slide-03">
+        <span class="point-num">03</span>
+        <div class="point-name">Accountability</div>
+        <p class="point-tagline">Leaders and institutions are answerable for their actions and decisions to the people they serve.</p>
+      </a>
+      <a class="point-card" href="#slide-04">
+        <span class="point-num">04</span>
+        <div class="point-name">Participation</div>
+        <p class="point-tagline">Citizens have meaningful opportunities to engage in decision-making processes that affect their lives.</p>
+      </a>
+      <a class="point-card" href="#slide-05">
+        <span class="point-num">05</span>
+        <div class="point-name">Consensus Orientation</div>
+        <p class="point-tagline">Governance mediates differing interests to reach broad agreement on what is in the best interest of the community.</p>
+      </a>
+      <a class="point-card" href="#slide-06">
+        <span class="point-num">06</span>
+        <div class="point-name">Equity &amp; Inclusiveness</div>
+        <p class="point-tagline">All members of society, especially the most vulnerable, have opportunities to improve or maintain their wellbeing.</p>
+      </a>
+      <a class="point-card" href="#slide-07">
+        <span class="point-num">07</span>
+        <div class="point-name">Effectiveness &amp; Efficiency</div>
+        <p class="point-tagline">Institutions produce results that meet the needs of society while making the best use of available resources.</p>
+      </a>
+      <a class="point-card" href="#slide-08">
+        <span class="point-num">08</span>
+        <div class="point-name">Responsiveness</div>
+        <p class="point-tagline">Institutions and processes serve all stakeholders within a reasonable timeframe.</p>
+      </a>
+      <a class="point-card" href="#slide-09">
+        <span class="point-num">09</span>
+        <div class="point-name">Strategic Vision</div>
+        <p class="point-tagline">Leaders have a long-term perspective on governance and human development, grounded in historical and social context.</p>
+      </a>
+      <a class="point-card" href="#slide-10">
+        <span class="point-num">10</span>
+        <div class="point-name">Ethical Leadership</div>
+        <p class="point-tagline">Those in power demonstrate integrity, honesty, and a genuine commitment to the public good over personal interest.</p>
+      </a>
+      <a class="point-card" href="#slide-11">
+        <span class="point-num">11</span>
+        <div class="point-name">Separation of Powers</div>
+        <p class="point-tagline">Legislative, executive, and judicial functions are distributed to prevent concentration of power and protect against abuse.</p>
+      </a>
+      <a class="point-card" href="#slide-12">
+        <span class="point-num">12</span>
+        <div class="point-name">Local Power</div>
+        <p class="point-tagline">Decisions are made at the most local level possible, empowering communities rather than centralizing all authority.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDES -->
+<section id="slides">
+  <div class="container">
+    <span class="section-label">Good Governance in Depth</span>
+    <h2 class="section-title">The Framework in Detail</h2>
+    <div class="gold-rule"></div>
+    <p class="slides-intro">
+      Explore each of the 12 Points of Good Governance in depth — from the foundational principles to their connection to Civic Sphere's mission.
+    </p>
+    <div class="slides-grid reveal">
+      <div class="slide-card" id="slide-overview">
+        <img src="images/slide-01.jpg" alt="Good Governance Overview" loading="lazy">
+        <div class="slide-card-label">Overview</div>
+      </div>
+      <div class="slide-card" id="slide-01">
+        <img src="images/slide-03.jpg" alt="Rule of Law" loading="lazy">
+        <div class="slide-card-label">01 — Rule of Law</div>
+      </div>
+      <div class="slide-card" id="slide-02">
+        <img src="images/slide-04.jpg" alt="Transparency" loading="lazy">
+        <div class="slide-card-label">02 — Transparency</div>
+      </div>
+      <div class="slide-card" id="slide-03">
+        <img src="images/slide-05.jpg" alt="Accountability" loading="lazy">
+        <div class="slide-card-label">03 — Accountability</div>
+      </div>
+      <div class="slide-card" id="slide-04">
+        <img src="images/slide-06.jpg" alt="Participation" loading="lazy">
+        <div class="slide-card-label">04 — Participation</div>
+      </div>
+      <div class="slide-card" id="slide-05">
+        <img src="images/slide-07.jpg" alt="Consensus Orientation" loading="lazy">
+        <div class="slide-card-label">05 — Consensus Orientation</div>
+      </div>
+      <div class="slide-card" id="slide-06">
+        <img src="images/slide-08.jpg" alt="Equity and Inclusiveness" loading="lazy">
+        <div class="slide-card-label">06 — Equity &amp; Inclusiveness</div>
+      </div>
+      <div class="slide-card" id="slide-07">
+        <img src="images/slide-09.jpg" alt="Effectiveness and Efficiency" loading="lazy">
+        <div class="slide-card-label">07 — Effectiveness &amp; Efficiency</div>
+      </div>
+      <div class="slide-card" id="slide-08">
+        <img src="images/slide-10.jpg" alt="Responsiveness" loading="lazy">
+        <div class="slide-card-label">08 — Responsiveness</div>
+      </div>
+      <div class="slide-card" id="slide-09">
+        <img src="images/slide-11.jpg" alt="Strategic Vision" loading="lazy">
+        <div class="slide-card-label">09 — Strategic Vision</div>
+      </div>
+      <div class="slide-card" id="slide-10">
+        <img src="images/slide-12.jpg" alt="Ethical Leadership" loading="lazy">
+        <div class="slide-card-label">10 — Ethical Leadership</div>
+      </div>
+      <div class="slide-card" id="slide-11">
+        <img src="images/slide-13.jpg" alt="Separation of Powers" loading="lazy">
+        <div class="slide-card-label">11 — Separation of Powers</div>
+      </div>
+      <div class="slide-card" id="slide-12">
+        <img src="images/slide-14.jpg" alt="Local Power" loading="lazy">
+        <div class="slide-card-label">12 — Local Power</div>
+      </div>
+      <div class="slide-card" id="slide-closing">
+        <img src="images/slide-15.jpg" alt="Closing" loading="lazy">
+        <div class="slide-card-label">Governance Is Everyone's Responsibility</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid reveal">
+      <div class="about-body">
+        <span class="section-label">About</span>
+        <h2 class="section-title">Civic Power, Put to Work</h2>
+        <div class="gold-rule"></div>
+        <p>
+          Civic Sphere was founded by <strong>Daniel P. Devine</strong>, a Long Island–based civic advocate, grassroots organizer, and democratic activist with decades of experience in electoral campaigns, community organizing, and civic education.
+        </p>
+        <p>
+          Daniel ran for the Nassau County Legislature in 2015, served as a Field Organizer for the New York State Democratic Committee, and has spent his career building organizations and platforms that connect citizens to the institutions that shape their lives.
+        </p>
+        <p>
+          Civic Sphere is the civic technology companion to <strong>American Civic Power</strong> — a grassroots organization dedicated to empowering citizens and strengthening democratic participation across Long Island and beyond.
+        </p>
+        <p>
+          Civic Sphere is working toward becoming a <strong>501(c)(3) nonprofit organization</strong> dedicated to civic education, community engagement, and democratic empowerment.
+        </p>
+      </div>
+      <div class="about-sidebar">
+        <div class="about-stat-grid">
+          <div class="about-stat">
+            <span class="about-stat-num">12</span>
+            <span class="about-stat-label">Points of Good Governance</span>
+          </div>
+          <div class="about-stat">
+            <span class="about-stat-num">100+</span>
+            <span class="about-stat-label">Volunteers Led</span>
+          </div>
+          <div class="about-stat">
+            <span class="about-stat-num">128K</span>
+            <span class="about-stat-label">District Residents Represented</span>
+          </div>
+          <div class="about-stat">
+            <span class="about-stat-num">25+</span>
+            <span class="about-stat-label">Years in Civic Life</span>
+          </div>
+        </div>
+        <div class="mission-links">
+          <a href="https://www.americancivicpower.com" target="_blank" class="mission-link">American Civic Power</a>
+          <a href="https://www.danielpdevine.com" target="_blank" class="mission-link">danielpdevine.com</a>
+          <a href="https://www.linkedin.com/in/danielpdevine" target="_blank" class="mission-link">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-grid reveal">
+      <div>
+        <span class="section-label">Get in Touch</span>
+        <h2 class="section-title light">Contact Civic Sphere</h2>
+        <div class="gold-rule"></div>
+        <p class="contact-intro">
+          Interested in civic education, community partnerships, or learning more about the 12 Points of Good Governance? We'd love to hear from you.
+        </p>
+        <div class="contact-details">
+          <div class="contact-item">
+            <div class="contact-icon">📍</div>
+            Long Island, New York
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">📞</div>
+            <a href="tel:6314069767">631-406-9767</a>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">✉️</div>
+            <a href="/cdn-cgi/l/email-protection#f3909a859a9080839b968196c2c4c4c5b3949e929a9fdd909c9e"><span class="__cf_email__" data-cfemail="b3d0dac5dad0c0c3dbd6c1d682848485f3d4ded2dadf9dd0dcde">[email&#160;protected]</span></a>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">🌐</div>
+            <a href="https://www.americancivicpower.com" target="_blank">americancivicpower.com</a>
+          </div>
+        </div>
+      </div>
+      <div>
+        <form class="contact-form" onsubmit="handleSubmit(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Name</label>
+              <input type="text" class="form-input" placeholder="Your name" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-input" placeholder="your@email.com" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Subject</label>
+            <input type="text" class="form-input" placeholder="How can we help?">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Message</label>
+            <textarea class="form-textarea" placeholder="Tell us about your interest in Civic Sphere..."></textarea>
+          </div>
+          <button type="submit" class="btn-gold" style="align-self:flex-start; border:none; cursor:pointer;">Send Message</button>
+          <div id="form-success" style="display:none; color:var(--gold); font-size:0.88rem; margin-top:0.5rem;">
+            ✓ Thank you — we'll be in touch soon.
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div style="max-width:1100px;margin:0 auto;padding:2.5rem 3rem;">
+    <div style="display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:3rem;margin-bottom:2rem;">
+      <div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.15em;color:var(--gold);margin-bottom:0.5rem;">CivicSphere</div>
+        <div style="font-size:0.72rem;color:rgba(245,240,232,0.35);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:1rem;">Direct Democracy Platform</div>
+        <p style="font-size:0.78rem;color:rgba(245,240,232,0.4);line-height:1.65;">Civic power, put to work — for every community, at every level of democracy.</p>
+      </div>
+      <div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:0.65rem;letter-spacing:0.3em;color:rgba(200,168,75,0.5);margin-bottom:0.75rem;">Services</div>
+        <div style="display:flex;flex-direction:column;gap:0.45rem;">
+          <a href="civicsphere-campaigns.html" style="font-size:0.78rem;color:rgba(245,240,232,0.55);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#C8A84B'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Campaign Services</a>
+          <a href="civicsphere-nonprofits.html" style="font-size:0.78rem;color:rgba(245,240,232,0.55);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#C8A84B'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Nonprofit Services</a>
+          <a href="civicsphere-portal.html" style="font-size:0.78rem;color:rgba(245,240,232,0.55);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#C8A84B'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Client Portal</a>
+          <a href="governance-assessment-landing.html" style="font-size:0.78rem;color:rgba(245,240,232,0.55);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#C8A84B'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Governance Assessment</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:0.65rem;letter-spacing:0.3em;color:rgba(200,168,75,0.5);margin-bottom:0.75rem;">Organization</div>
+        <div style="display:flex;flex-direction:column;gap:0.45rem;">
+          <a href="https://www.americancivicpower.com" target="_blank" style="font-size:0.78rem;color:rgba(245,240,232,0.55);text-decoration:none;" onmouseover="this.style.color='#C8A84B'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">American Civic Power</a>
+          <a href="https://www.danielpdevine.com" target="_blank" style="font-size:0.78rem;color:rgba(245,240,232,0.55);text-decoration:none;" onmouseover="this.style.color='#C8A84B'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">danielpdevine.com</a>
+          <a href="https://www.linkedin.com/in/danielpdevine" target="_blank" style="font-size:0.78rem;color:rgba(245,240,232,0.55);text-decoration:none;" onmouseover="this.style.color='#C8A84B'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">LinkedIn</a>
+          <a href="civic-dual-entity-structure.html" style="font-size:0.78rem;color:rgba(245,240,232,0.55);text-decoration:none;" onmouseover="this.style.color='#C8A84B'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Entity Structure</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:0.65rem;letter-spacing:0.3em;color:rgba(200,168,75,0.5);margin-bottom:0.75rem;">Civic</div>
+        <div style="display:flex;flex-direction:column;gap:0.45rem;">
+          <a href="https://vote.gov" target="_blank" style="font-size:0.78rem;color:rgba(245,240,232,0.55);text-decoration:none;" onmouseover="this.style.color='#C8A84B'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Register to Vote</a>
+          <a href="#points" style="font-size:0.78rem;color:rgba(245,240,232,0.55);text-decoration:none;" onmouseover="this.style.color='#C8A84B'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">12 Points Framework</a>
+          <a href="#contact" style="font-size:0.78rem;color:rgba(245,240,232,0.55);text-decoration:none;" onmouseover="this.style.color='#C8A84B'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Contact</a>
+        </div>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(200,168,75,0.12);padding-top:1.25rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;">
+      <span style="font-size:0.68rem;color:rgba(245,240,232,0.25);">© 2026 Civic Sphere / My Civic Sphere. Civic Power, Put to Work.</span>
+      <span style="font-size:0.68rem;color:rgba(245,240,232,0.2);">civicsphere.ai · mycivicsphere.com</span>
+    </div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  reveals.forEach(el => el.classList.add('hidden'));
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+          entry.target.classList.remove('hidden');
+        }, i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }
