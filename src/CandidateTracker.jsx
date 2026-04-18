@@ -283,7 +283,7 @@ export default function CandidateTracker() {
             American Civic Power — Internal Tool
           </div>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: 16 }}>
-            <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(22px, 4vw, 34px)", fontWeight: 900, lineHeight: 1.1 }}>
+            <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(22px, 4vw, 34px)", fontWeight: 900, lineHeight: 1.1, color: P.white }}>
               Board Candidate<br /><span style={{ color: P.goldLight }}>Tracker</span>
             </h1>
             <button onClick={() => setModal({ mode: "add", candidate: null })} style={{
