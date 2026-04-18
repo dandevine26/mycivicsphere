@@ -7,6 +7,7 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/board/recruitment" element={<BoardRecruitmentSuite />} />
+        <Route path="/" element={<BoardRecruitmentSuite />} />
         <Route path="/board/tracker" element={<CandidateTracker />} />
       </Routes>
     </BrowserRouter>
