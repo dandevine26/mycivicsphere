@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Civic Sphere — Civic Power, Put to Work</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:    #0D1F3C;
+    --cobalt:  #1A3A6B;
+    --sky:     #2E6FBB;
+    --gold:    #C8A84B;
+    --cream:   #F5F0E8;
+    --offwhite:#FAF8F4;
+    --charcoal:#2A2A2A;
+    --mid:     #6B7280;
+    --rule:    rgba(200,168,75,0.35);
+    --light-bg:#F0EDE6;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--offwhite);
+    color: var(--charcoal);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(13,31,60,0.97);
+    backdrop-filter: blur(8px);
+  }
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 3rem;
+  }
+  .nav-rainbow {
+    height: 3px;
+    background: linear-gradient(
+      to right,
+      #e63946, #e8593a, #f4a261, #f9c74f,
+      #90be6d, #43aa8b, #4cc9f0, #4361ee,
+      #7209b7, #e63946
+    );
+    width: 100%;
+  }
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+  .nav-logo-icon { width: 36px; height: 36px; flex-shrink: 0; }
+  .nav-logo-text { display: flex; flex-direction: column; line-height: 1.1; }
+  .nav-logo-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.25rem;
+    letter-spacing: 0.1em;
+    color: var(--cream);
+  }
+  .nav-logo-sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.45);
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; flex-wrap: wrap; align-items: center; }
+  .nav-links a {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.75);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a.active { color: var(--gold); }
+
+  /* ─── PAGE HERO ─── */
+  .page-hero {
+    padding: 9rem 0 4rem;
+    background: var(--navy);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 79px, rgba(200,168,75,0.04) 79px, rgba(200,168,75,0.04) 80px),
+      repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(200,168,75,0.04) 79px, rgba(200,168,75,0.04) 80px);
+    pointer-events: none;
+  }
+  .page-hero-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    margin-bottom: 1rem;
+    position: relative; z-index: 1;
+  }
+  .page-hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 900;
+    color: var(--cream);
+    margin-bottom: 1rem;
+    position: relative; z-index: 1;
+  }
+  .page-hero p {
+    font-family: 'Source Serif 4', serif;
+    font-style: italic;
+    color: rgba(245,240,232,0.65);
+    font-size: 1.1rem;
+    position: relative; z-index: 1;
+  }
+
+  /* ─── SECTION TAB NAV ─── */
+  .section-tabs {
+    background: var(--cobalt);
+    border-bottom: 2px solid var(--rule);
+    position: sticky; top: 72px; z-index: 90;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .section-tabs::-webkit-scrollbar { height: 3px; }
+  .section-tabs::-webkit-scrollbar-track { background: var(--cobalt); }
+  .section-tabs::-webkit-scrollbar-thumb { background: var(--gold); }
+  .tabs-inner {
+    display: flex;
+    white-space: nowrap;
+    padding: 0 2rem;
+    min-width: max-content;
+  }
+  .tab-btn {
+    padding: 1rem 1.4rem;
+    background: none; border: none;
+    color: rgba(245,240,232,0.6);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+    margin-bottom: -2px;
+  }
+  .tab-btn:hover { color: var(--cream); }
+  .tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+  /* ─── CONTENT PANELS ─── */
+  .content-panel { display: none; }
+  .content-panel.active { display: block; }
+
+  /* ─── CONTAINER ─── */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+  }
+
+  /* ─── TYPOGRAPHY ─── */
+  .section-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 900;
+    color: var(--navy);
+    margin-bottom: 0.5rem;
+    line-height: 1.1;
+  }
+  .section-divider {
+    width: 50px; height: 3px;
+    background: var(--gold);
+    margin: 1.2rem 0 2.5rem;
+  }
+  h2.content-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin: 2.5rem 0 0.8rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--rule);
+  }
+  h3.content-subheading {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--cobalt);
+    margin: 1.5rem 0 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  h4.content-subsubheading {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--charcoal);
+    margin: 1.2rem 0 0.4rem;
+    text-decoration: underline;
+    text-decoration-color: var(--gold);
+    text-underline-offset: 3px;
+  }
+  p.content-body {
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--charcoal);
+    margin-bottom: 1rem;
+  }
+  p.content-body strong {
+    font-weight: 500;
+    color: var(--navy);
+  }
+  .content-intro {
+    font-family: 'Source Serif 4', serif;
+    font-size: 1.15rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--mid);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  /* ─── LISTS ─── */
+  ul.content-list, ol.content-list {
+    margin: 0.5rem 0 1rem 1.5rem;
+  }
+  ul.content-list li, ol.content-list li {
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--charcoal);
+    margin-bottom: 0.4rem;
+  }
+  ul.content-list li strong, ol.content-list li strong {
+    font-weight: 500;
+    color: var(--navy);
+  }
+
+  /* ─── CALLOUT BOXES ─── */
+  .callout {
+    background: rgba(13,31,60,0.04);
+    border-left: 4px solid var(--gold);
+    padding: 1.5rem 1.8rem;
+    margin: 2rem 0;
+    border-radius: 0 4px 4px 0;
+  }
+  .callout p {
+    font-family: 'Source Serif 4', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--navy);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* ─── PHASE BOXES ─── */
+  .phase-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin: 1.5rem 0 2rem;
+  }
+  .phase-box {
+    background: var(--navy);
+    padding: 1.8rem;
+    border-bottom: 3px solid var(--gold);
+  }
+  .phase-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+  .phase-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--cream);
+    margin-bottom: 0.6rem;
+  }
+  .phase-box p {
+    font-size: 0.88rem;
+    color: rgba(245,240,232,0.7);
+    line-height: 1.6;
+  }
+
+  /* ─── TIER CARDS ─── */
+  .tier-card {
+    border: 1px solid var(--rule);
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    background: var(--offwhite);
+    border-top: 4px solid var(--gold);
+    transition: box-shadow 0.2s;
+  }
+  .tier-card:hover { box-shadow: 0 4px 24px rgba(13,31,60,0.08); }
+  .tier-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    margin-bottom: 0.3rem;
+  }
+  .tier-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 0.3rem;
+  }
+  .tier-subtitle {
+    font-size: 0.88rem;
+    font-style: italic;
+    color: var(--mid);
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  /* ─── RESOURCE TABLE ─── */
+  .resource-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0 2rem;
+    font-size: 0.9rem;
+  }
+  .resource-table th {
+    background: var(--navy);
+    color: var(--cream);
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .resource-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid rgba(200,168,75,0.15);
+    vertical-align: top;
+    line-height: 1.5;
+    color: var(--charcoal);
+    font-weight: 300;
+  }
+  .resource-table tr:nth-child(even) td { background: rgba(200,168,75,0.04); }
+  .resource-table tr:hover td { background: rgba(13,31,60,0.04); }
+  .format-badge {
+    display: inline-block;
+    background: var(--cobalt);
+    color: var(--cream);
+    font-size: 0.7rem;
+    font-weight: 500;
+    padding: 0.15rem 0.5rem;
+    border-radius: 2px;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+
+  /* ─── BLOG POSTS ─── */
+  .blog-post {
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 3rem;
+    margin-bottom: 3rem;
+  }
+  .blog-post:last-child { border-bottom: none; }
+  .blog-meta {
+    font-size: 0.82rem;
+    color: var(--mid);
+    font-style: italic;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .blog-type {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+  .blog-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 0.3rem;
+    line-height: 1.2;
+  }
+  .blog-subhead {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--cobalt);
+    margin: 1.5rem 0 0.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .blog-byline {
+    font-size: 0.9rem;
+    font-style: italic;
+    color: var(--mid);
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  /* ─── STAT BOXES ─── */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin: 2rem 0;
+  }
+  .stat-box {
+    background: var(--offwhite);
+    padding: 1.8rem 1.5rem;
+    text-align: center;
+  }
+  .stat-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    color: var(--navy);
+    letter-spacing: 0.05em;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .stat-label {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--mid);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* ─── CTA BUTTON ─── */
+  .btn-primary {
+    display: inline-block;
+    padding: 0.85rem 2rem;
+    background: var(--gold);
+    color: var(--navy);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none; cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    margin-top: 0.5rem;
+  }
+  .btn-primary:hover { background: #d4b060; transform: translateY(-2px); }
+  .btn-outline {
+    display: inline-block;
+    padding: 0.85rem 2rem;
+    background: transparent;
+    color: var(--navy);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1.5px solid var(--navy);
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 0.5rem;
+    margin-left: 1rem;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ─── PRIVACY NUMBERED ─── */
+  .policy-section {
+    margin-bottom: 2rem;
+  }
+  .policy-section h3 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--navy);
+    margin-bottom: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  /* ─── CONTACT LINK ─── */
+  .content-link {
+    color: var(--sky);
+    text-decoration: none;
+    font-weight: 400;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .content-link:hover { border-color: var(--sky); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--navy);
+    padding: 2.5rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    border-top: 1px solid rgba(200,168,75,0.2);
+  }
+  .footer-copy {
+    font-size: 0.8rem;
+    color: rgba(245,240,232,0.5);
+    font-family: 'DM Sans', sans-serif;
+  }
+  .footer-links { display: flex; gap: 2rem; }
+  .footer-links a {
+    font-size: 0.78rem;
+    color: rgba(245,240,232,0.5);
+    text-decoration: none;
+    font-family: 'DM Sans', sans-serif;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--gold); }
+
+  /* ─── REVEAL ANIMATION ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1.2rem; }
+    .container { padding: 2.5rem 1.25rem; }
+    .tabs-inner { padding: 0 1rem; }
+    .tab-btn { padding: 0.9rem 1rem; font-size: 0.7rem; }
+    .resource-table { font-size: 0.82rem; }
+    .resource-table th, .resource-table td { padding: 0.6rem 0.7rem; }
+    footer { flex-direction: column; padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="https://www.mycivicsphere.com" class="nav-logo">
+      <!-- Hexagonal logo icon matching mycivicsphere.com exactly -->
+      <svg class="nav-logo-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Dark hex background -->
+        <polygon points="22,3 37,12.5 37,31.5 22,41 7,31.5 7,12.5" fill="#0D1A2E"/>
+        <!-- Hex border — light teal outline -->
+        <polygon points="22,3 37,12.5 37,31.5 22,41 7,31.5 7,12.5" fill="none" stroke="#5BC8D0" stroke-width="1.2"/>
+
+        <!-- All connecting lines between every dot and center — light blue -->
+        <!-- Center to each vertex -->
+        <line x1="22" y1="22" x2="22" y2="3"   stroke="#7DD8E0" stroke-width="0.6" opacity="0.7"/>
+        <line x1="22" y1="22" x2="37" y2="12.5" stroke="#7DD8E0" stroke-width="0.6" opacity="0.7"/>
+        <line x1="22" y1="22" x2="37" y2="31.5" stroke="#7DD8E0" stroke-width="0.6" opacity="0.7"/>
+        <line x1="22" y1="22" x2="22" y2="41"  stroke="#7DD8E0" stroke-width="0.6" opacity="0.7"/>
+        <line x1="22" y1="22" x2="7"  y2="31.5" stroke="#7DD8E0" stroke-width="0.6" opacity="0.7"/>
+        <line x1="22" y1="22" x2="7"  y2="12.5" stroke="#7DD8E0" stroke-width="0.6" opacity="0.7"/>
+        <!-- Cross connections between opposite vertices -->
+        <line x1="22" y1="3"  x2="22" y2="41"   stroke="#7DD8E0" stroke-width="0.5" opacity="0.4"/>
+        <line x1="37" y1="12.5" x2="7" y2="31.5" stroke="#7DD8E0" stroke-width="0.5" opacity="0.4"/>
+        <line x1="37" y1="31.5" x2="7" y2="12.5" stroke="#7DD8E0" stroke-width="0.5" opacity="0.4"/>
+
+        <!-- Colored dots sitting ON the hex border at each vertex -->
+        <!-- Top — teal -->
+        <circle cx="22"  cy="3"    r="2.4" fill="#4ECDC4"/>
+        <!-- Top-right — yellow/gold -->
+        <circle cx="37"  cy="12.5" r="2.4" fill="#F4C94E"/>
+        <!-- Bottom-right — orange -->
+        <circle cx="37"  cy="31.5" r="2.4" fill="#F4845F"/>
+        <!-- Bottom — purple -->
+        <circle cx="22"  cy="41"   r="2.4" fill="#9B59B6"/>
+        <!-- Bottom-left — blue -->
+        <circle cx="7"   cy="31.5" r="2.4" fill="#4A90D9"/>
+        <!-- Top-left — green -->
+        <circle cx="7"   cy="12.5" r="2.4" fill="#5DBD72"/>
+
+        <!-- White center dot -->
+        <circle cx="22" cy="22" r="2.8" fill="white"/>
+      </svg>
+      </svg>
+      <div class="nav-logo-text">
+        <span class="nav-logo-name">CivicSphere</span>
+        <span class="nav-logo-sub">Direct Democracy Platform</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="https://www.mycivicsphere.com/#points">Governance</a></li>
+      <li><a href="https://www.mycivicsphere.com/#slides">Framework</a></li>
+      <li><a href="#about" class="active">About</a></li>
+      <li><a href="#library">Library</a></li>
+      <li><a href="#programs">Programs</a></li>
+      <li><a href="#blog">Blog</a></li>
+      <li><a href="#support">Support</a></li>
+      <li><a href="#partners">Partners</a></li>
+      <li><a href="https://www.mycivicsphere.com/#contact">Contact</a></li>
+      <li><a href="/civestor">Civestor</a></li>
+      <li><a href="https://vote.gov" target="_blank" style="background:var(--gold);color:var(--navy);padding:0.5rem 1.1rem;font-weight:500;letter-spacing:0.1em;font-size:0.78rem;text-transform:uppercase;">Vote Now →</a></li>
+    </ul>
+  </div>
+  <div class="nav-rainbow"></div>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="page-hero-label">Civic Sphere — Civic Power, Put to Work</div>
+  <h1>Our Story, Our Work</h1>
+  <p>Nonpartisan · Civic Education · Good Governance</p>
+</div>
+
+<!-- SECTION TABS -->
+<div class="section-tabs">
+  <div class="tabs-inner">
+    <button class="tab-btn active" onclick="showTab('about', this)">About</button>
+    <button class="tab-btn" onclick="showTab('library', this)">Civic Library</button>
+    <button class="tab-btn" onclick="showTab('programs', this)">Our Work</button>
+    <button class="tab-btn" onclick="showTab('blog', this)">Blog & News</button>
+    <button class="tab-btn" onclick="showTab('support', this)">Get Involved</button>
+    <button class="tab-btn" onclick="showTab('partners', this)">Partners</button>
+    <button class="tab-btn" onclick="showTab('privacy', this)">Privacy Policy</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 1: ABOUT / OUR STORY
+═══════════════════════════════════════════════ -->
+<div id="about" class="content-panel active">
+  <div class="container">
+    <span class="section-label">Our Story</span>
+    <h1 class="section-title">About Civic Sphere</h1>
+    <div class="section-divider"></div>
+
+    <p class="content-intro">
+      Democracy doesn't maintain itself. It requires informed citizens, accountable institutions, and leaders who understand that governance is a public trust — not a private privilege.
+    </p>
+
+    <h2 class="content-heading reveal">Why Civic Sphere Exists</h2>
+    <p class="content-body reveal">Across the United States, civic knowledge is declining, participation is uneven, and trust in government institutions has reached historic lows. Civic Sphere was founded in 2026 in response to that reality. Built on the conviction that good governance is both teachable and measurable, Civic Sphere exists to give citizens the knowledge, language, and tools to engage meaningfully with the institutions that shape their lives — and to hold those institutions to a higher standard.</p>
+
+    <h2 class="content-heading reveal">Our Framework</h2>
+    <p class="content-body reveal">At the heart of Civic Sphere is the <strong>12 Points of Good Governance</strong> — an original civic education framework developed by founder Daniel P. Devine and inspired by leading governance standards from institutions including the United Nations, academic political science, and decades of practical civic experience.</p>
+    <p class="content-body reveal">The 12 Points — covering principles from Rule of Law and Transparency to Local Power and Ethical Leadership — provide an accessible, nonpartisan standard that any citizen can use to evaluate their government. They are not a partisan checklist. They are a civic compass.</p>
+    <div class="callout reveal">
+      <p>"When citizens can name what good governance looks like, they are better equipped to recognize its absence — and to demand something better."</p>
+    </div>
+
+    <h2 class="content-heading reveal">Our Founder</h2>
+    <p class="content-body reveal">Civic Sphere was founded by <strong>Daniel P. Devine</strong>, a Long Island–based civic advocate, grassroots organizer, and democratic activist with more than 25 years of experience in electoral campaigns, community organizing, and civic education.</p>
+    <p class="content-body reveal">In 2015, Daniel was nominated by the Nassau County Democratic Committee as a candidate for the County Legislature, representing a district of 128,000 residents. As a Field Organizer for the New York State Democratic Committee, he led teams of 100+ volunteers, conducted 100+ daily outreach calls, and worked across diverse communities to build the grassroots infrastructure that democracy depends on.</p>
+    <p class="content-body reveal">Daniel is also the founder of <strong>American Civic Power</strong>, a grassroots civic organization dedicated to empowering citizens and strengthening democratic participation across Long Island and beyond — serving as its newsletter editor, website designer, and chief organizer.</p>
+
+    <div class="stats-row reveal">
+      <div class="stat-box"><div class="stat-number">12</div><div class="stat-label">Points of Good Governance</div></div>
+      <div class="stat-box"><div class="stat-number">100+</div><div class="stat-label">Volunteers Led</div></div>
+      <div class="stat-box"><div class="stat-number">128K</div><div class="stat-label">District Residents</div></div>
+      <div class="stat-box"><div class="stat-number">25+</div><div class="stat-label">Years in Civic Life</div></div>
+    </div>
+
+    <h2 class="content-heading reveal">Two Initiatives, One Mission</h2>
+    <p class="content-body reveal">Civic Sphere and American Civic Power are separate but deeply complementary initiatives, united by a shared founder and a shared mission.</p>
+    <p class="content-body reveal"><strong>American Civic Power</strong> is a grassroots organization focused on community engagement, voter mobilization, and civic empowerment at the local level — the on-the-ground expression of civic advocacy.</p>
+    <p class="content-body reveal"><strong>Civic Sphere</strong> is the civic technology and education platform — developing frameworks, digital tools, and educational resources designed to connect citizens with the principles and practices of good governance. Where American Civic Power organizes communities, Civic Sphere equips them.</p>
+    <p class="content-body reveal">Together, they represent a complete civic ecosystem: knowledge and action, platform and people, education and engagement — all in service of a stronger democracy.</p>
+
+    <h2 class="content-heading reveal">Where We Are Headed</h2>
+    <p class="content-body reveal">Civic Sphere is currently working toward formal incorporation as a <strong>501(c)(3) nonprofit organization</strong>, a milestone that will expand our capacity to pursue grant funding, build institutional partnerships, and grow our civic education programs across New York State and beyond.</p>
+    <p class="content-body reveal">In the near term, Civic Sphere is focused on:</p>
+    <ul class="content-list reveal">
+      <li>Expanding the 12 Points of Good Governance into a full civic education curriculum for community organizations, libraries, and schools</li>
+      <li>Developing AI-assisted civic engagement tools that help citizens navigate local government</li>
+      <li>Building partnerships with civic organizations, educational institutions, and community groups</li>
+      <li>Establishing a sustainable platform for nonpartisan civic education serving Long Island and New York State</li>
+    </ul>
+
+    <div style="margin-top:2.5rem;" class="reveal">
+      <a href="https://www.mycivicsphere.com/#contact" class="btn-primary">Get in Touch</a>
+      <a href="https://www.americancivicpower.com" target="_blank" class="btn-outline">American Civic Power</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 2: CIVIC LIBRARY
+═══════════════════════════════════════════════ -->
+<div id="library" class="content-panel">
+  <div class="container">
+    <span class="section-label">Resources</span>
+    <h1 class="section-title">Civic Library</h1>
+    <div class="section-divider"></div>
+
+    <p class="content-intro">A free, nonpartisan collection of guides, explainers, and educational resources designed to help everyday citizens understand how government works, how to participate meaningfully, and how to hold institutions accountable. All materials are free to access, share, and use.</p>
+
+    <h2 class="content-heading reveal">Collection I — The 12 Points of Good Governance</h2>
+    <p class="content-body reveal">Civic Sphere's flagship civic education framework — an accessible, nonpartisan standard for evaluating democratic institutions at every level of government.</p>
+    <table class="resource-table reveal">
+      <thead><tr><th>Resource</th><th>Format</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>The 12 Points of Good Governance — Overview Guide</td><td><span class="format-badge">PDF</span></td><td>A concise introduction to all 12 principles, designed for general audiences and community presentations</td></tr>
+        <tr><td>Rule of Law — Citizen's Guide</td><td><span class="format-badge">PDF + Web</span></td><td>What the rule of law means, why it matters, and how citizens can recognize when it is under threat</td></tr>
+        <tr><td>Transparency in Government — Citizen's Guide</td><td><span class="format-badge">PDF + Web</span></td><td>How open government works, FOIL requests, and how to access public records in New York</td></tr>
+        <tr><td>Accountability — Citizen's Guide</td><td><span class="format-badge">PDF + Web</span></td><td>How elected officials and institutions are held accountable, and what tools citizens have to demand it</td></tr>
+        <tr><td>Participation — Citizen's Guide</td><td><span class="format-badge">PDF + Web</span></td><td>The many forms civic participation takes — from voting to public comment to community boards</td></tr>
+        <tr><td>Consensus Orientation — Citizen's Guide</td><td><span class="format-badge">PDF + Web</span></td><td>How democratic governance mediates competing interests and builds community agreement</td></tr>
+        <tr><td>Equity &amp; Inclusiveness — Citizen's Guide</td><td><span class="format-badge">PDF + Web</span></td><td>Why inclusive governance matters and how communities can advocate for equitable representation</td></tr>
+        <tr><td>Effectiveness &amp; Efficiency — Citizen's Guide</td><td><span class="format-badge">PDF + Web</span></td><td>How citizens can evaluate whether their government is delivering results responsibly</td></tr>
+        <tr><td>Responsiveness — Citizen's Guide</td><td><span class="format-badge">PDF + Web</span></td><td>What responsive government looks like and how to engage when institutions fall short</td></tr>
+        <tr><td>Strategic Vision — Citizen's Guide</td><td><span class="format-badge">PDF + Web</span></td><td>The importance of long-term thinking in governance and how communities can advocate for it</td></tr>
+        <tr><td>Ethical Leadership — Citizen's Guide</td><td><span class="format-badge">PDF + Web</span></td><td>Standards of integrity in public life and how to identify and respond to ethical failures</td></tr>
+        <tr><td>Separation of Powers — Citizen's Guide</td><td><span class="format-badge">PDF + Web</span></td><td>How the division of legislative, executive, and judicial authority protects democratic governance</td></tr>
+        <tr><td>Local Power — Citizen's Guide</td><td><span class="format-badge">PDF + Web</span></td><td>Why local government matters most and how citizens can engage at the community level</td></tr>
+        <tr><td>12 Points Self-Assessment Scorecard</td><td><span class="format-badge">PDF</span></td><td>A practical tool for evaluating your local, state, or federal government against all 12 principles</td></tr>
+      </tbody>
+    </table>
+
+    <h2 class="content-heading reveal">Collection II — Civic Participation &amp; Voting</h2>
+    <p class="content-body reveal">Practical guides for citizens at every level of engagement — from registering to vote to running for office.</p>
+    <table class="resource-table reveal">
+      <thead><tr><th>Resource</th><th>Format</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>How to Register to Vote in New York</td><td><span class="format-badge">Web</span></td><td>Step-by-step guide to voter registration, deadlines, and same-day registration options</td></tr>
+        <tr><td>Your Ballot Explained</td><td><span class="format-badge">PDF + Web</span></td><td>A plain-language guide to understanding what's on your ballot — from federal races to ballot propositions</td></tr>
+        <tr><td>How to Find Your Elected Officials</td><td><span class="format-badge">Web</span></td><td>A guide to identifying and contacting your representatives at every level of government</td></tr>
+        <tr><td>How to Attend a Public Meeting</td><td><span class="format-badge">PDF + Web</span></td><td>What to expect at a town board, school board, or city council meeting — and how to make your voice heard</td></tr>
+        <tr><td>How to Submit a Public Comment</td><td><span class="format-badge">PDF</span></td><td>Step-by-step guide to participating in public comment periods for proposed legislation and regulations</td></tr>
+        <tr><td>Filing a FOIL Request in New York</td><td><span class="format-badge">PDF + Web</span></td><td>How to use New York's Freedom of Information Law to access government records</td></tr>
+        <tr><td>How to Run for Local Office</td><td><span class="format-badge">PDF</span></td><td>An introductory guide to candidacy requirements, petitioning, and campaign basics in New York State</td></tr>
+        <tr><td>Civic Participation Checklist</td><td><span class="format-badge">PDF</span></td><td>A practical checklist of civic actions every citizen can take — from voting to volunteering to organizing</td></tr>
+      </tbody>
+    </table>
+
+    <h2 class="content-heading reveal">Collection III — Local Government</h2>
+    <p class="content-body reveal">Local government shapes more of daily life than any other level. This collection helps citizens understand how local institutions work and how to engage with them effectively.</p>
+    <table class="resource-table reveal">
+      <thead><tr><th>Resource</th><th>Format</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>How Local Government Works in New York</td><td><span class="format-badge">PDF + Web</span></td><td>An overview of counties, towns, villages, cities, and school districts in New York State</td></tr>
+        <tr><td>Your County Legislature Explained</td><td><span class="format-badge">Web</span></td><td>How county legislatures are structured, what they do, and how citizens can participate</td></tr>
+        <tr><td>How School Boards Work</td><td><span class="format-badge">PDF + Web</span></td><td>The role of school boards in local governance and how community members can engage</td></tr>
+        <tr><td>Understanding Your Local Budget</td><td><span class="format-badge">PDF + Web</span></td><td>How to read a municipal budget, where the money comes from, and how citizens can weigh in</td></tr>
+        <tr><td>Community Boards in New York City</td><td><span class="format-badge">Web</span></td><td>For NYC residents — how community boards work and how to get involved</td></tr>
+        <tr><td>Long Island Civic Guide</td><td><span class="format-badge">PDF</span></td><td>A Civic Sphere resource covering Nassau and Suffolk County government structures</td></tr>
+      </tbody>
+    </table>
+
+    <h2 class="content-heading reveal">Collection IV — Electoral Reform</h2>
+    <p class="content-body reveal">Exploring electoral reform topics through a nonpartisan, educational lens — because the rules governing how we elect our representatives matter deeply.</p>
+    <table class="resource-table reveal">
+      <thead><tr><th>Resource</th><th>Format</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>Ranked-Choice Voting Explained</td><td><span class="format-badge">PDF + Web</span></td><td>How ranked-choice voting works, where it is used, and what research says about its effects</td></tr>
+        <tr><td>Proportional Representation — A Primer</td><td><span class="format-badge">PDF + Web</span></td><td>An introduction to proportional representation systems and how they differ from winner-take-all elections</td></tr>
+        <tr><td>Gerrymandering and Redistricting</td><td><span class="format-badge">PDF + Web</span></td><td>What gerrymandering is, how redistricting works, and how citizens can advocate for fair maps</td></tr>
+        <tr><td>Campaign Finance Reform — Key Concepts</td><td><span class="format-badge">PDF + Web</span></td><td>An overview of campaign finance law, public financing options, and reform efforts</td></tr>
+        <tr><td>Electoral Systems Comparison Guide</td><td><span class="format-badge">PDF</span></td><td>A side-by-side comparison of major electoral systems used in democracies around the world</td></tr>
+        <tr><td>Small-Dollar Democracy — Public Campaign Financing</td><td><span class="format-badge">PDF + Web</span></td><td>How small-dollar and public financing programs work and why reformers believe they strengthen democracy</td></tr>
+        <tr><td>Electoral Reform in New York State</td><td><span class="format-badge">Web</span></td><td>A current overview of electoral reform efforts underway in Albany, including RCV legislation</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout reveal">
+      <p>All Civic Sphere resources are free to use in classrooms, community workshops, library programs, and civic education initiatives. Educators and community organizations are invited to <a href="https://www.mycivicsphere.com/#contact" class="content-link">contact us</a> about incorporating the 12 Points framework into your programming.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 3: OUR WORK / PROGRAMS
+═══════════════════════════════════════════════ -->
+<div id="programs" class="content-panel">
+  <div class="container">
+    <span class="section-label">Programs &amp; Initiatives</span>
+    <h1 class="section-title">Our Work</h1>
+    <div class="section-divider"></div>
+
+    <p class="content-intro">Civic Sphere's work is rooted in a simple but powerful belief: that civic knowledge is civic power. Everything we build is nonpartisan, accessible, and free at the point of use.</p>
+
+    <h2 class="content-heading reveal">Program 1 — The 12 Points of Good Governance Platform</h2>
+    <p class="content-body reveal" style="font-style:italic;color:var(--mid);">Our Flagship Civic Education Initiative</p>
+    <h3 class="content-subheading reveal">What It Is</h3>
+    <p class="content-body reveal">The 12 Points of Good Governance is Civic Sphere's core civic education framework — an original, nonpartisan standard for evaluating democratic institutions at every level of government. Developed by founder Daniel P. Devine and informed by leading governance frameworks, the 12 Points cover the foundational principles of democratic governance: Rule of Law, Transparency, Accountability, Participation, Consensus Orientation, Equity &amp; Inclusiveness, Effectiveness &amp; Efficiency, Responsiveness, Strategic Vision, Ethical Leadership, Separation of Powers, and Local Power.</p>
+    <h3 class="content-subheading reveal">What It Does</h3>
+    <p class="content-body reveal">The platform makes the 12 Points accessible to everyday citizens and organizations through mycivicsphere.com. Users can explore each principle in depth, access supporting resources from the Civic Library, and use the 12 Points as a practical lens for evaluating their own government at the local, state, or federal level.</p>
+    <h3 class="content-subheading reveal">Current Status</h3>
+    <p class="content-body reveal">The platform is live at mycivicsphere.com. The framework is fully published and the Civic Library is actively being built out with supporting guides and resources for each of the 12 principles.</p>
+    <h3 class="content-subheading reveal">Near-Term Development Goals</h3>
+    <ul class="content-list reveal">
+      <li>Complete the full suite of Civic Library guides for all 12 Points</li>
+      <li>Develop a printable 12 Points Self-Assessment Scorecard for community use</li>
+      <li>Create an Educator's Resource Pack for civic organizations and community groups</li>
+      <li>Build a shareable digital version of the framework suitable for embedding in partner websites</li>
+    </ul>
+
+    <h2 class="content-heading reveal">Program 2 — AI-Assisted Civic Engagement Tools</h2>
+    <p class="content-body reveal" style="font-style:italic;color:var(--mid);">Civic Technology for the 21st Century</p>
+    <h3 class="content-subheading reveal">What It Is</h3>
+    <p class="content-body reveal">Civic Sphere is developing a suite of AI-assisted civic engagement tools designed to help citizens and community organizations navigate local government, identify opportunities for civic participation, and apply the 12 Points framework to real-world governance challenges.</p>
+    <h3 class="content-subheading reveal">Planned Features</h3>
+    <ul class="content-list reveal">
+      <li>An AI-assisted governance assessment tool that helps organizations apply the 12 Points framework</li>
+      <li>A civic navigation tool that helps citizens identify elected officials and find opportunities for engagement</li>
+      <li>A community resource connector linking civic organizations with educational resources and civic events</li>
+      <li>A plain-language government document interpreter for public meeting agendas and budget documents</li>
+    </ul>
+    <h3 class="content-subheading reveal">Current Status</h3>
+    <p class="content-body reveal">This program is in active development. Civic Sphere is currently scoping the technical architecture and user experience design for the first suite of tools, with a planned initial release to be announced.</p>
+
+    <h2 class="content-heading reveal">Program 3 — Community Civic Education Initiative</h2>
+    <p class="content-body reveal" style="font-style:italic;color:var(--mid);">Bringing the Framework to Organizations and Communities</p>
+    <h3 class="content-subheading reveal">What It Is</h3>
+    <p class="content-body reveal">The Community Civic Education Initiative is Civic Sphere's outreach program — bringing the 12 Points of Good Governance framework and civic education resources directly to community and civic organizations and local government bodies across Long Island and New York State.</p>
+    <h3 class="content-subheading reveal">Who It Serves</h3>
+    <ul class="content-list reveal">
+      <li>Civic and community organizations seeking nonpartisan civic education content for their members</li>
+      <li>Local government bodies interested in demonstrating their commitment to good governance principles</li>
+      <li>Neighborhood associations, civic leagues, and advocacy groups strengthening civic education capacity</li>
+    </ul>
+    <h3 class="content-subheading reveal">Near-Term Development Goals</h3>
+    <ul class="content-list reveal">
+      <li>Establish five inaugural community partner organizations on Long Island</li>
+      <li>Develop a formal partner onboarding process and resource kit</li>
+      <li>Host the first Civic Sphere community forum on Long Island in 2026</li>
+      <li>Expand partnership outreach to civic organizations across New York State</li>
+    </ul>
+
+    <h2 class="content-heading reveal">Our Geographic Reach</h2>
+    <p class="content-body reveal">Civic Sphere's programs begin at home — on Long Island and across New York State — with the long-term vision of scaling to communities nationwide.</p>
+    <div class="phase-grid reveal">
+      <div class="phase-box">
+        <div class="phase-label">Phase 1 — Current</div>
+        <div class="phase-title">Long Island</div>
+        <p>Establishing the platform, building the Civic Library, and developing the first community partnerships across Nassau and Suffolk Counties.</p>
+      </div>
+      <div class="phase-box">
+        <div class="phase-label">Phase 2 — Near-Term</div>
+        <div class="phase-title">New York State</div>
+        <p>Expanding community partnerships and civic education programming to organizations across New York State, with a focus on underserved communities.</p>
+      </div>
+      <div class="phase-box">
+        <div class="phase-label">Phase 3 — Long-Term</div>
+        <div class="phase-title">National</div>
+        <p>Scaling the 12 Points platform, AI-assisted tools, and civic education resources to communities across the country through digital distribution and partnerships.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 4: BLOG / NEWS
+═══════════════════════════════════════════════ -->
+<div id="blog" class="content-panel">
+  <div class="container">
+    <span class="section-label">Blog &amp; News</span>
+    <h1 class="section-title">Civic Sphere Blog</h1>
+    <div class="section-divider"></div>
+
+    <p class="content-intro">A monthly publication covering civic education, democratic participation, and good governance — through the lens of the 12 Points of Good Governance framework. Written by founder Daniel P. Devine. All content is nonpartisan, free to read, and free to share.</p>
+
+    <!-- News Update -->
+    <div class="blog-post reveal">
+      <span class="blog-type">News Update</span>
+      <h2 class="blog-title">Civic Sphere Launches in 2026</h2>
+      <div class="blog-meta">Civic Sphere News &nbsp;·&nbsp; April 2026</div>
+      <p class="content-body">Civic Sphere is proud to announce the official launch of mycivicsphere.com — a nonpartisan civic education platform dedicated to strengthening democratic participation and good governance at every level of civic life.</p>
+      <p class="content-body">The platform launches with the full publication of the <strong>12 Points of Good Governance</strong> framework, an original civic education resource developed by founder Daniel P. Devine. Also launching today is the <strong>Civic Library</strong> — a growing collection of free guides, explainers, and educational resources covering the 12 Points, civic participation, local government, and electoral reform. New resources will be added monthly.</p>
+      <p class="content-body">Civic Sphere is the civic technology companion to <strong>American Civic Power</strong>, a Long Island–based grassroots civic organization. Together, they represent a complete civic ecosystem connecting civic education with grassroots community action.</p>
+      <p class="content-body">Civic Sphere is currently working toward formal incorporation as a 501(c)(3) nonprofit organization and is actively seeking community and organizational partners on Long Island. <a href="https://www.mycivicsphere.com/#contact" class="content-link">Get in touch</a> if your organization is interested in partnership.</p>
+    </div>
+
+    <!-- Blog Post 1 -->
+    <div class="blog-post reveal">
+      <span class="blog-type">Blog</span>
+      <h2 class="blog-title">Why Good Governance Needs a Name</h2>
+      <div class="blog-meta">By Daniel P. Devine &nbsp;·&nbsp; Civic Sphere &nbsp;·&nbsp; April 2026</div>
+      <p class="content-body">We talk a lot about bad governance. Corruption. Dysfunction. Gridlock. Abuse of power. The language of democratic failure is rich and well-worn — we reach for it instinctively when institutions let us down, which they do with increasing frequency.</p>
+      <p class="content-body">But what about good governance? What does it actually look like? Can you name its principles? Can you describe it to a neighbor, a student, a first-time voter?</p>
+      <p class="content-body">Most people cannot. And that is a problem.</p>
+      <p class="content-body">If we cannot name what good governance looks like, we cannot recognize its absence. If we cannot articulate a standard, we cannot hold anyone to it. And if civic education gives us only a vague sense that democracy should work better — without the vocabulary to say precisely how — then we are left with frustration but no framework for action.</p>
+      <p class="content-body">That is why Civic Sphere built the <strong>12 Points of Good Governance</strong>.</p>
+      <p class="content-body">The 12 Points are not a partisan platform. They are not a policy agenda. They are a civic vocabulary — a set of principles, drawn from leading governance frameworks and decades of civic experience, that give citizens a common language for evaluating the institutions that shape their lives.</p>
+      <p class="content-body">Rule of Law. Transparency. Accountability. Participation. Consensus Orientation. Equity and Inclusiveness. Effectiveness and Efficiency. Responsiveness. Strategic Vision. Ethical Leadership. Separation of Powers. Local Power.</p>
+      <p class="content-body">Twelve principles. Each one both an aspiration and a standard. Each one something that every citizen — regardless of party, ideology, or background — can recognize, apply, and demand.</p>
+      <p class="content-body">Good governance needs a name because democracy needs citizens who can hold it to account. The 12 Points are that name. That is what Civic Sphere is here to do.</p>
+      <div class="blog-byline">— Daniel P. Devine, Founder, Civic Sphere</div>
+    </div>
+
+    <!-- Blog Post 2 -->
+    <div class="blog-post reveal">
+      <span class="blog-type">Blog</span>
+      <h2 class="blog-title">The Most Important Government You Never Think About</h2>
+      <div class="blog-meta">By Daniel P. Devine &nbsp;·&nbsp; Civic Sphere &nbsp;·&nbsp; May 2026</div>
+      <p class="content-body">Ask most people to name their elected officials, and they will start at the top. The President. Their U.S. Senators. Maybe their member of Congress, if they can remember the name.</p>
+      <p class="content-body">Ask them to name their county legislator, their town supervisor, their school board members, or their village trustee — and most will draw a blank.</p>
+      <p class="content-body">This is one of the great paradoxes of American civic life. The government that affects us most directly — the government that sets our property taxes, runs our schools, maintains our roads, issues our building permits, and shapes the character of our neighborhoods — is the government we pay the least attention to.</p>
+      <p class="content-body">Local government is democracy at its most immediate. It is the level at which a single engaged citizen can walk into a meeting, speak for three minutes, and actually change something. It is where the gap between civic participation and civic impact is smallest. And it is, by almost every measure, the most underleveraged arena in American democratic life.</p>
+      <p class="content-body">The 12 Points of Good Governance were designed with local government in mind. Consider just a few through that lens:</p>
+      <p class="content-body"><strong>Transparency</strong> — Can you find your town board's meeting agendas online? Are the minutes published promptly and accessibly? Is the budget written in language a resident can understand?</p>
+      <p class="content-body"><strong>Participation</strong> — Does your local government hold public hearings at times when working people can attend? Are there meaningful opportunities to comment on decisions before they are made?</p>
+      <p class="content-body"><strong>Local Power</strong> — Are decisions being made at the most local level possible, or are they being pushed up to county or state government in ways that remove accountability from the community?</p>
+      <p class="content-body"><strong>Responsiveness</strong> — When you contact your local officials, do you hear back? Does it matter?</p>
+      <p class="content-body">The next time you think about civic engagement, start close to home. Find out who represents you on your town board, your county legislature, your school board. Attend one meeting. Ask one question. Submit one public comment.</p>
+      <p class="content-body">Local government is the most important government you never think about. It is also the one most responsive to your voice — if you use it.</p>
+      <div class="blog-byline">— Daniel P. Devine, Founder, Civic Sphere</div>
+    </div>
+
+    <!-- Blog Post 3 -->
+    <div class="blog-post reveal">
+      <span class="blog-type">Blog</span>
+      <h2 class="blog-title">What Ranked-Choice Voting Is — and What It Isn't</h2>
+      <div class="blog-meta">By Daniel P. Devine &nbsp;·&nbsp; Civic Sphere &nbsp;·&nbsp; June 2026</div>
+      <p class="content-body">Few electoral reform topics generate more heat — and more confusion — than ranked-choice voting. Depending on who you ask, it is either a cure for political polarization or a recipe for electoral chaos. It has been adopted in New York City, Maine, and Alaska, and rejected or repealed in other jurisdictions.</p>
+      <h4 class="content-subsubheading">How It Works</h4>
+      <p class="content-body">In a standard plurality election, you vote for one candidate. Whoever gets the most votes wins — even if that is only 30% of the electorate. In a ranked-choice election, you rank candidates in order of preference. If no candidate wins a majority of first-choice votes, the candidate with the fewest votes is eliminated, and those ballots are redistributed to their voters' next choices. The process continues until one candidate has a majority.</p>
+      <h4 class="content-subsubheading">What Proponents Say</h4>
+      <p class="content-body">Supporters argue that ranked-choice voting produces winners with broader support, reduces the spoiler effect, and decreases the incentive for negative campaigning — since candidates need to appeal to their opponents' supporters as second or third choices, not just fire up their own base.</p>
+      <h4 class="content-subsubheading">What Critics Say</h4>
+      <p class="content-body">Critics argue that ranked-choice voting is confusing for voters, particularly in communities with lower civic literacy or limited English proficiency. They point to longer ballot counts and cases where the candidate with the most first-choice votes did not ultimately win.</p>
+      <h4 class="content-subsubheading">What the Evidence Says</h4>
+      <p class="content-body">Research on ranked-choice voting is genuinely mixed. Some studies find modest reductions in negative campaigning and increased voter satisfaction. Others find little significant difference in turnout or representation. The experience varies significantly by jurisdiction and implementation quality.</p>
+      <h4 class="content-subsubheading">The Civic Sphere View</h4>
+      <p class="content-body">Civic Sphere takes no position on whether ranked-choice voting is the right reform for any particular jurisdiction. That is a democratic question — one that communities should debate, deliberate, and decide for themselves. What we believe is that citizens deserve clear, honest, nonpartisan information about electoral reform proposals so they can participate in those debates as informed voices. That is what the Civic Sphere Civic Library is here to provide.</p>
+      <div class="blog-byline">— Daniel P. Devine, Founder, Civic Sphere</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 5: SUPPORT US / GET INVOLVED
+═══════════════════════════════════════════════ -->
+<div id="support" class="content-panel">
+  <div class="container">
+    <span class="section-label">Get Involved</span>
+    <h1 class="section-title">Support Civic Sphere</h1>
+    <div class="section-divider"></div>
+
+    <p class="content-intro">There are many ways to support Civic Sphere's mission — whether you are an individual citizen, a civic or community organization, or a foundation or funder. Every form of engagement matters. Every connection strengthens the work.</p>
+
+    <h2 class="content-heading reveal">For Individuals</h2>
+    <h3 class="content-subheading reveal">Stay Informed — Subscribe to the Newsletter</h3>
+    <p class="content-body reveal">Subscribe to the <strong>American Civic Power newsletter</strong> — Civic Sphere's editorial partner — for monthly civic education content, updates on the 12 Points of Good Governance platform, new Civic Library resources, and civic news from Long Island and New York State. Free, nonpartisan, and published monthly.</p>
+    <div class="reveal" style="margin-bottom:1.5rem;">
+      <a href="https://www.americancivicpower.com" target="_blank" class="btn-primary">Subscribe to the Newsletter</a>
+    </div>
+    <h3 class="content-subheading reveal">Spread the Word</h3>
+    <ul class="content-list reveal">
+      <li>Share mycivicsphere.com with your community</li>
+      <li>Forward the American Civic Power newsletter to a friend</li>
+      <li>Share Civic Sphere blog posts on social media</li>
+      <li>Mention the 12 Points framework in your own civic conversations and programming</li>
+    </ul>
+    <h3 class="content-subheading reveal">Use the Resources</h3>
+    <p class="content-body reveal">The Civic Library is free and open to everyone. Download guides, share explainers, and use the 12 Points of Good Governance framework in your own civic life — at town board meetings, school board elections, community forums, and everyday conversations about governance.</p>
+
+    <h2 class="content-heading reveal">For Civic &amp; Community Organizations</h2>
+    <h3 class="content-subheading reveal">Become a Civic Sphere Partner</h3>
+    <p class="content-body reveal">Civic Sphere is actively seeking its first community and organizational partners on Long Island and across New York State. As a partner, your organization will receive:</p>
+    <ul class="content-list reveal">
+      <li>A free <strong>Civic Sphere Partner Resource Kit</strong> — printable guides, presentation materials, and explainers built around the 12 Points of Good Governance</li>
+      <li>Early access to new Civic Library resources and platform features</li>
+      <li>Listing as a <strong>Civic Sphere Community Partner</strong> on mycivicsphere.com</li>
+      <li>Invitations to Civic Sphere community forums and civic education events</li>
+      <li>The opportunity to co-present the 12 Points framework to your members and constituents</li>
+    </ul>
+    <div class="reveal" style="margin-bottom:1.5rem;">
+      <a href="https://www.mycivicsphere.com/#contact" class="btn-primary">Inquire About Partnership</a>
+    </div>
+
+    <h2 class="content-heading reveal">For Local Government Bodies</h2>
+    <p class="content-body reveal">Civic Sphere invites local government bodies — town boards, county legislatures, school boards, village boards, and other civic institutions — to use the 12 Points of Good Governance as a voluntary self-assessment and transparency tool. Adopting the 12 Points framework signals to your constituents that your institution is committed to the principles of good governance.</p>
+    <div class="reveal" style="margin-bottom:1.5rem;">
+      <a href="https://www.mycivicsphere.com/#contact" class="btn-primary">Contact Civic Sphere</a>
+    </div>
+
+    <h2 class="content-heading reveal">For Foundations &amp; Funders</h2>
+    <p class="content-body reveal">Civic Sphere is currently working toward formal incorporation as a <strong>501(c)(3) nonprofit organization</strong>. Once established, we will be fully positioned to receive tax-deductible charitable contributions. In the meantime, we welcome conversations with foundations, philanthropic organizations, and individual funders who share our commitment to civic education and democratic participation.</p>
+    <ul class="content-list reveal">
+      <li><strong>Express Interest</strong> — Let us know you are interested. We will keep you informed of our progress toward 501(c)(3) status.</li>
+      <li><strong>Program-Related Support</strong> — Foundations interested in supporting specific Civic Sphere programs are encouraged to contact us to discuss alignment with your funding priorities.</li>
+      <li><strong>Fiscal Sponsorship</strong> — If your foundation requires 501(c)(3) status before engaging, we are actively exploring fiscal sponsorship arrangements.</li>
+    </ul>
+    <div class="callout reveal">
+      <p>Civic Sphere is not yet able to accept tax-deductible charitable contributions, as our 501(c)(3) application is pending. We are committed to transparency about our organizational status and will update this page as soon as that milestone is reached.</p>
+    </div>
+    <div class="reveal">
+      <a href="https://www.mycivicsphere.com/#contact" class="btn-primary">Get in Touch</a>
+      <a href="https://www.americancivicpower.com" target="_blank" class="btn-outline">Subscribe to Newsletter</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 6: PARTNERS
+═══════════════════════════════════════════════ -->
+<div id="partners" class="content-panel">
+  <div class="container">
+    <span class="section-label">Partnership</span>
+    <h1 class="section-title">Partners</h1>
+    <div class="section-divider"></div>
+
+    <p class="content-intro">Strengthening democracy is not the work of any single organization. It is the work of a community — a growing network of civic organizations, educational institutions, government bodies, and nonprofits united by a shared commitment to informed citizenship, accountable governance, and meaningful democratic participation.</p>
+
+    <h2 class="content-heading reveal">Why Partner With Civic Sphere</h2>
+    <h3 class="content-subheading reveal">What Partner Organizations Receive</h3>
+    <ul class="content-list reveal">
+      <li>A free <strong>Civic Sphere Partner Resource Kit</strong> — printable guides, presentation materials, and explainers built around the 12 Points of Good Governance</li>
+      <li>Early access to new Civic Library resources, platform features, and civic education tools</li>
+      <li>Listing as a <strong>Civic Sphere Community Partner</strong> on mycivicsphere.com</li>
+      <li>Invitations to Civic Sphere community forums and civic education events</li>
+      <li>The opportunity to co-present the 12 Points framework to your members, constituents, or students</li>
+      <li>A direct relationship with the Civic Sphere team, including access to founder Daniel P. Devine for speaking engagements and community presentations</li>
+    </ul>
+    <h3 class="content-subheading reveal">What Civic Sphere Asks of Partners</h3>
+    <ul class="content-list reveal">
+      <li>A shared commitment to nonpartisan civic education and democratic participation</li>
+      <li>A willingness to incorporate Civic Sphere resources into your programming or community outreach</li>
+      <li>A commitment to link to mycivicsphere.com as a civic education resource for your members</li>
+      <li>Periodic feedback on Civic Sphere resources and tools to help us improve and grow</li>
+    </ul>
+
+    <h2 class="content-heading reveal">Partnership Tiers</h2>
+
+    <div class="tier-card reveal">
+      <div class="tier-label">Tier 1</div>
+      <div class="tier-title">Community Partner</div>
+      <div class="tier-subtitle">For civic leagues, neighborhood associations, advocacy groups, and community organizations</div>
+      <p class="content-body">Community Partners are the foundation of the Civic Sphere network — the civic leagues, neighborhood associations, block clubs, advocacy groups, and community organizations that do the daily work of democratic participation on Long Island and across New York State. Community Partners receive the full Partner Resource Kit, partner listing on mycivicsphere.com, and invitations to Civic Sphere events.</p>
+      <p class="content-body"><strong>Ideal for:</strong> Civic leagues, neighborhood associations, block clubs, advocacy organizations, voter registration groups, and community development organizations.</p>
+      <a href="https://www.mycivicsphere.com/#contact" class="btn-primary">Become a Community Partner</a>
+    </div>
+
+    <div class="tier-card reveal">
+      <div class="tier-label">Tier 2</div>
+      <div class="tier-title">Educational Partner</div>
+      <div class="tier-subtitle">For schools, universities, and libraries</div>
+      <p class="content-body">Educational Partners incorporate the 12 Points of Good Governance framework and Civic Library resources into formal or informal educational programming — from high school civics classes and college political science courses to library civic education series and community learning programs. Educational Partners receive all Community Partner benefits plus an <strong>Educator's Resource Pack</strong>.</p>
+      <p class="content-body"><strong>Ideal for:</strong> High schools, colleges and universities, public libraries, community colleges, adult education programs, and civic literacy initiatives.</p>
+      <a href="https://www.mycivicsphere.com/#contact" class="btn-primary">Become an Educational Partner</a>
+    </div>
+
+    <div class="tier-card reveal">
+      <div class="tier-label">Tier 3</div>
+      <div class="tier-title">Institutional Partner</div>
+      <div class="tier-subtitle">For government bodies, nonprofits, and civic technology organizations</div>
+      <p class="content-body">Institutional Partners have a formal, ongoing relationship with Civic Sphere — collaborating on programming, co-developing resources, or using the 12 Points of Good Governance framework as an institutional transparency and accountability tool. Institutional Partners receive all Community and Educational Partner benefits, plus priority access to AI-assisted civic engagement tools and co-branding opportunities.</p>
+      <p class="content-body"><strong>Ideal for:</strong> Local government bodies, county agencies, established nonprofit organizations, civic technology platforms, community foundations, and regional civic coalitions.</p>
+      <a href="https://www.mycivicsphere.com/#contact" class="btn-primary">Become an Institutional Partner</a>
+    </div>
+
+    <h2 class="content-heading reveal">Partnership Goals by Phase</h2>
+    <div class="phase-grid reveal">
+      <div class="phase-box">
+        <div class="phase-label">Phase 1 — 2026</div>
+        <div class="phase-title">Long Island</div>
+        <p>Establish five inaugural Community Partner organizations across Nassau and Suffolk Counties. Identify at least one Educational Partner to pilot the 12 Points framework in a formal educational setting.</p>
+      </div>
+      <div class="phase-box">
+        <div class="phase-label">Phase 2 — 2027</div>
+        <div class="phase-title">New York State</div>
+        <p>Expand the partner network to civic organizations and educational institutions across New York State, with a focus on underserved communities where civic education resources are most limited.</p>
+      </div>
+      <div class="phase-box">
+        <div class="phase-label">Phase 3 — Long-Term</div>
+        <div class="phase-title">National</div>
+        <p>Scale the Civic Sphere partner network nationally through digital outreach, organizational relationships, and grant-funded programming.</p>
+      </div>
+    </div>
+
+    <div class="callout reveal">
+      <p>Civic Sphere is a new organization and our partner roster is open. Being an early partner means you will help shape how the 12 Points framework is used in community settings and be recognized as a founding partner of a civic education platform built for the long term.</p>
+    </div>
+    <div class="reveal">
+      <a href="https://www.mycivicsphere.com/#contact" class="btn-primary">Become Civic Sphere's First Partner</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 7: PRIVACY POLICY
+═══════════════════════════════════════════════ -->
+<div id="privacy" class="content-panel">
+  <div class="container">
+    <span class="section-label">Legal</span>
+    <h1 class="section-title">Privacy Policy</h1>
+    <div class="section-divider"></div>
+    <p class="content-body" style="color:var(--mid);font-style:italic;">Effective Date: April 12, 2026 &nbsp;·&nbsp; Last Updated: April 12, 2026</p>
+
+    <p class="content-intro">Civic Sphere is committed to protecting the privacy of everyone who visits mycivicsphere.com. We do not sell your personal information. We do not share your personal information with advertisers. We collect only what we need to operate our platform and communicate with the people who support our mission.</p>
+
+    <div class="policy-section reveal">
+      <h3>1. Information We Collect</h3>
+      <p class="content-body"><strong>Information You Provide Directly:</strong> We collect information you voluntarily provide when you submit our contact form (name, email address, subject, and message), subscribe to the American Civic Power newsletter, inquire about partnership opportunities, or contact us by email or telephone.</p>
+      <p class="content-body"><strong>Information Collected Automatically:</strong> When you visit the Site, we may automatically collect certain technical information including your IP address and general geographic location, browser type and version, operating system, pages visited and time spent on the Site, and referring website or source. This information is used in aggregate form and is not used to identify individual visitors.</p>
+      <p class="content-body"><strong>Cookies:</strong> The Site may use cookies to support basic site functionality. We do not use cookies for advertising or behavioral tracking purposes. You may disable cookies in your browser settings.</p>
+    </div>
+
+    <div class="policy-section reveal">
+      <h3>2. How We Use Your Information</h3>
+      <p class="content-body">We use the information we collect to respond to your inquiries and partnership requests, send you the American Civic Power newsletter and Civic Sphere updates if you have subscribed, improve the content and functionality of the Site, understand how visitors engage with the Site, communicate organizational news and civic education content to people who have expressed interest in our work, and comply with applicable legal obligations.</p>
+    </div>
+
+    <div class="policy-section reveal">
+      <h3>3. How We Share Your Information</h3>
+      <p class="content-body">Civic Sphere does not sell, rent, or trade your personal information to any third party. We may share your information only with trusted service providers who assist us in operating the Site, when required by law or court order, or in the event of an organizational transition to another nonprofit organization.</p>
+    </div>
+
+    <div class="policy-section reveal">
+      <h3>4. Email Communications</h3>
+      <p class="content-body">If you subscribe to our newsletter or request communications from Civic Sphere, you may unsubscribe at any time by clicking the unsubscribe link included in every email we send, or by contacting us directly. We will process your unsubscribe request promptly.</p>
+    </div>
+
+    <div class="policy-section reveal">
+      <h3>5. Data Retention</h3>
+      <p class="content-body">We retain your personal information only for as long as necessary to fulfill the purposes for which it was collected and to comply with applicable legal obligations. You may request deletion of your personal information at any time by contacting us.</p>
+    </div>
+
+    <div class="policy-section reveal">
+      <h3>6. Data Security</h3>
+      <p class="content-body">Civic Sphere takes reasonable technical and organizational measures to protect your personal information. Our Site is hosted on a secure platform and transmitted over encrypted HTTPS connections. However, no method of transmission over the internet is completely secure, and we cannot guarantee absolute security.</p>
+    </div>
+
+    <div class="policy-section reveal">
+      <h3>7. Third-Party Links</h3>
+      <p class="content-body">The Site contains links to third-party websites including americancivicpower.com, danielpdevine.com, vote.gov, and linkedin.com. Civic Sphere is not responsible for the privacy practices or content of third-party websites. We encourage you to review the privacy policies of any website you visit.</p>
+    </div>
+
+    <div class="policy-section reveal">
+      <h3>8. Children's Privacy</h3>
+      <p class="content-body">Civic Sphere's Site and programs are not directed at children under the age of 13. We do not knowingly collect personal information from children under 13. If you believe a child under 13 has provided personal information to us, please contact us immediately.</p>
+    </div>
+
+    <div class="policy-section reveal">
+      <h3>9. Your Rights and Choices</h3>
+      <ul class="content-list reveal">
+        <li><strong>Access</strong> — You may request a copy of the personal information we hold about you.</li>
+        <li><strong>Correction</strong> — You may request that we correct inaccurate or incomplete information.</li>
+        <li><strong>Deletion</strong> — You may request that we delete your personal information.</li>
+        <li><strong>Unsubscribe</strong> — You may unsubscribe from our email communications at any time.</li>
+        <li><strong>Opt-Out</strong> — You may opt out of any communications from Civic Sphere at any time.</li>
+      </ul>
+    </div>
+
+    <div class="policy-section reveal">
+      <h3>10. New York State Residents</h3>
+      <p class="content-body">Civic Sphere operates in compliance with applicable New York State privacy laws, including the New York SHIELD Act, which requires businesses to implement reasonable safeguards to protect the security, confidentiality, and integrity of private information of New York residents.</p>
+    </div>
+
+    <div class="policy-section reveal">
+      <h3>11. Changes to This Privacy Policy</h3>
+      <p class="content-body">Civic Sphere reserves the right to update or modify this Privacy Policy at any time. Any changes will be posted on this page with an updated effective date. If we make material changes, we will notify subscribers by email or by posting a prominent notice on the Site.</p>
+    </div>
+
+    <div class="policy-section reveal">
+      <h3>12. Contact</h3>
+      <p class="content-body">If you have questions or requests regarding this Privacy Policy, please contact us:</p>
+      <p class="content-body"><strong>Civic Sphere</strong><br>Long Island, New York<br>
+      <a href="mailto:civicsphere@mycivicsphere.com" class="content-link">civicsphere@mycivicsphere.com</a><br>
+      <a href="https://www.mycivicsphere.com/#contact" class="content-link">mycivicsphere.com/contact</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-copy">© 2026 Civic Sphere. Civic Power, Put to Work.</span>
+  <div class="footer-links">
+    <a href="https://www.americancivicpower.com" target="_blank">American Civic Power</a>
+    <a href="https://www.danielpdevine.com" target="_blank">danielpdevine.com</a>
+    <a href="https://vote.gov" target="_blank">Register to Vote</a>
+  </div>
+</footer>
+
+<script>
+  // ─── TAB NAVIGATION ───
+  function showTab(id, btn) {
+    document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+    window.scrollTo({ top: document.querySelector('.section-tabs').offsetTop - 72, behavior: 'smooth' });
+    initReveal();
+  }
+
+  // ─── URL HASH ROUTING ───
+  function routeFromHash() {
+    const hash = window.location.hash.replace('#', '');
+    const validTabs = ['about','library','programs','blog','support','partners','privacy'];
+    if (hash && validTabs.includes(hash)) {
+      const btn = document.querySelector(`.tab-btn[onclick*="${hash}"]`);
+      if (btn) showTab(hash, btn);
+    }
+  }
+
+  // ─── SCROLL REVEAL ───
+  function initReveal() {
+    const reveals = document.querySelectorAll('.content-panel.active .reveal:not(.visible)');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 60);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+  }
+
+  // ─── NAV LINK HIGHLIGHTING ───
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', function() {
+      document.querySelectorAll('.nav-links a').forEach(l => l.classList.remove('active'));
+    });
+  });
+
+  window.addEventListener('load', () => {
+    routeFromHash();
+    initReveal();
+  });
+  window.addEventListener('hashchange', routeFromHash);
+</script>
+</body>
+</html>

@@ -1,0 +1,1565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Civic Sphere · 12 Points Governance Assessment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,700;0,900;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:    #0D1F3C;
+    --cobalt:  #1A3A6B;
+    --sky:     #2E6FBB;
+    --gold:    #C8A84B;
+    --gold-lt: #D4B86A;
+    --cream:   #F5F0E8;
+    --offwhite:#FAF8F4;
+    --charcoal:#2A2A2A;
+    --mid:     #6B7280;
+    --rule:    rgba(200,168,75,0.25);
+    --good:    #2D7A4F;
+    --warn:    #B45309;
+    --alert:   #9B1C1C;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+  body {
+    padding-top: 6px; /* rainbow band height */
+    background: var(--offwhite);
+    color: var(--charcoal);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .q-header {
+    background: var(--navy);
+    padding: 1.5rem 3rem;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 2px solid var(--gold);
+    position: sticky; top: 0; z-index: 50;
+  }
+  .q-brand {
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .q-brand-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem; letter-spacing: 0.14em;
+    color: var(--gold);
+  }
+  .q-brand-sub {
+    font-size: 0.7rem; color: rgba(245,240,232,0.4);
+    letter-spacing: 0.08em;
+    padding-left: 0.75rem;
+    border-left: 1px solid var(--rule);
+    margin-left: 0.25rem;
+  }
+  .q-progress-wrap {
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .q-progress-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.72rem; letter-spacing: 0.2em;
+    color: rgba(245,240,232,0.4);
+  }
+  .q-progress-bar {
+    width: 160px; height: 4px;
+    background: rgba(200,168,75,0.15);
+    border-radius: 0;
+    overflow: hidden;
+  }
+  .q-progress-fill {
+    height: 100%; background: var(--gold);
+    transition: width 0.5s ease;
+    width: 0%;
+  }
+
+  /* ── MAIN ── */
+  .q-main { padding-top: calc(3rem + 76px) !important;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 3rem 2rem 6rem;
+  }
+
+  /* ── STEP INDICATOR ── */
+  .step-indicator {
+    display: flex; gap: 0; margin-bottom: 3rem;
+    overflow-x: auto;
+  }
+  .step-dot {
+    display: flex; flex-direction: column; align-items: center;
+    flex: 1; min-width: 60px;
+    cursor: pointer;
+  }
+  .step-dot-circle {
+    width: 28px; height: 28px;
+    border: 1.5px solid rgba(200,168,75,0.2);
+    background: white;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.75rem; color: var(--mid);
+    transition: all 0.3s;
+    position: relative; z-index: 1;
+  }
+  .step-dot.active .step-dot-circle {
+    border-color: var(--gold);
+    background: var(--gold);
+    color: var(--navy);
+  }
+  .step-dot.done .step-dot-circle {
+    border-color: var(--good);
+    background: var(--good);
+    color: white;
+  }
+  .step-dot-label {
+    font-size: 0.6rem; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--mid); margin-top: 0.3rem;
+    text-align: center; line-height: 1.3;
+  }
+  .step-dot.active .step-dot-label { color: var(--gold); }
+  .step-dot.done .step-dot-label { color: var(--good); }
+  .step-connector {
+    flex: 1; height: 1.5px;
+    background: rgba(200,168,75,0.15);
+    margin-top: 13px; min-width: 10px;
+    transition: background 0.3s;
+  }
+  .step-connector.done { background: var(--good); }
+
+  /* ── STEP PANELS ── */
+  .step-panel { display: none; animation: fadeSlide 0.4s ease; }
+  .step-panel.active { display: block; }
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateX(16px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  .panel-eyebrow {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.7rem; letter-spacing: 0.35em;
+    color: var(--gold); display: block; margin-bottom: 0.5rem;
+  }
+  .panel-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; font-weight: 700;
+    color: var(--navy); line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+  .panel-rule {
+    width: 36px; height: 2px;
+    background: var(--gold); margin-bottom: 1.25rem;
+  }
+  .panel-intro {
+    font-size: 0.88rem; font-weight: 300;
+    color: var(--mid); line-height: 1.7;
+    margin-bottom: 2rem;
+    padding: 1rem 1.25rem;
+    border-left: 2px solid var(--gold);
+    background: rgba(200,168,75,0.04);
+  }
+
+  /* ── QUESTIONS ── */
+  .question-block {
+    margin-bottom: 1.75rem;
+    padding: 1.5rem;
+    background: white;
+    border: 1px solid rgba(0,0,0,0.07);
+    border-left: 3px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .question-block:focus-within { border-left-color: var(--gold); }
+  .question-block.answered { border-left-color: var(--good); }
+
+  .q-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.65rem; letter-spacing: 0.2em;
+    color: var(--gold); display: block; margin-bottom: 0.4rem;
+  }
+  .q-text {
+    font-size: 0.92rem; font-weight: 400;
+    color: var(--navy); line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+  .q-subtext {
+    font-size: 0.78rem; font-weight: 300;
+    color: var(--mid); line-height: 1.5;
+    margin-bottom: 0.85rem;
+    font-style: italic;
+  }
+
+  /* Rating scale */
+  .rating-scale {
+    display: flex; gap: 0.5rem; flex-wrap: wrap;
+  }
+  .rating-opt {
+    flex: 1; min-width: 50px;
+    padding: 0.65rem 0.4rem;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: var(--offwhite);
+    text-align: center; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .rating-opt:hover { border-color: var(--gold); background: rgba(200,168,75,0.06); }
+  .rating-opt.selected { border-color: var(--gold); background: var(--gold); color: var(--navy); }
+  .rating-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem; line-height: 1; display: block;
+  }
+  .rating-label {
+    font-size: 0.58rem; letter-spacing: 0.05em;
+    display: block; margin-top: 0.2rem;
+    color: inherit; opacity: 0.7;
+    text-transform: uppercase;
+  }
+
+  /* Yes/No/Partial */
+  .yn-scale {
+    display: flex; gap: 0.5rem;
+  }
+  .yn-opt {
+    padding: 0.6rem 1.25rem;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: var(--offwhite);
+    font-size: 0.8rem; font-weight: 500;
+    cursor: pointer; transition: all 0.2s;
+    letter-spacing: 0.05em;
+  }
+  .yn-opt:hover { border-color: var(--gold); }
+  .yn-opt.selected { border-color: var(--gold); background: var(--gold); color: var(--navy); }
+
+  /* Text area */
+  .q-textarea {
+    width: 100%; min-height: 80px;
+    background: var(--offwhite);
+    border: 1px solid rgba(0,0,0,0.1);
+    padding: 0.75rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem; font-weight: 300;
+    color: var(--charcoal); line-height: 1.6;
+    resize: vertical; outline: none;
+    transition: border-color 0.2s;
+  }
+  .q-textarea:focus { border-color: var(--gold); }
+
+  /* Text input */
+  .q-input {
+    width: 100%;
+    background: var(--offwhite);
+    border: 1px solid rgba(0,0,0,0.1);
+    padding: 0.7rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem; font-weight: 300;
+    color: var(--charcoal); outline: none;
+    transition: border-color 0.2s;
+  }
+  .q-input:focus { border-color: var(--gold); }
+
+  /* ── NAVIGATION ── */
+  .step-nav {
+    display: flex; justify-content: space-between;
+    align-items: center; margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(0,0,0,0.07);
+  }
+  .btn-prev {
+    padding: 0.8rem 1.75rem;
+    background: transparent;
+    border: 1px solid rgba(0,0,0,0.12);
+    color: var(--mid);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .btn-prev:hover { border-color: var(--gold); color: var(--gold); }
+  .btn-next {
+    padding: 0.8rem 2rem;
+    background: var(--gold);
+    border: none;
+    color: var(--navy);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    cursor: pointer; transition: background 0.2s, transform 0.2s;
+  }
+  .btn-next:hover { background: var(--gold-lt); transform: translateY(-1px); }
+  .step-nav-info {
+    font-size: 0.72rem; color: var(--mid);
+    font-weight: 300;
+  }
+
+  /* ── INTRO PANEL ── */
+  #panel-intro .intro-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1rem; margin: 1.5rem 0;
+  }
+  .intro-card {
+    background: white; border: 1px solid rgba(0,0,0,0.07);
+    padding: 1.25rem;
+  }
+  .intro-card-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem; color: var(--gold);
+    line-height: 1; margin-bottom: 0.35rem;
+  }
+  .intro-card-label {
+    font-size: 0.78rem; font-weight: 400;
+    color: var(--navy); line-height: 1.4;
+  }
+  .intro-card-sub {
+    font-size: 0.72rem; color: var(--mid);
+    margin-top: 0.2rem;
+  }
+  .org-fields {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1rem; margin-bottom: 1.5rem;
+  }
+  .field-group { display: flex; flex-direction: column; gap: 0.35rem; }
+  .field-label {
+    font-size: 0.67rem; font-weight: 500;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  /* ── RESULTS PANEL ── */
+  #panel-results { display: none; }
+  #panel-results.active { display: block; }
+
+  .results-header {
+    background: var(--navy);
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    border-bottom: 2px solid var(--gold);
+  }
+  .results-score-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.72rem; letter-spacing: 0.35em;
+    color: var(--gold); margin-bottom: 0.5rem; display: block;
+  }
+  .results-score {
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem; font-weight: 900;
+    color: var(--cream); line-height: 1;
+  }
+  .results-score span { color: var(--gold); font-size: 2rem; }
+  .results-grade {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem; letter-spacing: 0.3em;
+    margin-top: 0.5rem; display: block;
+  }
+  .results-grade.strong { color: #4ADE80; }
+  .results-grade.moderate { color: var(--gold); }
+  .results-grade.developing { color: #FB923C; }
+  .results-grade.critical { color: #F87171; }
+
+  .dimension-scores {
+    display: flex; flex-direction: column; gap: 0.75rem;
+    margin-bottom: 2rem;
+  }
+  .dim-row {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 0.85rem 1.25rem;
+    background: white; border: 1px solid rgba(0,0,0,0.07);
+  }
+  .dim-name {
+    font-size: 0.82rem; font-weight: 500;
+    color: var(--navy); min-width: 180px;
+  }
+  .dim-bar-wrap {
+    flex: 1; height: 6px;
+    background: rgba(0,0,0,0.07);
+  }
+  .dim-bar {
+    height: 100%;
+    transition: width 1s ease;
+  }
+  .dim-score {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem; min-width: 40px; text-align: right;
+  }
+
+  .results-cta {
+    background: var(--navy);
+    padding: 2rem 2.5rem;
+    text-align: center;
+    border: 1px solid var(--rule);
+  }
+  .results-cta-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; font-weight: 700;
+    color: var(--cream); margin-bottom: 0.5rem;
+  }
+  .results-cta-text {
+    font-size: 0.85rem; color: rgba(245,240,232,0.6);
+    line-height: 1.65; margin-bottom: 1.5rem;
+    max-width: 480px; margin-left: auto; margin-right: auto;
+  }
+  .results-cta-btn {
+    display: inline-block;
+    padding: 0.9rem 2.5rem;
+    background: var(--gold); color: var(--navy);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: background 0.2s;
+  }
+  .results-cta-btn:hover { background: var(--gold-lt); }
+
+  @media (max-width: 640px) {
+    .q-header { padding: 1rem 1.25rem; }
+    .q-main { padding-top: calc(3rem + 76px) !important; padding: 2rem 1.25rem 5rem; }
+    .intro-grid, .org-fields { grid-template-columns: 1fr; }
+    .step-indicator { gap: 0; }
+  }
+
+  /* ── CIVIC SPHERE HEADER ── */
+  .cs-rainbow-header {
+    position: relative; top: 0; left: 0; right: 0; z-index: 200;
+  }
+  .cs-nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.7rem 2.5rem;
+    background: #0D1B2E;
+  }
+  .cs-brand {
+    display: flex; align-items: center; gap: 0.65rem;
+    text-decoration: none;
+  }
+  .cs-logo-svg { width: 38px; height: 38px; flex-shrink: 0; }
+  .cs-wordmark-wrap { display: flex; flex-direction: column; justify-content: center; }
+  .cs-wordmark {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.15rem; letter-spacing: 0.12em;
+    color: #ffffff; line-height: 1;
+  }
+  .cs-subtitle {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.58rem; font-weight: 400;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: rgba(245,240,232,0.45);
+    margin-top: 0.1rem; line-height: 1;
+  }
+  .cs-rainbow-band {
+    display: flex; height: 3px; width: 100%;
+  }
+  .cs-rainbow-band span { flex: 1; }
+
+
+/* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.9rem 3rem;
+    background: #0D1F3C;
+    backdrop-filter: blur(10px);
+  }
+  .nav-rainbow {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(to right,
+      #1A8A7B 8.33%,   /* 01 Rule of Law - teal */
+      #27AE60 16.66%,  /* 02 Transparency - green */
+      #7D9B3A 25%,     /* 03 Accountability - olive */
+      #E67E22 33.33%,  /* 04 Participation - orange */
+      #E05A3A 41.66%,  /* 05 Consensus - red-orange */
+      #7D3C98 50%,     /* 06 Equity - purple */
+      #A93226 58.33%,  /* 07 Effectiveness - dark red */
+      #7B8EC8 66.66%,  /* 08 Responsiveness - slate blue */
+      #7D6608 75%,     /* 09 Strategic Vision - olive brown */
+      #D4AC0D 83.33%,  /* 10 Ethical Leadership - gold */
+      #1A3A5C 91.66%,  /* 11 Separation - dark navy */
+      #2E86C1 100%     /* 12 Local Power - sky blue */
+    );
+  }
+  .nav-brand {
+    display: flex; align-items: center; gap: 0.85rem;
+    text-decoration: none;
+  }
+  .nav-brand-logo {
+    width: 38px; height: 38px;
+    flex-shrink: 0;
+  }
+  .nav-brand-logo svg { width: 100%; height: 100%; }
+  .nav-brand-info {
+    display: flex; flex-direction: column; gap: 0;
+  }
+  .nav-brand-name {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.05rem; font-weight: 500;
+    color: white; letter-spacing: 0.02em;
+    line-height: 1.2;
+  }
+  .nav-brand-sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.6rem; font-weight: 400;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.2;
+  }
+  .nav-links { display: flex; gap: 2.2rem; list-style: none; align-items: center; }
+  .nav-links a {
+    font-size: 0.82rem; font-weight: 400;
+    color: rgba(255,255,255,0.85); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: white; }
+  .nav-vote {
+    padding: 0.55rem 1.4rem;
+    background: var(--gold); color: var(--navy);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem; font-weight: 500;
+    border-radius: 4px;
+    text-decoration: none; white-space: nowrap;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .nav-vote:hover { background: #d4b060; transform: translateY(-1px); }
+
+/* ── SERVICES DROPDOWN ── */
+  .nav-dropdown { position: relative; }
+  .nav-dropdown-trigger {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem; font-weight: 400;
+    color: rgba(255,255,255,0.85);
+    padding: 0;
+    letter-spacing: 0;
+    transition: color 0.2s;
+    display: flex; align-items: center; gap: 0.35rem;
+  }
+  .nav-dropdown-trigger:hover { color: white; }
+  .nav-dropdown.open .nav-dropdown-trigger { color: var(--gold); }
+  .nav-dropdown-menu {
+    display: none;
+    position: absolute; top: calc(100% + 8px); left: 50%;
+    transform: translateX(-50%);
+    background: #0D1F3C;
+    border: 1px solid rgba(200,168,75,0.2);
+    border-top: 2px solid var(--gold);
+    min-width: 230px;
+    z-index: 200;
+    padding: 0.5rem 0;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  }
+  .nav-dropdown.open .nav-dropdown-menu { display: block; }
+  .nav-dropdown-menu a {
+    display: block;
+    padding: 0.6rem 1.25rem;
+    font-size: 0.78rem; font-weight: 400;
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+    border-left: 2px solid transparent;
+  }
+  .nav-dropdown-menu a:hover {
+    background: rgba(200,168,75,0.08);
+    color: var(--gold);
+    border-left-color: var(--gold);
+  }
+  .nav-dropdown-divider {
+    height: 1px;
+    background: rgba(200,168,75,0.15);
+    margin: 0.4rem 0;
+  }
+  .nav-dropdown-label {
+    padding: 0.3rem 1.25rem 0.1rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.6rem; letter-spacing: 0.3em;
+    color: rgba(200,168,75,0.5);
+  }
+</style>
+</head>
+<body>
+<!-- NAV -->
+<nav>
+  <div class="nav-rainbow"></div>
+  <a href="https://www.mycivicsphere.com" class="nav-brand">
+    <div class="nav-brand-logo">
+      <svg viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg">
+        <!-- Hexagon background -->
+        <polygon points="19,2 34,10.5 34,27.5 19,36 4,27.5 4,10.5" fill="#1A3A6B" stroke="#2E6FBB" stroke-width="1"/>
+        <!-- Connection lines -->
+        <line x1="19" y1="8" x2="19" y2="30" stroke="rgba(200,168,75,0.5)" stroke-width="0.5"/>
+        <line x1="8" y1="14" x2="30" y2="24" stroke="rgba(200,168,75,0.5)" stroke-width="0.5"/>
+        <line x1="30" y1="14" x2="8" y2="24" stroke="rgba(200,168,75,0.5)" stroke-width="0.5"/>
+        <!-- Colored dots around hexagon -->
+        <circle cx="19" cy="4"  r="2.5" fill="#1A8A7B"/>
+        <circle cx="30" cy="10" r="2.5" fill="#27AE60"/>
+        <circle cx="33" cy="19" r="2.5" fill="#E67E22"/>
+        <circle cx="30" cy="28" r="2.5" fill="#7D3C98"/>
+        <circle cx="19" cy="34" r="2.5" fill="#7B8EC8"/>
+        <circle cx="8"  cy="28" r="2.5" fill="#D4AC0D"/>
+        <circle cx="5"  cy="19" r="2.5" fill="#1A3A5C"/>
+        <circle cx="8"  cy="10" r="2.5" fill="#2E86C1"/>
+        <!-- Center dot -->
+        <circle cx="19" cy="19" r="3" fill="white"/>
+      </svg>
+    </div>
+    <div class="nav-brand-info">
+      <span class="nav-brand-name">CivicSphere</span>
+      <span class="nav-brand-sub">Direct Democracy Platform</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#points">Governance</a></li>
+    <li><a href="#slides">Framework</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li class="nav-dropdown">
+      <button class="nav-dropdown-trigger" onclick="toggleDropdown(this)" type="button">Services ▾</button>
+      <div class="nav-dropdown-menu">
+        <div class="nav-dropdown-label">For Campaigns</div>
+        <a href="civicsphere-campaigns.html">Campaign Services</a>
+        <div class="nav-dropdown-divider"></div>
+        <div class="nav-dropdown-label">For Nonprofits</div>
+        <a href="civicsphere-nonprofits.html">Nonprofit Services</a>
+        <div class="nav-dropdown-divider"></div>
+        <div class="nav-dropdown-label">Client Tools</div>
+        <a href="civicsphere-portal.html">Client Portal</a>
+        <a href="governance-assessment-landing.html">Governance Assessment</a>
+        <div class="nav-dropdown-divider"></div>
+        <div class="nav-dropdown-label">Documents</div>
+        <a href="civic-dual-entity-structure.html">Entity Structure</a>
+      </div>
+    </li>
+    <li><a href="/content">Content</a></li>
+    <li><a href="/civestor">Civestor</a></li>
+    <li><a href="https://vote.gov" target="_blank" class="nav-vote">Vote Now →</a></li>
+  </ul>
+</nav>
+<script>
+function toggleDropdown(btn) {
+  var li = btn.closest('.nav-dropdown');
+  var isOpen = li.classList.contains('open');
+  document.querySelectorAll('.nav-dropdown').forEach(function(d) {
+    d.classList.remove('open');
+  });
+  if (!isOpen) li.classList.add('open');
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.nav-dropdown')) {
+    document.querySelectorAll('.nav-dropdown').forEach(function(d) {
+      d.classList.remove('open');
+    });
+  }
+});
+</script>
+<div style="height:60px;"></div>
+
+  <!-- CIVIC SPHERE HEADER -->
+  <div class="cs-rainbow-header">
+    <div class="cs-nav">
+      <a href="https://www.mycivicsphere.com" class="cs-brand">
+        <svg class="cs-logo-svg" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="22.0,6.0 35.9,14.0 35.9,30.0 22.0,38.0 8.1,30.0 8.1,14.0" fill="#1A2E4A" stroke="rgba(200,168,75,0.5)" stroke-width="1"/><circle cx="22.0" cy="6.0" r="2.2" fill="#3ECFB0"/><circle cx="35.9" cy="14.0" r="2.2" fill="#4A90D9"/><circle cx="35.9" cy="30.0" r="2.2" fill="#9B59B6"/><circle cx="22.0" cy="38.0" r="2.2" fill="#E74C3C"/><circle cx="8.1" cy="30.0" r="2.2" fill="#F39C12"/><circle cx="8.1" cy="14.0" r="2.2" fill="#27AE60"/><circle cx="22" cy="22" r="3.2" fill="white"/></svg>
+        <div class="cs-wordmark-wrap">
+          <span class="cs-wordmark">CivicSphere</span>
+          <span class="cs-subtitle">Direct Democracy Platform</span>
+        </div>
+      </a>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:0.7rem;letter-spacing:0.25em;color:rgba(200,168,75,0.6);">12 Points Governance Assessment</div>
+      <a href="https://www.mycivicsphere.com" style="font-family:'DM Sans',sans-serif;font-size:0.72rem;font-weight:400;letter-spacing:0.08em;color:rgba(245,240,232,0.55);text-decoration:none;margin-right:auto;padding-left:1.5rem;transition:color 0.2s;" onmouseover="this.style.color='#C8A84B'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">← mycivicsphere.com</a>
+    </div>
+    <div class="cs-rainbow-band">
+      <span style="background:#E63946"></span><span style="background:#F4722B"></span><span style="background:#F9C74F"></span><span style="background:#90BE6D"></span><span style="background:#43AA8B"></span><span style="background:#4D908E"></span><span style="background:#4361EE"></span><span style="background:#7209B7"></span><span style="background:#B5179E"></span><span style="background:#2E6FBB"></span><span style="background:#C8A84B"></span><span style="background:#2E8B57"></span>
+    </div>
+  </div>
+
+  <div class="q-progress-wrap">
+    <span class="q-progress-label" id="progress-label">Step 1 of 14</span>
+    <div class="q-progress-bar">
+      <div class="q-progress-fill" id="progress-fill"></div>
+    </div>
+  </div>
+</div>
+
+<div class="q-main">
+
+  <!-- STEP INDICATOR -->
+  <div class="step-indicator" id="step-indicator">
+    <div class="step-dot active" id="dot-0" onclick="goToStep(0)">
+      <div class="step-dot-circle">0</div>
+      <div class="step-dot-label">Org Info</div>
+    </div>
+    <div class="step-connector" id="con-0"></div>
+    <div class="step-dot" id="dot-1" onclick="goToStep(1)">
+      <div class="step-dot-circle">1</div>
+      <div class="step-dot-label">Rule of Law</div>
+    </div>
+    <div class="step-connector" id="con-1"></div>
+    <div class="step-dot" id="dot-2" onclick="goToStep(2)">
+      <div class="step-dot-circle">2</div>
+      <div class="step-dot-label">Transparency</div>
+    </div>
+    <div class="step-connector" id="con-2"></div>
+    <div class="step-dot" id="dot-3" onclick="goToStep(3)">
+      <div class="step-dot-circle">3</div>
+      <div class="step-dot-label">Accountability</div>
+    </div>
+    <div class="step-connector" id="con-3"></div>
+    <div class="step-dot" id="dot-4" onclick="goToStep(4)">
+      <div class="step-dot-circle">4</div>
+      <div class="step-dot-label">Participation</div>
+    </div>
+    <div class="step-connector" id="con-4"></div>
+    <div class="step-dot" id="dot-5" onclick="goToStep(5)">
+      <div class="step-dot-circle">5</div>
+      <div class="step-dot-label">Local Power</div>
+    </div>
+    <div class="step-connector" id="con-5"></div>
+    <div class="step-dot" id="dot-6" onclick="goToStep(6)">
+      <div class="step-dot-circle">6</div>
+      <div class="step-dot-label">Separation</div>
+    </div>
+    <div class="step-connector" id="con-6"></div>
+    <div class="step-dot" id="dot-7" onclick="goToStep(7)">
+      <div class="step-dot-circle">7</div>
+      <div class="step-dot-label">Equity</div>
+    </div>
+    <div class="step-connector" id="con-7"></div>
+    <div class="step-dot" id="dot-8" onclick="goToStep(8)">
+      <div class="step-dot-circle">8</div>
+      <div class="step-dot-label">Civic Ed</div>
+    </div>
+    <div class="step-connector" id="con-8"></div>
+    <div class="step-dot" id="dot-9" onclick="goToStep(9)">
+      <div class="step-dot-circle">9</div>
+      <div class="step-dot-label">Free Press</div>
+    </div>
+    <div class="step-connector" id="con-9"></div>
+    <div class="step-dot" id="dot-10" onclick="goToStep(10)">
+      <div class="step-dot-circle">10</div>
+      <div class="step-dot-label">Elections</div>
+    </div>
+    <div class="step-connector" id="con-10"></div>
+    <div class="step-dot" id="dot-11" onclick="goToStep(11)">
+      <div class="step-dot-circle">11</div>
+      <div class="step-dot-label">Civil Rights</div>
+    </div>
+    <div class="step-connector" id="con-11"></div>
+    <div class="step-dot" id="dot-12" onclick="goToStep(12)">
+      <div class="step-dot-circle">12</div>
+      <div class="step-dot-label">Public Trust</div>
+    </div>
+    <div class="step-connector" id="con-12"></div>
+    <div class="step-dot" id="dot-13" onclick="goToStep(13)">
+      <div class="step-dot-circle">✓</div>
+      <div class="step-dot-label">Review</div>
+    </div>
+  </div>
+
+  <!-- PANEL 0: ORG INFO -->
+  <div class="step-panel active" id="panel-0">
+    <span class="panel-eyebrow">Getting Started</span>
+    <h2 class="panel-title">About Your Organization</h2>
+    <div class="panel-rule"></div>
+    <div class="panel-intro">This assessment takes approximately 20–30 minutes to complete. Your responses are used to generate a custom Governance Health Report scored against the 12 Points of Good Governance framework. All responses are confidential.</div>
+
+    <div class="org-fields">
+      <div class="field-group">
+        <label class="field-label">Organization Name</label>
+        <input type="text" class="q-input" id="org-name" placeholder="Full legal name">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Primary Contact Name</label>
+        <input type="text" class="q-input" id="contact-name" placeholder="Your full name">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Title / Role</label>
+        <input type="text" class="q-input" id="contact-title" placeholder="Executive Director, Campaign Manager, etc.">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Email Address</label>
+        <input type="email" class="q-input" id="contact-email" placeholder="you@organization.org">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Organization Type</label>
+        <select class="q-input" id="org-type">
+          <option value="">Select...</option>
+          <option>501(c)(3) Nonprofit</option>
+          <option>501(c)(4) Social Welfare Org</option>
+          <option>Political Campaign</option>
+          <option>Civic Association</option>
+          <option>PAC / Super PAC</option>
+          <option>Democratic Club / Committee</option>
+          <option>Community Organization</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Years in Operation</label>
+        <select class="q-input" id="org-age">
+          <option value="">Select...</option>
+          <option>Less than 1 year</option>
+          <option>1–3 years</option>
+          <option>4–10 years</option>
+          <option>11–25 years</option>
+          <option>25+ years</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Staff Size</label>
+        <select class="q-input" id="org-size">
+          <option value="">Select...</option>
+          <option>1 (solo / founder)</option>
+          <option>2–5 staff</option>
+          <option>6–15 staff</option>
+          <option>16–50 staff</option>
+          <option>50+ staff</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Annual Budget (approx.)</label>
+        <select class="q-input" id="org-budget">
+          <option value="">Select...</option>
+          <option>Under $50,000</option>
+          <option>$50,000 – $250,000</option>
+          <option>$250,000 – $1M</option>
+          <option>$1M – $5M</option>
+          <option>Over $5M</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field-group" style="margin-bottom:1.5rem;">
+      <label class="field-label">What prompted you to seek a governance assessment?</label>
+      <textarea class="q-textarea" id="org-reason" placeholder="Briefly describe your goals for this assessment..."></textarea>
+    </div>
+
+    <div class="intro-grid">
+      <div class="intro-card">
+        <div class="intro-card-num">12</div>
+        <div class="intro-card-label">Governance Dimensions Assessed</div>
+        <div class="intro-card-sub">Each scored 1–5</div>
+      </div>
+      <div class="intro-card">
+        <div class="intro-card-num">~25</div>
+        <div class="intro-card-label">Minutes to Complete</div>
+        <div class="intro-card-sub">Save progress anytime</div>
+      </div>
+      <div class="intro-card">
+        <div class="intro-card-num">1</div>
+        <div class="intro-card-label">Custom Report Delivered</div>
+        <div class="intro-card-sub">Within 3–5 business days</div>
+      </div>
+      <div class="intro-card">
+        <div class="intro-card-num">60</div>
+        <div class="intro-card-label">Min. Debrief Call Included</div>
+        <div class="intro-card-sub">With Dan Devine</div>
+      </div>
+    </div>
+
+    <div class="step-nav">
+      <span class="step-nav-info">Complete all fields before proceeding</span>
+      <button class="btn-next" onclick="nextStep()">Begin Assessment →</button>
+    </div>
+  </div>
+
+  <!-- PANELS 1–12: THE 12 POINTS -->
+
+  <!-- POINT 1: Rule of Law -->
+  <div class="step-panel" id="panel-1">
+    <span class="panel-eyebrow">Point 1 of 12</span>
+    <h2 class="panel-title">Rule of Law</h2>
+    <div class="panel-rule"></div>
+    <div class="panel-intro">A well-governed organization operates within a clear legal and policy framework — bylaws, conflict of interest policies, and compliance procedures that are documented, followed, and regularly reviewed.</div>
+
+    <div class="question-block" id="qb-1-1">
+      <span class="q-num">Question 1.1</span>
+      <div class="q-text">Does your organization have current, written bylaws or governing documents that are reviewed at least every 3 years?</div>
+      <div class="yn-scale">
+        <div class="yn-opt" onclick="selectYN(this,'q1_1','Yes')">Yes</div>
+        <div class="yn-opt" onclick="selectYN(this,'q1_1','Partially')">Partially</div>
+        <div class="yn-opt" onclick="selectYN(this,'q1_1','No')">No</div>
+        <div class="yn-opt" onclick="selectYN(this,'q1_1','Unsure')">Unsure</div>
+      </div>
+    </div>
+
+    <div class="question-block" id="qb-1-2">
+      <span class="q-num">Question 1.2</span>
+      <div class="q-text">How consistently does your organization follow its own stated rules and procedures?</div>
+      <div class="q-subtext">1 = Rarely followed · 5 = Always followed without exception</div>
+      <div class="rating-scale">
+        <div class="rating-opt" onclick="selectRating(this,'q1_2',1)"><span class="rating-num">1</span><span class="rating-label">Rarely</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q1_2',2)"><span class="rating-num">2</span><span class="rating-label">Sometimes</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q1_2',3)"><span class="rating-num">3</span><span class="rating-label">Usually</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q1_2',4)"><span class="rating-num">4</span><span class="rating-label">Mostly</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q1_2',5)"><span class="rating-num">5</span><span class="rating-label">Always</span></div>
+      </div>
+    </div>
+
+    <div class="question-block" id="qb-1-3">
+      <span class="q-num">Question 1.3</span>
+      <div class="q-text">Does your organization have a written conflict of interest policy that board members and key staff sign annually?</div>
+      <div class="yn-scale">
+        <div class="yn-opt" onclick="selectYN(this,'q1_3','Yes')">Yes</div>
+        <div class="yn-opt" onclick="selectYN(this,'q1_3','Partially')">Partially</div>
+        <div class="yn-opt" onclick="selectYN(this,'q1_3','No')">No</div>
+        <div class="yn-opt" onclick="selectYN(this,'q1_3','Unsure')">Unsure</div>
+      </div>
+    </div>
+
+    <div class="question-block" id="qb-1-4">
+      <span class="q-num">Question 1.4</span>
+      <div class="q-text">What are the most significant gaps or challenges in your organization's legal and policy compliance? (Optional)</div>
+      <textarea class="q-textarea" id="q1_notes" placeholder="Describe any known compliance gaps, pending legal matters, or policy concerns..."></textarea>
+    </div>
+    <div class="step-nav">
+      <button class="btn-prev" onclick="prevStep()">← Back</button>
+      <span class="step-nav-info">Point 1 of 12</span>
+      <button class="btn-next" onclick="nextStep()">Next Point →</button>
+    </div>
+  </div>
+
+  <!-- POINT 2: Transparency -->
+  <div class="step-panel" id="panel-2">
+    <span class="panel-eyebrow">Point 2 of 12</span>
+    <h2 class="panel-title">Transparency</h2>
+    <div class="panel-rule"></div>
+    <div class="panel-intro">Transparent organizations proactively share information about their finances, decisions, and operations with stakeholders — building the trust that sustains long-term legitimacy and support.</div>
+
+    <div class="question-block" id="qb-2-1">
+      <span class="q-num">Question 2.1</span>
+      <div class="q-text">How openly does your organization share financial information (budgets, audits, 990s) with stakeholders and the public?</div>
+      <div class="q-subtext">1 = Not at all · 5 = Fully and proactively</div>
+      <div class="rating-scale">
+        <div class="rating-opt" onclick="selectRating(this,'q2_1',1)"><span class="rating-num">1</span><span class="rating-label">Not at all</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q2_1',2)"><span class="rating-num">2</span><span class="rating-label">On request</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q2_1',3)"><span class="rating-num">3</span><span class="rating-label">Partially</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q2_1',4)"><span class="rating-num">4</span><span class="rating-label">Mostly</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q2_1',5)"><span class="rating-num">5</span><span class="rating-label">Fully</span></div>
+      </div>
+    </div>
+
+    <div class="question-block" id="qb-2-2">
+      <span class="q-num">Question 2.2</span>
+      <div class="q-text">Are your organization's decision-making processes documented and communicated to members, donors, or constituents?</div>
+      <div class="yn-scale">
+        <div class="yn-opt" onclick="selectYN(this,'q2_2','Yes')">Yes</div>
+        <div class="yn-opt" onclick="selectYN(this,'q2_2','Partially')">Partially</div>
+        <div class="yn-opt" onclick="selectYN(this,'q2_2','No')">No</div>
+        <div class="yn-opt" onclick="selectYN(this,'q2_2','Unsure')">Unsure</div>
+      </div>
+    </div>
+
+    <div class="question-block" id="qb-2-3">
+      <span class="q-num">Question 2.3</span>
+      <div class="q-text">How would you rate your organization's overall culture of openness and transparency internally (among staff and board)?</div>
+      <div class="q-subtext">1 = Very closed · 5 = Fully open</div>
+      <div class="rating-scale">
+        <div class="rating-opt" onclick="selectRating(this,'q2_3',1)"><span class="rating-num">1</span><span class="rating-label">Very closed</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q2_3',2)"><span class="rating-num">2</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q2_3',3)"><span class="rating-num">3</span><span class="rating-label">Moderate</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q2_3',4)"><span class="rating-num">4</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q2_3',5)"><span class="rating-num">5</span><span class="rating-label">Fully open</span></div>
+      </div>
+    </div>
+
+    <div class="step-nav">
+      <button class="btn-prev" onclick="prevStep()">← Back</button>
+      <span class="step-nav-info">Point 2 of 12</span>
+      <button class="btn-next" onclick="nextStep()">Next Point →</button>
+    </div>
+  </div>
+
+  <!-- POINT 3: Accountability -->
+  <div class="step-panel" id="panel-3">
+    <span class="panel-eyebrow">Point 3 of 12</span>
+    <h2 class="panel-title">Accountability</h2>
+    <div class="panel-rule"></div>
+    <div class="panel-intro">Accountable organizations have clear lines of responsibility, meaningful oversight mechanisms, and cultures where people — including leadership — answer for their actions and decisions.</div>
+
+    <div class="question-block">
+      <span class="q-num">Question 3.1</span>
+      <div class="q-text">Does your organization have a functioning board or oversight body that actively reviews executive leadership's decisions?</div>
+      <div class="yn-scale">
+        <div class="yn-opt" onclick="selectYN(this,'q3_1','Yes')">Yes</div>
+        <div class="yn-opt" onclick="selectYN(this,'q3_1','Partially')">Partially</div>
+        <div class="yn-opt" onclick="selectYN(this,'q3_1','No')">No</div>
+        <div class="yn-opt" onclick="selectYN(this,'q3_1','N/A')">N/A</div>
+      </div>
+    </div>
+
+    <div class="question-block">
+      <span class="q-num">Question 3.2</span>
+      <div class="q-text">How effectively does your organization hold itself accountable to its stated mission, goals, and commitments to stakeholders?</div>
+      <div class="q-subtext">1 = Not effectively · 5 = Very effectively</div>
+      <div class="rating-scale">
+        <div class="rating-opt" onclick="selectRating(this,'q3_2',1)"><span class="rating-num">1</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q3_2',2)"><span class="rating-num">2</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q3_2',3)"><span class="rating-num">3</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q3_2',4)"><span class="rating-num">4</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q3_2',5)"><span class="rating-num">5</span></div>
+      </div>
+    </div>
+
+    <div class="question-block">
+      <span class="q-num">Question 3.3</span>
+      <div class="q-text">When things go wrong, does your organization have a clear process for acknowledging mistakes, correcting course, and communicating with affected parties?</div>
+      <div class="yn-scale">
+        <div class="yn-opt" onclick="selectYN(this,'q3_3','Yes')">Yes</div>
+        <div class="yn-opt" onclick="selectYN(this,'q3_3','Partially')">Partially</div>
+        <div class="yn-opt" onclick="selectYN(this,'q3_3','No')">No</div>
+        <div class="yn-opt" onclick="selectYN(this,'q3_3','Unsure')">Unsure</div>
+      </div>
+    </div>
+
+    <div class="step-nav">
+      <button class="btn-prev" onclick="prevStep()">← Back</button>
+      <span class="step-nav-info">Point 3 of 12</span>
+      <button class="btn-next" onclick="nextStep()">Next Point →</button>
+    </div>
+  </div>
+
+  <!-- POINT 4: Participation -->
+  <div class="step-panel" id="panel-4">
+    <span class="panel-eyebrow">Point 4 of 12</span>
+    <h2 class="panel-title">Participation</h2>
+    <div class="panel-rule"></div>
+    <div class="panel-intro">Strong civic organizations actively invite, enable, and value participation — from members, constituents, volunteers, and the communities they serve. Participation is not just welcomed; it is structured and meaningful.</div>
+
+    <div class="question-block">
+      <span class="q-num">Question 4.1</span>
+      <div class="q-text">How actively does your organization seek input from its members, constituents, or community before making major decisions?</div>
+      <div class="q-subtext">1 = Rarely or never · 5 = Consistently and systematically</div>
+      <div class="rating-scale">
+        <div class="rating-opt" onclick="selectRating(this,'q4_1',1)"><span class="rating-num">1</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q4_1',2)"><span class="rating-num">2</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q4_1',3)"><span class="rating-num">3</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q4_1',4)"><span class="rating-num">4</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q4_1',5)"><span class="rating-num">5</span></div>
+      </div>
+    </div>
+
+    <div class="question-block">
+      <span class="q-num">Question 4.2</span>
+      <div class="q-text">Does your organization have formal structures for volunteer and member participation (committees, working groups, advisory councils)?</div>
+      <div class="yn-scale">
+        <div class="yn-opt" onclick="selectYN(this,'q4_2','Yes')">Yes</div>
+        <div class="yn-opt" onclick="selectYN(this,'q4_2','Partially')">Partially</div>
+        <div class="yn-opt" onclick="selectYN(this,'q4_2','No')">No</div>
+        <div class="yn-opt" onclick="selectYN(this,'q4_2','Unsure')">Unsure</div>
+      </div>
+    </div>
+
+    <div class="question-block">
+      <span class="q-num">Question 4.3</span>
+      <div class="q-text">How would you rate participation levels among your volunteers, members, or constituents in the past 12 months?</div>
+      <div class="q-subtext">1 = Very low / declining · 5 = Strong and growing</div>
+      <div class="rating-scale">
+        <div class="rating-opt" onclick="selectRating(this,'q4_3',1)"><span class="rating-num">1</span><span class="rating-label">Very low</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q4_3',2)"><span class="rating-num">2</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q4_3',3)"><span class="rating-num">3</span><span class="rating-label">Moderate</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q4_3',4)"><span class="rating-num">4</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q4_3',5)"><span class="rating-num">5</span><span class="rating-label">Strong</span></div>
+      </div>
+    </div>
+
+    <div class="step-nav">
+      <button class="btn-prev" onclick="prevStep()">← Back</button>
+      <span class="step-nav-info">Point 4 of 12</span>
+      <button class="btn-next" onclick="nextStep()">Next Point →</button>
+    </div>
+  </div>
+
+  <!-- POINTS 5–12: Condensed for brevity, same structure -->
+
+  <div class="step-panel" id="panel-5">
+    <span class="panel-eyebrow">Point 5 of 12</span>
+    <h2 class="panel-title">Local Power</h2>
+    <div class="panel-rule"></div>
+    <div class="panel-intro">Effective civic organizations are rooted in their communities — decisions are made as close to the people they affect as possible, and local knowledge and relationships are treated as essential assets.</div>
+    <div class="question-block">
+      <span class="q-num">Question 5.1</span>
+      <div class="q-text">How deeply embedded is your organization in the local community it serves?</div>
+      <div class="q-subtext">1 = Minimal local presence · 5 = Deeply rooted and trusted locally</div>
+      <div class="rating-scale">
+        <div class="rating-opt" onclick="selectRating(this,'q5_1',1)"><span class="rating-num">1</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q5_1',2)"><span class="rating-num">2</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q5_1',3)"><span class="rating-num">3</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q5_1',4)"><span class="rating-num">4</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q5_1',5)"><span class="rating-num">5</span></div>
+      </div>
+    </div>
+    <div class="question-block">
+      <span class="q-num">Question 5.2</span>
+      <div class="q-text">Are decisions made at the lowest appropriate level within your organization, giving front-line staff or community members meaningful authority?</div>
+      <div class="yn-scale">
+        <div class="yn-opt" onclick="selectYN(this,'q5_2','Yes')">Yes</div>
+        <div class="yn-opt" onclick="selectYN(this,'q5_2','Partially')">Partially</div>
+        <div class="yn-opt" onclick="selectYN(this,'q5_2','No')">No</div>
+        <div class="yn-opt" onclick="selectYN(this,'q5_2','Unsure')">Unsure</div>
+      </div>
+    </div>
+    <div class="step-nav">
+      <button class="btn-prev" onclick="prevStep()">← Back</button>
+      <span class="step-nav-info">Point 5 of 12</span>
+      <button class="btn-next" onclick="nextStep()">Next Point →</button>
+    </div>
+  </div>
+
+  <div class="step-panel" id="panel-6">
+    <span class="panel-eyebrow">Point 6 of 12</span>
+    <h2 class="panel-title">Separation of Powers</h2>
+    <div class="panel-rule"></div>
+    <div class="panel-intro">No single person or faction should hold unchecked authority. Healthy organizations distribute power through checks, balances, and independent oversight — preventing concentration that leads to abuse or organizational fragility.</div>
+    <div class="question-block">
+      <span class="q-num">Question 6.1</span>
+      <div class="q-text">How well does your organization distribute authority across different roles, committees, or bodies to prevent power from being concentrated in one person or group?</div>
+      <div class="q-subtext">1 = Highly concentrated · 5 = Well distributed with real checks</div>
+      <div class="rating-scale">
+        <div class="rating-opt" onclick="selectRating(this,'q6_1',1)"><span class="rating-num">1</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q6_1',2)"><span class="rating-num">2</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q6_1',3)"><span class="rating-num">3</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q6_1',4)"><span class="rating-num">4</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q6_1',5)"><span class="rating-num">5</span></div>
+      </div>
+    </div>
+    <div class="question-block">
+      <span class="q-num">Question 6.2</span>
+      <div class="q-text">Does your organization have an independent body (board, audit committee, etc.) with real authority to check executive leadership?</div>
+      <div class="yn-scale">
+        <div class="yn-opt" onclick="selectYN(this,'q6_2','Yes')">Yes</div>
+        <div class="yn-opt" onclick="selectYN(this,'q6_2','Partially')">Partially</div>
+        <div class="yn-opt" onclick="selectYN(this,'q6_2','No')">No</div>
+        <div class="yn-opt" onclick="selectYN(this,'q6_2','N/A')">N/A</div>
+      </div>
+    </div>
+    <div class="step-nav">
+      <button class="btn-prev" onclick="prevStep()">← Back</button>
+      <span class="step-nav-info">Point 6 of 12</span>
+      <button class="btn-next" onclick="nextStep()">Next Point →</button>
+    </div>
+  </div>
+
+  <div class="step-panel" id="panel-7">
+    <span class="panel-eyebrow">Point 7 of 12</span>
+    <h2 class="panel-title">Equity & Inclusion</h2>
+    <div class="panel-rule"></div>
+    <div class="panel-intro">Governance is only as strong as its inclusivity. Organizations that reflect the full diversity of their communities — in leadership, decision-making, and programming — are more resilient, more trusted, and more effective.</div>
+    <div class="question-block">
+      <span class="q-num">Question 7.1</span>
+      <div class="q-text">How well does your organization's leadership reflect the demographic diversity of the community it serves?</div>
+      <div class="q-subtext">1 = Very poorly · 5 = Strongly reflective</div>
+      <div class="rating-scale">
+        <div class="rating-opt" onclick="selectRating(this,'q7_1',1)"><span class="rating-num">1</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q7_1',2)"><span class="rating-num">2</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q7_1',3)"><span class="rating-num">3</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q7_1',4)"><span class="rating-num">4</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q7_1',5)"><span class="rating-num">5</span></div>
+      </div>
+    </div>
+    <div class="question-block">
+      <span class="q-num">Question 7.2</span>
+      <div class="q-text">Does your organization have explicit equity and inclusion policies — and are they meaningfully implemented?</div>
+      <div class="yn-scale">
+        <div class="yn-opt" onclick="selectYN(this,'q7_2','Yes')">Yes</div>
+        <div class="yn-opt" onclick="selectYN(this,'q7_2','Partially')">Partially</div>
+        <div class="yn-opt" onclick="selectYN(this,'q7_2','No')">No</div>
+        <div class="yn-opt" onclick="selectYN(this,'q7_2','Unsure')">Unsure</div>
+      </div>
+    </div>
+    <div class="step-nav">
+      <button class="btn-prev" onclick="prevStep()">← Back</button>
+      <span class="step-nav-info">Point 7 of 12</span>
+      <button class="btn-next" onclick="nextStep()">Next Point →</button>
+    </div>
+  </div>
+
+  <div class="step-panel" id="panel-8">
+    <span class="panel-eyebrow">Point 8 of 12</span>
+    <h2 class="panel-title">Civic Education</h2>
+    <div class="panel-rule"></div>
+    <div class="panel-intro">Organizations that invest in civic education — for members, constituents, and the broader public — build more engaged, informed communities and demonstrate deeper commitment to democratic values than those focused purely on institutional self-interest.</div>
+    <div class="question-block">
+      <span class="q-num">Question 8.1</span>
+      <div class="q-text">Does your organization actively invest in civic education — helping members or constituents understand governance, rights, and civic processes?</div>
+      <div class="q-subtext">1 = Not at all · 5 = Central to our mission</div>
+      <div class="rating-scale">
+        <div class="rating-opt" onclick="selectRating(this,'q8_1',1)"><span class="rating-num">1</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q8_1',2)"><span class="rating-num">2</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q8_1',3)"><span class="rating-num">3</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q8_1',4)"><span class="rating-num">4</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q8_1',5)"><span class="rating-num">5</span></div>
+      </div>
+    </div>
+    <div class="question-block">
+      <span class="q-num">Question 8.2</span>
+      <div class="q-text">Do your own board members and key staff have a strong working knowledge of relevant laws, governance principles, and civic processes?</div>
+      <div class="yn-scale">
+        <div class="yn-opt" onclick="selectYN(this,'q8_2','Yes')">Yes</div>
+        <div class="yn-opt" onclick="selectYN(this,'q8_2','Partially')">Partially</div>
+        <div class="yn-opt" onclick="selectYN(this,'q8_2','No')">No</div>
+        <div class="yn-opt" onclick="selectYN(this,'q8_2','Unsure')">Unsure</div>
+      </div>
+    </div>
+    <div class="step-nav">
+      <button class="btn-prev" onclick="prevStep()">← Back</button>
+      <span class="step-nav-info">Point 8 of 12</span>
+      <button class="btn-next" onclick="nextStep()">Next Point →</button>
+    </div>
+  </div>
+
+  <div class="step-panel" id="panel-9">
+    <span class="panel-eyebrow">Point 9 of 12</span>
+    <h2 class="panel-title">Free Press & Open Communication</h2>
+    <div class="panel-rule"></div>
+    <div class="panel-intro">Organizations that value open communication — internally and externally — are better governed, more trusted, and more resilient. This includes how you engage with media, communicate with the public, and protect internal dissent.</div>
+    <div class="question-block">
+      <span class="q-num">Question 9.1</span>
+      <div class="q-text">How effectively does your organization communicate with the public and media about its work, positions, and impact?</div>
+      <div class="q-subtext">1 = Very poorly · 5 = Very effectively</div>
+      <div class="rating-scale">
+        <div class="rating-opt" onclick="selectRating(this,'q9_1',1)"><span class="rating-num">1</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q9_1',2)"><span class="rating-num">2</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q9_1',3)"><span class="rating-num">3</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q9_1',4)"><span class="rating-num">4</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q9_1',5)"><span class="rating-num">5</span></div>
+      </div>
+    </div>
+    <div class="question-block">
+      <span class="q-num">Question 9.2</span>
+      <div class="q-text">Does your organization create safe channels for internal dissent, concerns, or whistleblowing without fear of retaliation?</div>
+      <div class="yn-scale">
+        <div class="yn-opt" onclick="selectYN(this,'q9_2','Yes')">Yes</div>
+        <div class="yn-opt" onclick="selectYN(this,'q9_2','Partially')">Partially</div>
+        <div class="yn-opt" onclick="selectYN(this,'q9_2','No')">No</div>
+        <div class="yn-opt" onclick="selectYN(this,'q9_2','Unsure')">Unsure</div>
+      </div>
+    </div>
+    <div class="step-nav">
+      <button class="btn-prev" onclick="prevStep()">← Back</button>
+      <span class="step-nav-info">Point 9 of 12</span>
+      <button class="btn-next" onclick="nextStep()">Next Point →</button>
+    </div>
+  </div>
+
+  <div class="step-panel" id="panel-10">
+    <span class="panel-eyebrow">Point 10 of 12</span>
+    <h2 class="panel-title">Free & Fair Elections / Democratic Process</h2>
+    <div class="panel-rule"></div>
+    <div class="panel-intro">Whether your organization holds internal elections or works within electoral systems, commitment to free, fair, and transparent democratic processes is foundational — both internally and in how you engage the broader civic environment.</div>
+    <div class="question-block">
+      <span class="q-num">Question 10.1</span>
+      <div class="q-text">If your organization holds internal elections (board, officers, delegates), how free and fair are they?</div>
+      <div class="q-subtext">1 = Not at all free/fair · 5 = Fully free, fair, and transparent · N/A if no internal elections</div>
+      <div class="rating-scale">
+        <div class="rating-opt" onclick="selectRating(this,'q10_1',1)"><span class="rating-num">1</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q10_1',2)"><span class="rating-num">2</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q10_1',3)"><span class="rating-num">3</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q10_1',4)"><span class="rating-num">4</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q10_1',5)"><span class="rating-num">5</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q10_1',0)"><span class="rating-num" style="font-size:0.9rem">N/A</span></div>
+      </div>
+    </div>
+    <div class="question-block">
+      <span class="q-num">Question 10.2</span>
+      <div class="q-text">Does your organization actively support voter registration, civic participation, or election integrity in the communities it serves?</div>
+      <div class="yn-scale">
+        <div class="yn-opt" onclick="selectYN(this,'q10_2','Yes')">Yes</div>
+        <div class="yn-opt" onclick="selectYN(this,'q10_2','Partially')">Partially</div>
+        <div class="yn-opt" onclick="selectYN(this,'q10_2','No')">No</div>
+        <div class="yn-opt" onclick="selectYN(this,'q10_2','N/A')">N/A</div>
+      </div>
+    </div>
+    <div class="step-nav">
+      <button class="btn-prev" onclick="prevStep()">← Back</button>
+      <span class="step-nav-info">Point 10 of 12</span>
+      <button class="btn-next" onclick="nextStep()">Next Point →</button>
+    </div>
+  </div>
+
+  <div class="step-panel" id="panel-11">
+    <span class="panel-eyebrow">Point 11 of 12</span>
+    <h2 class="panel-title">Civil Rights & Human Dignity</h2>
+    <div class="panel-rule"></div>
+    <div class="panel-intro">Organizations committed to good governance actively uphold and protect the civil rights and human dignity of all people — in their internal culture, their programming, and their public advocacy.</div>
+    <div class="question-block">
+      <span class="q-num">Question 11.1</span>
+      <div class="q-text">How actively does your organization work to protect and advance the civil rights of the communities it serves?</div>
+      <div class="q-subtext">1 = Not a focus · 5 = Central to our identity and work</div>
+      <div class="rating-scale">
+        <div class="rating-opt" onclick="selectRating(this,'q11_1',1)"><span class="rating-num">1</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q11_1',2)"><span class="rating-num">2</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q11_1',3)"><span class="rating-num">3</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q11_1',4)"><span class="rating-num">4</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q11_1',5)"><span class="rating-num">5</span></div>
+      </div>
+    </div>
+    <div class="question-block">
+      <span class="q-num">Question 11.2</span>
+      <div class="q-text">Does your organization have clear anti-discrimination and anti-harassment policies that are enforced?</div>
+      <div class="yn-scale">
+        <div class="yn-opt" onclick="selectYN(this,'q11_2','Yes')">Yes</div>
+        <div class="yn-opt" onclick="selectYN(this,'q11_2','Partially')">Partially</div>
+        <div class="yn-opt" onclick="selectYN(this,'q11_2','No')">No</div>
+        <div class="yn-opt" onclick="selectYN(this,'q11_2','Unsure')">Unsure</div>
+      </div>
+    </div>
+    <div class="step-nav">
+      <button class="btn-prev" onclick="prevStep()">← Back</button>
+      <span class="step-nav-info">Point 11 of 12</span>
+      <button class="btn-next" onclick="nextStep()">Next Point →</button>
+    </div>
+  </div>
+
+  <div class="step-panel" id="panel-12">
+    <span class="panel-eyebrow">Point 12 of 12</span>
+    <h2 class="panel-title">Public Trust & Institutional Integrity</h2>
+    <div class="panel-rule"></div>
+    <div class="panel-intro">The ultimate measure of good governance is the degree to which an organization has earned and maintained public trust — through consistent ethical behavior, honest communication, and demonstrated commitment to its stated values.</div>
+    <div class="question-block">
+      <span class="q-num">Question 12.1</span>
+      <div class="q-text">How would you rate the level of public trust your organization currently holds within its community?</div>
+      <div class="q-subtext">1 = Very low / damaged · 5 = High and well-earned</div>
+      <div class="rating-scale">
+        <div class="rating-opt" onclick="selectRating(this,'q12_1',1)"><span class="rating-num">1</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q12_1',2)"><span class="rating-num">2</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q12_1',3)"><span class="rating-num">3</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q12_1',4)"><span class="rating-num">4</span></div>
+        <div class="rating-opt" onclick="selectRating(this,'q12_1',5)"><span class="rating-num">5</span></div>
+      </div>
+    </div>
+    <div class="question-block">
+      <span class="q-num">Question 12.2</span>
+      <div class="q-text">Has your organization faced any significant public trust or reputational challenges in the past 3 years? If yes, please briefly describe.</div>
+      <div class="yn-scale" style="margin-bottom:0.75rem;">
+        <div class="yn-opt" onclick="selectYN(this,'q12_2_yn','Yes')">Yes</div>
+        <div class="yn-opt" onclick="selectYN(this,'q12_2_yn','No')">No</div>
+        <div class="yn-opt" onclick="selectYN(this,'q12_2_yn','Prefer not to say')">Prefer not to say</div>
+      </div>
+      <textarea class="q-textarea" id="q12_2_detail" placeholder="Optional: briefly describe the challenge and how it was addressed..."></textarea>
+    </div>
+    <div class="question-block">
+      <span class="q-num">Question 12.3</span>
+      <div class="q-text">What is the single most important governance improvement your organization could make in the next 12 months?</div>
+      <textarea class="q-textarea" id="q12_final" placeholder="Your most honest answer here will make your report most useful..."></textarea>
+    </div>
+    <div class="step-nav">
+      <button class="btn-prev" onclick="prevStep()">← Back</button>
+      <span class="step-nav-info">Point 12 of 12 — Almost done!</span>
+      <button class="btn-next" onclick="nextStep()">Review & Submit →</button>
+    </div>
+  </div>
+
+  <!-- PANEL 13: REVIEW & SUBMIT -->
+  <div class="step-panel" id="panel-13">
+    <span class="panel-eyebrow">Final Step</span>
+    <h2 class="panel-title">Review & Submit</h2>
+    <div class="panel-rule"></div>
+    <div class="panel-intro">You've completed all 12 points of the governance assessment. Click Submit below to generate your preliminary score and send your responses to Civic Sphere. Your full Governance Health Report will be delivered within 3–5 business days.</div>
+
+    <div id="review-summary" style="margin-bottom:2rem;">
+      <!-- Populated by JS -->
+    </div>
+
+    <div class="question-block">
+      <span class="q-num">Additional Notes</span>
+      <div class="q-text">Is there anything else you'd like Dan to know before your debrief call?</div>
+      <textarea class="q-textarea" id="final-notes" placeholder="Any context, priorities, or concerns not covered in the assessment..."></textarea>
+    </div>
+
+    <div class="step-nav">
+      <button class="btn-prev" onclick="prevStep()">← Back</button>
+      <span class="step-nav-info"></span>
+      <button class="btn-next" onclick="submitAssessment()" style="background:#1A4D35;">Submit Assessment ✓</button>
+    </div>
+  </div>
+
+  <!-- RESULTS PANEL -->
+  <div class="step-panel" id="panel-results">
+    <div class="results-header">
+      <span class="results-score-label">Your Preliminary Governance Score</span>
+      <div class="results-score" id="final-score">—<span>/60</span></div>
+      <span class="results-grade" id="final-grade">Calculating...</span>
+    </div>
+
+    <div class="dimension-scores" id="dimension-scores"></div>
+
+    <div class="results-cta">
+      <div class="results-cta-title">Your Full Report Is Being Prepared</div>
+      <p class="results-cta-text">Dan Devine will review your responses and deliver a complete Governance Health Report with detailed findings, dimension-by-dimension recommendations, and a proposed action plan within 3–5 business days.</p>
+      <a href="mailto:dandevine26@gmail.com" class="results-cta-btn">Email Dan to Confirm Submission</a>
+      <div style="margin-top:1rem;">
+        <span style="font-size:0.75rem; color:rgba(245,240,232,0.4);">dandevine26@gmail.com · 516-749-6690 · civicsphere.ai</span>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end q-main -->
+
+<script>
+  let currentStep = 0;
+  const totalSteps = 14;
+  const scores = {};
+
+  function updateProgress() {
+    const pct = (currentStep / (totalSteps - 1)) * 100;
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-label').textContent =
+      currentStep === 0 ? 'Getting Started' :
+      currentStep === 13 ? 'Final Review' :
+      `Point ${currentStep} of 12`;
+    // Update step dots
+    for (let i = 0; i < totalSteps; i++) {
+      const dot = document.getElementById('dot-' + i);
+      const con = document.getElementById('con-' + i);
+      if (!dot) continue;
+      dot.classList.remove('active', 'done');
+      if (i < currentStep) dot.classList.add('done');
+      if (i === currentStep) dot.classList.add('active');
+      if (con) con.classList.toggle('done', i < currentStep);
+    }
+  }
+
+  function goToStep(n) {
+    if (n > currentStep) return; // only go back freely
+    document.getElementById('panel-' + currentStep).classList.remove('active');
+    currentStep = n;
+    document.getElementById('panel-' + currentStep).classList.add('active');
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function nextStep() {
+    document.getElementById('panel-' + currentStep).classList.remove('active');
+    if (currentStep === 13) { submitAssessment(); return; }
+    currentStep++;
+    if (currentStep === 13) buildReview();
+    const next = document.getElementById('panel-' + currentStep);
+    if (next) { next.classList.add('active'); }
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function prevStep() {
+    if (currentStep === 0) return;
+    document.getElementById('panel-' + currentStep).classList.remove('active');
+    currentStep--;
+    document.getElementById('panel-' + currentStep).classList.add('active');
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function selectRating(el, key, val) {
+    el.closest('.rating-scale').querySelectorAll('.rating-opt').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    scores[key] = val;
+    el.closest('.question-block').classList.add('answered');
+  }
+
+  function selectYN(el, key, val) {
+    el.closest('.yn-scale').querySelectorAll('.yn-opt').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    scores[key] = val;
+    el.closest('.question-block').classList.add('answered');
+  }
+
+  function getDimensionScore(keys) {
+    let total = 0, count = 0;
+    keys.forEach(k => {
+      const v = scores[k];
+      if (v !== undefined) {
+        if (typeof v === 'number') { total += v; count++; }
+        else if (v === 'Yes') { total += 5; count++; }
+        else if (v === 'Partially') { total += 3; count++; }
+        else if (v === 'No') { total += 1; count++; }
+        else if (v === 'Unsure') { total += 2; count++; }
+      }
+    });
+    return count > 0 ? Math.round((total / count) * 10) / 10 : 3;
+  }
+
+  const dimensions = [
+    { name: 'Rule of Law',         keys: ['q1_1','q1_2','q1_3'] },
+    { name: 'Transparency',        keys: ['q2_1','q2_2','q2_3'] },
+    { name: 'Accountability',      keys: ['q3_1','q3_2','q3_3'] },
+    { name: 'Participation',       keys: ['q4_1','q4_2','q4_3'] },
+    { name: 'Local Power',         keys: ['q5_1','q5_2'] },
+    { name: 'Separation of Powers',keys: ['q6_1','q6_2'] },
+    { name: 'Equity & Inclusion',  keys: ['q7_1','q7_2'] },
+    { name: 'Civic Education',     keys: ['q8_1','q8_2'] },
+    { name: 'Free Communication',  keys: ['q9_1','q9_2'] },
+    { name: 'Democratic Process',  keys: ['q10_1','q10_2'] },
+    { name: 'Civil Rights',        keys: ['q11_1','q11_2'] },
+    { name: 'Public Trust',        keys: ['q12_1','q12_2_yn'] },
+  ];
+
+  function buildReview() {
+    let html = '<div style="background:white;border:1px solid rgba(0,0,0,0.07);padding:1.5rem;margin-bottom:1rem;">';
+    html += '<div style="font-family:\'Bebas Neue\',sans-serif;font-size:0.7rem;letter-spacing:0.3em;color:#C8A84B;margin-bottom:0.75rem;">Assessment Summary</div>';
+    const org = document.getElementById('org-name').value || 'Your Organization';
+    html += `<div style="font-size:0.9rem;font-weight:500;color:#0D1F3C;margin-bottom:0.25rem;">${org}</div>`;
+    html += `<div style="font-size:0.78rem;color:#6B7280;">${document.getElementById('org-type').value || ''} · ${document.getElementById('org-size').value || ''}</div>`;
+    html += '</div>';
+
+    let totalScore = 0;
+    dimensions.forEach(d => {
+      const s = getDimensionScore(d.keys);
+      totalScore += s;
+      const pct = (s / 5) * 100;
+      const color = s >= 4 ? '#2D7A4F' : s >= 3 ? '#C8A84B' : '#9B1C1C';
+      html += `<div style="display:flex;align-items:center;gap:1rem;padding:0.6rem 1rem;background:white;border:1px solid rgba(0,0,0,0.06);margin-bottom:0.4rem;">
+        <span style="font-size:0.78rem;font-weight:500;color:#0D1F3C;min-width:170px;">${d.name}</span>
+        <div style="flex:1;height:5px;background:rgba(0,0,0,0.07);"><div style="width:${pct}%;height:100%;background:${color};"></div></div>
+        <span style="font-family:'Bebas Neue',sans-serif;font-size:0.95rem;color:${color};min-width:30px;text-align:right;">${s}</span>
+      </div>`;
+    });
+    document.getElementById('review-summary').innerHTML = html;
+  }
+
+  function submitAssessment() {
+    // Calculate final scores
+    let totalScore = 0;
+    const dimResults = [];
+    dimensions.forEach(d => {
+      const s = getDimensionScore(d.keys);
+      totalScore += s;
+      dimResults.push({ name: d.name, score: s });
+    });
+    const overallScore = Math.round(totalScore * 10) / 10;
+
+    // Show results panel
+    document.getElementById('panel-13').classList.remove('active');
+    const rp = document.getElementById('panel-results');
+    rp.style.display = 'block';
+    rp.classList.add('active');
+
+    document.getElementById('final-score').innerHTML = `${overallScore}<span>/60</span>`;
+
+    const grade = overallScore >= 48 ? 'Strong Governance Foundation' :
+                  overallScore >= 36 ? 'Moderate Governance — Room to Grow' :
+                  overallScore >= 24 ? 'Developing — Significant Gaps Present' :
+                  'Critical — Immediate Attention Needed';
+    const gradeClass = overallScore >= 48 ? 'strong' : overallScore >= 36 ? 'moderate' : overallScore >= 24 ? 'developing' : 'critical';
+    const el = document.getElementById('final-grade');
+    el.textContent = grade;
+    el.className = 'results-grade ' + gradeClass;
+
+    let dimHTML = '';
+    dimResults.forEach(d => {
+      const pct = (d.score / 5) * 100;
+      const color = d.score >= 4 ? '#2D7A4F' : d.score >= 3 ? '#C8A84B' : '#9B1C1C';
+      dimHTML += `<div class="dim-row">
+        <div class="dim-name">${d.name}</div>
+        <div class="dim-bar-wrap"><div class="dim-bar" style="width:${pct}%;background:${color};"></div></div>
+        <div class="dim-score" style="color:${color};">${d.score}</div>
+      </div>`;
+    });
+    document.getElementById('dimension-scores').innerHTML = dimHTML;
+
+    document.getElementById('progress-fill').style.width = '100%';
+    document.getElementById('progress-label').textContent = 'Assessment Complete';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  updateProgress();
+</script>
+</body>
+</html>

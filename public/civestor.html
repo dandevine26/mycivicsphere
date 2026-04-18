@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CIVESTOR™ — Civic Investor Activist | CivicSphere</title>
+<meta name="description" content="The definition, manifesto, and movement. A project of American Civic Power and CivicSphere.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:    #0D1F3C;
+    --cobalt:  #1A3A6B;
+    --sky:     #2E6FBB;
+    --gold:    #C8A84B;
+    --gold-lt: #D4B060;
+    --cream:   #F5F0E8;
+    --offwhite:#FAF8F4;
+    --charcoal:#2A2A2A;
+    --mid:     #6B7280;
+    --rule:    rgba(200,168,75,0.3);
+    --teal:    #4ECDC4;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--offwhite);
+    color: var(--charcoal);
+    font-family: 'Source Serif 4', serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(13,31,60,0.97);
+    backdrop-filter: blur(8px);
+  }
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 3rem;
+  }
+  .nav-rainbow {
+    height: 3px;
+    background: linear-gradient(to right,
+      #e63946, #e8593a, #f4a261, #f9c74f,
+      #90be6d, #43aa8b, #4cc9f0, #4361ee,
+      #7209b7, #e63946);
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 0.75rem;
+    text-decoration: none; flex-shrink: 0;
+  }
+  .nav-logo-icon { width: 36px; height: 36px; flex-shrink: 0; }
+  .nav-logo-text { display: flex; flex-direction: column; line-height: 1.1; }
+  .nav-logo-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.25rem; letter-spacing: 0.1em; color: var(--cream);
+  }
+  .nav-logo-sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.6rem; font-weight: 500;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: rgba(245,240,232,0.45);
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+  .nav-links a {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(245,240,232,0.7); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-vote {
+    background: var(--gold); color: var(--navy) !important;
+    padding: 0.5rem 1.1rem; font-weight: 500 !important;
+    transition: background 0.2s, transform 0.2s !important;
+  }
+  .nav-vote:hover { background: var(--gold-lt) !important; transform: translateY(-1px); }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    background: var(--navy);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 8rem 2rem 5rem;
+    position: relative; overflow: hidden;
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 79px, rgba(200,168,75,0.04) 79px, rgba(200,168,75,0.04) 80px),
+      repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(200,168,75,0.04) 79px, rgba(200,168,75,0.04) 80px);
+    pointer-events: none;
+  }
+  .hero-wordmark {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(5rem, 15vw, 12rem);
+    letter-spacing: 0.08em;
+    color: var(--cream);
+    line-height: 0.9;
+    position: relative; z-index: 2;
+    opacity: 0; animation: fadeUp 0.9s 0.2s forwards;
+  }
+  .hero-wordmark span { color: var(--gold); }
+  .hero-tm {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.2rem; font-weight: 300;
+    color: var(--gold); letter-spacing: 0.05em;
+    position: relative; z-index: 2;
+    margin-top: -0.5rem; margin-bottom: 1.5rem;
+    opacity: 0; animation: fadeUp 0.9s 0.4s forwards;
+  }
+  .hero-subtitle {
+    font-family: 'Source Serif 4', serif;
+    font-style: italic; font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    color: rgba(245,240,232,0.7);
+    position: relative; z-index: 2;
+    margin-bottom: 0.8rem;
+    opacity: 0; animation: fadeUp 0.9s 0.5s forwards;
+  }
+  .hero-verb {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem; font-weight: 400;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(200,168,75,0.7);
+    position: relative; z-index: 2;
+    margin-bottom: 3rem;
+    opacity: 0; animation: fadeUp 0.9s 0.6s forwards;
+  }
+  .hero-rule {
+    width: 60px; height: 2px; background: var(--gold);
+    margin: 0 auto 3rem;
+    position: relative; z-index: 2;
+    opacity: 0; animation: fadeUp 0.9s 0.7s forwards;
+  }
+  .hero-tagline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    font-style: italic; font-weight: 400;
+    color: rgba(245,240,232,0.85);
+    max-width: 600px; line-height: 1.7;
+    position: relative; z-index: 2;
+    margin-bottom: 3rem;
+    opacity: 0; animation: fadeUp 0.9s 0.8s forwards;
+  }
+  .hero-ctas {
+    display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+    position: relative; z-index: 2;
+    opacity: 0; animation: fadeUp 0.9s 1s forwards;
+  }
+  .hero-meta {
+    position: absolute; bottom: 2.5rem; left: 0; right: 0;
+    text-align: center; z-index: 2;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem; letter-spacing: 0.15em;
+    color: rgba(245,240,232,0.35); text-transform: uppercase;
+    opacity: 0; animation: fadeUp 0.9s 1.2s forwards;
+  }
+
+  /* ─── BUTTONS ─── */
+  .btn-gold {
+    padding: 0.9rem 2.2rem;
+    background: var(--gold); color: var(--navy);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    display: inline-block;
+  }
+  .btn-gold:hover { background: var(--gold-lt); transform: translateY(-2px); }
+  .btn-outline-light {
+    padding: 0.9rem 2.2rem;
+    background: transparent; color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    text-decoration: none; border: 1px solid rgba(245,240,232,0.3); cursor: pointer;
+    transition: border-color 0.2s, color 0.2s, transform 0.2s;
+    display: inline-block;
+  }
+  .btn-outline-light:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+  /* ─── SECTION WRAPPER ─── */
+  .section { padding: 6rem 2rem; }
+  .section-dark { background: var(--navy); }
+  .section-mid { background: #EDE9E0; }
+  .section-light { background: var(--offwhite); }
+  .section-cream { background: var(--cream); }
+
+  .container { max-width: 860px; margin: 0 auto; }
+  .container-wide { max-width: 1100px; margin: 0 auto; }
+
+  /* ─── PART LABELS ─── */
+  .part-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.8rem; letter-spacing: 0.35em;
+    color: var(--gold); text-transform: uppercase;
+    display: block; margin-bottom: 0.5rem;
+  }
+  .part-label-light {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.8rem; letter-spacing: 0.35em;
+    color: rgba(200,168,75,0.7); text-transform: uppercase;
+    display: block; margin-bottom: 0.5rem;
+  }
+
+  /* ─── HEADINGS ─── */
+  h2.section-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 900; color: var(--navy);
+    line-height: 1.1; margin-bottom: 1rem;
+  }
+  h2.section-heading-light {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 900; color: var(--cream);
+    line-height: 1.1; margin-bottom: 1rem;
+  }
+  h3.sub-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; font-weight: 700;
+    color: var(--navy); margin: 2.5rem 0 0.8rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--rule);
+  }
+  h3.sub-heading-light {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; font-weight: 700;
+    color: var(--cream); margin: 2.5rem 0 0.8rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(200,168,75,0.25);
+  }
+  h4.dim-heading {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem; font-weight: 500;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--cobalt); margin: 1.8rem 0 0.5rem;
+  }
+  h4.dim-heading-light {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem; font-weight: 500;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: rgba(200,168,75,0.8); margin: 1.8rem 0 0.5rem;
+  }
+  .gold-rule { width: 50px; height: 3px; background: var(--gold); margin: 1.2rem 0 2.5rem; }
+  .gold-rule-center { width: 50px; height: 3px; background: var(--gold); margin: 1.2rem auto 2.5rem; }
+
+  /* ─── BODY TEXT ─── */
+  p.body-text {
+    font-size: 1.05rem; font-weight: 300;
+    line-height: 1.85; color: var(--charcoal);
+    margin-bottom: 1.1rem;
+  }
+  p.body-text strong { font-weight: 600; color: var(--navy); }
+  p.body-text-light {
+    font-size: 1.05rem; font-weight: 300;
+    line-height: 1.85; color: rgba(245,240,232,0.8);
+    margin-bottom: 1.1rem;
+  }
+  p.body-text-light strong { font-weight: 600; color: var(--cream); }
+
+  /* ─── DEFINITION BLOCK ─── */
+  .definition-block {
+    background: var(--navy);
+    padding: 3rem 3.5rem;
+    margin: 2rem 0;
+    border-left: 4px solid var(--gold);
+    position: relative;
+  }
+  .def-word {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem; font-weight: 900;
+    color: var(--cream); margin-bottom: 0.2rem;
+  }
+  .def-pronunciation {
+    font-family: 'Source Serif 4', serif;
+    font-style: italic; font-size: 1rem;
+    color: rgba(200,168,75,0.7); margin-bottom: 0.4rem;
+  }
+  .def-pos {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem; font-weight: 400;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(245,240,232,0.4); margin-bottom: 1.2rem;
+  }
+  .def-entry {
+    margin-bottom: 1rem;
+    padding-left: 1.2rem;
+    border-left: 2px solid rgba(200,168,75,0.2);
+  }
+  .def-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.85rem; letter-spacing: 0.1em;
+    color: var(--gold); margin-bottom: 0.25rem;
+  }
+  .def-text {
+    font-size: 1rem; font-weight: 300;
+    line-height: 1.75; color: rgba(245,240,232,0.85);
+  }
+  .def-text strong { font-weight: 600; color: var(--cream); }
+
+  /* ─── PULLQUOTE ─── */
+  .pullquote {
+    border-left: 4px solid var(--gold);
+    padding: 1.5rem 2rem;
+    margin: 2.5rem 0;
+    background: rgba(200,168,75,0.06);
+  }
+  .pullquote p {
+    font-family: 'Playfair Display', serif;
+    font-style: italic; font-size: 1.2rem;
+    font-weight: 400; color: var(--navy);
+    line-height: 1.65;
+  }
+  .pullquote-dark {
+    border-left: 4px solid var(--gold);
+    padding: 1.5rem 2rem;
+    margin: 2.5rem 0;
+    background: rgba(200,168,75,0.07);
+  }
+  .pullquote-dark p {
+    font-family: 'Playfair Display', serif;
+    font-style: italic; font-size: 1.2rem;
+    font-weight: 400; color: var(--cream);
+    line-height: 1.65;
+  }
+
+  /* ─── USAGE EXAMPLES ─── */
+  .usage-block {
+    background: rgba(200,168,75,0.06);
+    border: 1px solid var(--rule);
+    padding: 2rem 2.5rem;
+    margin: 1.5rem 0;
+  }
+  .usage-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.72rem; font-weight: 500;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1rem;
+  }
+  .usage-example {
+    font-family: 'Source Serif 4', serif;
+    font-style: italic; font-size: 1rem;
+    color: var(--charcoal); line-height: 1.7;
+    margin-bottom: 0.6rem;
+    padding-left: 1rem;
+    border-left: 2px solid var(--rule);
+  }
+  .usage-example:last-child { margin-bottom: 0; }
+
+  /* ─── ETYMOLOGY ─── */
+  .etymology-block {
+    background: var(--cream);
+    padding: 2.5rem 3rem;
+    border-top: 3px solid var(--gold);
+    margin: 2rem 0;
+  }
+  .etymology-block p {
+    font-size: 0.98rem; font-weight: 300;
+    line-height: 1.8; color: var(--charcoal);
+    margin-bottom: 0.8rem;
+  }
+  .etymology-block p:last-child { margin-bottom: 0; }
+
+  /* ─── THREE DIMENSIONS ─── */
+  .dimensions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin: 2rem 0;
+  }
+  .dimension-card {
+    background: var(--offwhite);
+    padding: 2.5rem 2rem;
+    transition: background 0.2s;
+  }
+  .dimension-card:hover { background: var(--cream); }
+  .dimension-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem; letter-spacing: 0.05em;
+    color: rgba(200,168,75,0.25);
+    line-height: 1; margin-bottom: 0.5rem;
+  }
+  .dimension-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; font-weight: 700;
+    color: var(--navy); margin-bottom: 0.8rem;
+  }
+  .dimension-text {
+    font-size: 0.95rem; font-weight: 300;
+    line-height: 1.75; color: var(--charcoal);
+  }
+
+  /* ─── MANIFESTO ─── */
+  .manifesto-opener {
+    text-align: center;
+    padding: 4rem 2rem 3rem;
+  }
+  .manifesto-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900; font-style: italic;
+    color: var(--cream); line-height: 1.2;
+    margin-bottom: 1.5rem;
+  }
+  .manifesto-subline {
+    font-family: 'Source Serif 4', serif;
+    font-style: italic; font-size: 1.15rem;
+    color: rgba(245,240,232,0.6); line-height: 1.7;
+    max-width: 600px; margin: 0 auto;
+  }
+
+  /* ─── 12 POINTS GRID ─── */
+  .points-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1px;
+    background: rgba(200,168,75,0.15);
+    margin: 2rem 0;
+  }
+  .point-item {
+    background: rgba(13,31,60,0.6);
+    padding: 1.5rem 1.8rem;
+    transition: background 0.2s;
+  }
+  .point-item:hover { background: rgba(26,58,107,0.8); }
+  .point-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.75rem; letter-spacing: 0.2em;
+    color: var(--gold); margin-bottom: 0.3rem;
+  }
+  .point-name {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.92rem; font-weight: 500;
+    color: var(--cream); margin-bottom: 0.5rem;
+  }
+  .point-desc {
+    font-size: 0.88rem; font-weight: 300;
+    line-height: 1.6; color: rgba(245,240,232,0.65);
+  }
+
+  /* ─── CIVESTOR PLEDGE ─── */
+  .pledge-block {
+    background: var(--navy);
+    border: 1px solid rgba(200,168,75,0.2);
+    padding: 3.5rem;
+    text-align: center;
+    margin: 3rem 0;
+    position: relative;
+  }
+  .pledge-block::before {
+    content: '"';
+    font-family: 'Playfair Display', serif;
+    font-size: 8rem; line-height: 0.5;
+    color: rgba(200,168,75,0.1);
+    position: absolute; top: 2rem; left: 2rem;
+  }
+  .pledge-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+    font-style: italic; font-weight: 400;
+    color: var(--cream); line-height: 1.65;
+    margin-bottom: 1rem; position: relative; z-index: 1;
+  }
+  .pledge-em {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem; letter-spacing: 0.2em;
+    color: var(--gold);
+  }
+
+  /* ─── CLOSING ─── */
+  .closing-section {
+    background: var(--navy);
+    padding: 6rem 2rem;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .closing-section::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 79px, rgba(200,168,75,0.03) 79px, rgba(200,168,75,0.03) 80px),
+      repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(200,168,75,0.03) 79px, rgba(200,168,75,0.03) 80px);
+  }
+  .closing-wordmark {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 8vw, 6rem);
+    letter-spacing: 0.15em;
+    color: var(--cream);
+    position: relative; z-index: 1;
+    margin-bottom: 0.5rem;
+  }
+  .closing-wordmark span { color: var(--gold); }
+  .closing-tagline {
+    font-family: 'Source Serif 4', serif;
+    font-style: italic; font-size: 1.3rem;
+    color: rgba(245,240,232,0.6);
+    position: relative; z-index: 1;
+    margin-bottom: 3rem;
+  }
+  .closing-cta {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    font-weight: 900; font-style: italic;
+    color: var(--gold);
+    position: relative; z-index: 1;
+    margin-bottom: 0.5rem;
+  }
+  .closing-sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem; font-weight: 300;
+    color: rgba(245,240,232,0.5);
+    position: relative; z-index: 1;
+    letter-spacing: 0.05em;
+    margin-bottom: 3rem;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: #080F1E;
+    padding: 2.5rem 3rem;
+    display: flex; align-items: center;
+    justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    border-top: 1px solid rgba(200,168,75,0.15);
+  }
+  .footer-copy {
+    font-size: 0.78rem; font-family: 'DM Sans', sans-serif;
+    color: rgba(245,240,232,0.35);
+  }
+  .footer-links { display: flex; gap: 2rem; }
+  .footer-links a {
+    font-size: 0.78rem; font-family: 'DM Sans', sans-serif;
+    color: rgba(245,240,232,0.35); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--gold); }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .reveal {
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    .nav-inner { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1.2rem; }
+    .nav-links li:nth-child(n+3):not(:last-child) { display: none; }
+    .section { padding: 4rem 1.25rem; }
+    .definition-block { padding: 2rem 1.5rem; }
+    .pledge-block { padding: 2.5rem 1.5rem; }
+    footer { flex-direction: column; padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="https://www.mycivicsphere.com" class="nav-logo">
+      <svg class="nav-logo-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="22,3 37,12.5 37,31.5 22,41 7,31.5 7,12.5" fill="#0D1A2E"/>
+        <polygon points="22,3 37,12.5 37,31.5 22,41 7,31.5 7,12.5" fill="none" stroke="#5BC8D0" stroke-width="1.2"/>
+        <line x1="22" y1="22" x2="22" y2="3"    stroke="#7DD8E0" stroke-width="0.6" opacity="0.7"/>
+        <line x1="22" y1="22" x2="37" y2="12.5"  stroke="#7DD8E0" stroke-width="0.6" opacity="0.7"/>
+        <line x1="22" y1="22" x2="37" y2="31.5"  stroke="#7DD8E0" stroke-width="0.6" opacity="0.7"/>
+        <line x1="22" y1="22" x2="22" y2="41"   stroke="#7DD8E0" stroke-width="0.6" opacity="0.7"/>
+        <line x1="22" y1="22" x2="7"  y2="31.5"  stroke="#7DD8E0" stroke-width="0.6" opacity="0.7"/>
+        <line x1="22" y1="22" x2="7"  y2="12.5"  stroke="#7DD8E0" stroke-width="0.6" opacity="0.7"/>
+        <line x1="22" y1="3"  x2="22" y2="41"    stroke="#7DD8E0" stroke-width="0.5" opacity="0.4"/>
+        <line x1="37" y1="12.5" x2="7" y2="31.5" stroke="#7DD8E0" stroke-width="0.5" opacity="0.4"/>
+        <line x1="37" y1="31.5" x2="7" y2="12.5" stroke="#7DD8E0" stroke-width="0.5" opacity="0.4"/>
+        <circle cx="22"  cy="3"    r="2.4" fill="#4ECDC4"/>
+        <circle cx="37"  cy="12.5" r="2.4" fill="#F4C94E"/>
+        <circle cx="37"  cy="31.5" r="2.4" fill="#F4845F"/>
+        <circle cx="22"  cy="41"   r="2.4" fill="#9B59B6"/>
+        <circle cx="7"   cy="31.5" r="2.4" fill="#4A90D9"/>
+        <circle cx="7"   cy="12.5" r="2.4" fill="#5DBD72"/>
+        <circle cx="22"  cy="22"   r="2.8" fill="white"/>
+      </svg>
+      <div class="nav-logo-text">
+        <span class="nav-logo-name">CivicSphere</span>
+        <span class="nav-logo-sub">Direct Democracy Platform</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="https://www.mycivicsphere.com/#points">Governance</a></li>
+      <li><a href="https://www.mycivicsphere.com/#slides">Framework</a></li>
+      <li><a href="https://www.mycivicsphere.com/content#about">About</a></li>
+      <li><a href="https://www.mycivicsphere.com/content">Content</a></li>
+      <li><a href="https://www.mycivicsphere.com/#contact">Contact</a></li>
+      <li><a href="https://vote.gov" target="_blank" class="nav-vote">Vote Now →</a></li>
+    </ul>
+  </div>
+  <div class="nav-rainbow"></div>
+</nav>
+
+<!-- ═══════════════════ HERO ═══════════════════ -->
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-wordmark">CIVEST<span>OR</span>™</div>
+  <div class="hero-tm">Civic Investor Activist</div>
+  <div class="hero-verb">verb: to civest &nbsp;·&nbsp; noun: civestor &nbsp;·&nbsp; noun: civestment &nbsp;·&nbsp; plural: civestors</div>
+  <div class="hero-rule"></div>
+  <p class="hero-tagline">The Definition · The Manifesto · The Movement</p>
+  <div class="hero-ctas">
+    <a href="#definition" class="btn-gold">Read the Definition</a>
+    <a href="#manifesto" class="btn-outline-light">The Manifesto</a>
+  </div>
+  <div class="hero-meta">A project of American Civic Power &nbsp;·&nbsp; mycivicsphere.com &nbsp;·&nbsp; 2026</div>
+</section>
+
+<!-- ═══════════════════ PART I: DEFINITION ═══════════════════ -->
+<section id="definition" class="section section-light">
+  <div class="container">
+    <span class="part-label reveal">Part I</span>
+    <h2 class="section-heading reveal">The Definition</h2>
+    <div class="gold-rule reveal"></div>
+
+    <!-- CIVESTOR -->
+    <div class="definition-block reveal">
+      <div class="def-word">civestor</div>
+      <div class="def-pronunciation">/sɪˈvɛs.tər/</div>
+      <div class="def-pos">noun · coined 2026 · plural: civestors</div>
+      <div class="def-entry">
+        <div class="def-num">1.</div>
+        <div class="def-text">A citizen who recognizes that their tax contributions constitute a civic investment in democracy, and who actively engages in governance to ensure that investment delivers results for their community.</div>
+      </div>
+      <div class="def-entry">
+        <div class="def-num">2.</div>
+        <div class="def-text">Short for <strong>civic investor activist</strong>. A reframing of the word 'taxpayer' to emphasize agency, investment, and democratic participation rather than financial burden.</div>
+      </div>
+      <div class="def-entry">
+        <div class="def-num">3.</div>
+        <div class="def-text">One who civests — an engaged, informed citizen who participates actively in democratic governance as a stakeholder in the civic enterprise.</div>
+      </div>
+    </div>
+
+    <!-- CIVEST -->
+    <div class="definition-block reveal" style="margin-top:2rem;">
+      <div class="def-word">civest</div>
+      <div class="def-pronunciation">/sɪˈvɛst/</div>
+      <div class="def-pos">verb · civests · civested · civesting</div>
+      <div class="def-entry">
+        <div class="def-num">1.</div>
+        <div class="def-text">To engage in active civic participation — reading legislation, voting on bills, holding representatives accountable — as an informed investor in democratic governance.</div>
+      </div>
+      <div class="def-entry">
+        <div class="def-num">2.</div>
+        <div class="def-text">To exercise the rights and responsibilities of a civestor.</div>
+      </div>
+    </div>
+
+    <!-- CIVESTMENT -->
+    <div class="definition-block reveal" style="margin-top:2rem;">
+      <div class="def-word">civestment</div>
+      <div class="def-pronunciation">/sɪˈvɛst.mənt/</div>
+      <div class="def-pos">noun · coined 2026 · uncountable and countable</div>
+      <div class="def-entry">
+        <div class="def-num">1.</div>
+        <div class="def-text">The act or practice of active civic participation — the collective engagement of citizens in democratic governance as informed investors in the civic enterprise.</div>
+      </div>
+      <div class="def-entry">
+        <div class="def-num">2.</div>
+        <div class="def-text">The total contribution of a citizen's civic resources — time, attention, voice, and financial taxes — to the democratic process. <em>Example: "Your vote, your voice, and your tax dollars are all forms of civestment."</em></div>
+      </div>
+      <div class="def-entry">
+        <div class="def-num">3.</div>
+        <div class="def-text">The system or platform through which civic investor activists engage with democratic governance. <em>Example: "CivicSphere is a tool for civestment — designed to make civic participation informed, trackable, and accountable."</em></div>
+      </div>
+    </div>
+
+    <!-- USAGE -->
+    <div class="usage-block reveal">
+      <div class="usage-label">Usage Examples</div>
+      <p class="usage-example">"As a civestor, I have both the right and the responsibility to understand every bill my representative votes on."</p>
+      <p class="usage-example">"CivicSphere is built for civestors — citizens who treat their democracy like the investment it is."</p>
+      <p class="usage-example">"It's time to stop thinking of ourselves as taxpayers and start civesting in our democracy."</p>
+      <p class="usage-example">"Civestors civest. Are you one?"</p>
+      <p class="usage-example">"The civestor movement is changing how Long Islanders engage with their government."</p>
+      <p class="usage-example">"Civestment is how democracy holds itself accountable — one engaged citizen at a time."</p>
+      <p class="usage-example">"CivicSphere is a platform for civestment — designed to make civic participation informed, trackable, and powerful."</p>
+      <p class="usage-example">"The civestment of informed citizens is democracy's most powerful resource."</p>
+    </div>
+
+    <!-- ETYMOLOGY -->
+    <h3 class="sub-heading reveal">Etymology and Origin</h3>
+    <div class="etymology-block reveal">
+      <p>'Civestor' is a portmanteau coined in 2026 by American Civic Power, fusing the roots of 'civic' (from Latin <em>civicus</em>, relating to citizens and city life) and 'investor' (from Latin <em>investire</em> — one who commits resources toward a productive end, seeking a return).</p>
+      <p>The '-or' suffix follows a deep English pattern — educator, senator, legislator, administrator — denoting the agent: one who performs the action. 'Civestor' therefore literally means 'one who civically invests.' The meaning is carried in the word's structure, requiring no external explanation.</p>
+      <p>The companion verb 'civest' derives naturally from 'civestor' — just as 'invest' gives us 'investor,' 'civest' gives us 'civestor.' The abstract noun 'civestment' completes the family — just as 'invest' gives us 'investment,' 'civest' gives us 'civestment.' Together they form a complete and versatile word family: <strong>civestors civest — and their civestment strengthens democracy.</strong></p>
+      <p>The terms emerged from a recognition that the dominant civic vocabulary of our time — 'taxpayer' — had been politically captured to frame the citizen-government relationship as adversarial and transactional. 'Civestor,' 'civest,' and 'civestment' reclaim that relationship as collaborative, invested, and empowered.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ PART II: REFRAMING ═══════════════════ -->
+<section id="reframing" class="section section-mid">
+  <div class="container">
+    <span class="part-label reveal">Part II</span>
+    <h2 class="section-heading reveal">The Reframing</h2>
+    <h3 class="sub-heading reveal" style="border-color:rgba(200,168,75,0.4);margin-top:0.5rem;">From Taxpayer to Civestor</h3>
+    <div class="gold-rule reveal"></div>
+
+    <p class="body-text reveal">Language shapes how we think. And how we think shapes how we act. The words we use to describe our relationship to government determine whether we feel like victims of that government or participants in it.</p>
+    <p class="body-text reveal">For decades, the dominant term for citizens in their relationship to government has been 'taxpayer.' It is a word that tells a very specific story — and it is not an empowering one.</p>
+
+    <div class="pullquote reveal">
+      <p><strong>'Taxpayer' frames citizenship as a financial burden. 'Civestor' frames it as a civic investment.</strong></p>
+    </div>
+
+    <h4 class="dim-heading reveal">What 'Taxpayer' Gets Wrong</h4>
+    <p class="body-text reveal">The word 'taxpayer' reduces the richest relationship in a democracy — citizen to government — to a single dimension: money. It says: you give money, government spends it, the relationship ends there. It implies that the citizen's primary concern is how much they pay, not what they receive. It frames every public expenditure as a cost, never as a return on investment.</p>
+    <p class="body-text reveal">More insidiously, 'taxpayer' has been weaponized. In political discourse, 'hardworking taxpayers' has become a rhetorical device for opposing public investment — pitting citizens against their own institutions. It encourages resentment rather than engagement, withdrawal rather than participation.</p>
+    <p class="body-text reveal">A taxpayer is a passive figure — someone to whom things happen. Tax is collected from them. Money is spent on their behalf. Decisions are made about their future. They are consumers of government, not participants in it.</p>
+
+    <h4 class="dim-heading reveal">What 'Civestor' Gets Right</h4>
+    <p class="body-text reveal">A civestor is an active figure. A stakeholder. An agent. Someone who civests — who participates with purpose and demands results. The civestor framing says three things simultaneously:</p>
+
+    <div class="pullquote reveal">
+      <p><strong>1.</strong> You have invested in this democracy. Your taxes fund every institution, every service, and every elected official who represents you. That investment entitles you to something: results, accountability, and a voice.</p>
+    </div>
+    <div class="pullquote reveal">
+      <p><strong>2.</strong> You have the right to know how your investment is performing. Just as a financial investor monitors their portfolio, a civestor monitors their civic investment — tracking legislation, following voting records, evaluating outcomes.</p>
+    </div>
+    <div class="pullquote reveal">
+      <p><strong>3.</strong> You have the obligation to act. Investment without oversight is negligence. A civestor doesn't just pay and walk away. They civest — they engage, scrutinize, advocate, and hold their representatives accountable.</p>
+    </div>
+
+    <div class="pullquote reveal" style="background:rgba(13,31,60,0.08);border-color:var(--navy);">
+      <p style="color:var(--navy);"><strong>Democracy is not a spectator sport. It is an investment — and every civestor is a shareholder.</strong></p>
+    </div>
+
+    <h3 class="sub-heading reveal">The Three Dimensions of a Civestor</h3>
+    <div class="dimensions-grid reveal">
+      <div class="dimension-card">
+        <div class="dimension-number">01</div>
+        <div class="dimension-title">Civic Investor</div>
+        <p class="dimension-text">Every citizen who pays taxes makes a continuous financial investment in the infrastructure of democratic life. But the civic investor framing goes beyond taxes — time spent at a community meeting, a letter written to a representative, a vote cast in a local election are investments of a different kind: attention, voice, and democratic participation.</p>
+      </div>
+      <div class="dimension-card">
+        <div class="dimension-number">02</div>
+        <div class="dimension-title">Civic Activist</div>
+        <p class="dimension-text">The word 'activist' carries baggage — it conjures images of protest. But its original meaning is simpler and more profound: one who acts. A civestor civests not necessarily by marching in the streets but by refusing to be passive. They read the legislation. They vote their conscience. They contact their representative. Civic activism is not partisan.</p>
+      </div>
+      <div class="dimension-card">
+        <div class="dimension-number">03</div>
+        <div class="dimension-title">Citizen</div>
+        <p class="dimension-text">Underlying both investor and activist is the most fundamental identity of all: citizen. Not subject, not consumer, not taxpayer — citizen. A person with rights, responsibilities, and a stake in the common good. The civestor identity reclaims and elevates citizenship as an active, ongoing, and consequential role in self-governance.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ PART III: MANIFESTO ═══════════════════ -->
+<section id="manifesto" class="section section-dark">
+  <div class="container">
+    <span class="part-label-light reveal">Part III</span>
+    <h2 class="section-heading-light reveal">The Manifesto</h2>
+    <div class="gold-rule reveal"></div>
+
+    <div class="pledge-block reveal">
+      <p class="pledge-text">We are not merely taxpayers. We are investors in the greatest civic enterprise in human history: American democracy.</p>
+      <div class="pledge-em">— We Are Civestors</div>
+    </div>
+
+    <p class="body-text-light reveal">We civest every day. We pay taxes not as a burden but as a contribution — to the roads we drive on, the schools our children attend, the courts that protect our rights, and the institutions that make community life possible. We are invested, literally and figuratively, in this democracy. And like all investors, we expect accountability, transparency, and results. This is our civestment — and we demand a return.</p>
+
+    <p class="body-text-light reveal">We are not passive. We do not write our checks and disappear. We civest. We read the legislation that shapes our lives. We vote our conscience on the bills our representatives debate. We track the voting records of those who speak in our name. We hold them accountable not with anger but with information — the most powerful civic tool available.</p>
+
+    <div class="pullquote-dark reveal">
+      <p>We believe that more civic participation — from all directions, across all perspectives — produces better governance for everyone.</p>
+    </div>
+
+    <p class="body-text-light reveal">We are not partisan. A civestor can be conservative or progressive, Republican or Democrat, independent or unaffiliated. What unites us is not a political position but a civic commitment: that democracy works best when citizens are informed, engaged, and empowered to demand the governance they deserve.</p>
+
+    <p class="body-text-light reveal">We believe in the <strong>12 Points of Good Governance</strong> — Rule of Law, Transparency, Accountability, Participation, Consensus Orientation, Equity and Inclusiveness, Effectiveness and Efficiency, Responsiveness, Strategic Vision, Ethical Leadership, Separation of Powers, and Subsidiarity. These are not partisan principles. They are the architecture of any well-functioning democracy.</p>
+
+    <p class="body-text-light reveal">We use every tool available to us. We read plain-language bill summaries. We cast constituent votes. We compare our preferences to our representatives' records. We build a permanent, public accounting of agreement and disagreement. We share what we learn with our neighbors. We are the feedback loop that democracy requires to function.</p>
+
+    <div class="pullquote-dark reveal">
+      <p>We are not waiting for someone else to fix democracy. We are democracy. And we civest in it every day.</p>
+    </div>
+
+    <p class="body-text-light reveal">We are Long Islanders and New Yorkers, but our civic philosophy knows no borders. Every American who pays taxes, votes in elections, sends their children to public schools, drives on public roads, and relies on public institutions is a civestor — whether they know the word or not. Our mission is to help them know it, own it, and civest.</p>
+
+    <p class="body-text-light reveal">We built CivicSphere because democracy needs participants, not just spectators. We coined the words 'civestor,' 'civest,' and 'civestment' because language shapes action — and we believe that when citizens understand themselves as civic investor activists, and their participation as civestment, they will engage differently, demand differently, and ultimately govern differently.</p>
+
+    <div class="pledge-block reveal" style="margin-top:3rem;">
+      <p class="pledge-text">This is the civestor movement.</p>
+      <div class="pledge-em">Civestors Civest. Are You One?</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ PART IV: 12 POINTS ═══════════════════ -->
+<section id="twelve-points" class="section section-dark" style="padding-top:2rem;">
+  <div class="container">
+    <span class="part-label-light reveal">Part IV</span>
+    <h2 class="section-heading-light reveal">Civestors &amp; the 12 Points</h2>
+    <h3 class="sub-heading-light reveal">How Civestors Embody Good Governance</h3>
+    <div class="gold-rule reveal"></div>
+    <p class="body-text-light reveal">The civestor identity is not abstract — it is expressed through specific behaviors and commitments that map directly onto the 12 Points of Good Governance. Every civestor, by definition, practices good governance at the citizen level.</p>
+
+    <div class="points-grid reveal">
+      <div class="point-item">
+        <div class="point-num">01</div>
+        <div class="point-name">Rule of Law</div>
+        <div class="point-desc">Civestors respect and defend the legal frameworks that protect everyone's rights — including the right to hold government accountable.</div>
+      </div>
+      <div class="point-item">
+        <div class="point-num">02</div>
+        <div class="point-name">Transparency</div>
+        <div class="point-desc">Civestors demand that government decisions and finances be visible and accessible — and civest using platforms like CivicSphere to make transparency real.</div>
+      </div>
+      <div class="point-item">
+        <div class="point-num">03</div>
+        <div class="point-name">Accountability</div>
+        <div class="point-desc">Civestors track how their representatives vote, compare it to their own preferences, and build a permanent public record of accountability.</div>
+      </div>
+      <div class="point-item">
+        <div class="point-num">04</div>
+        <div class="point-name">Participation</div>
+        <div class="point-desc">Civestors civest in every available channel — voting, attending meetings, reading legislation, and contacting their representatives.</div>
+      </div>
+      <div class="point-item">
+        <div class="point-num">05</div>
+        <div class="point-name">Consensus Orientation</div>
+        <div class="point-desc">Civestors seek common ground across political differences, recognizing that durable governance requires broad coalitions, not narrow majorities.</div>
+      </div>
+      <div class="point-item">
+        <div class="point-num">06</div>
+        <div class="point-name">Equity &amp; Inclusiveness</div>
+        <div class="point-desc">Civestors advocate for governance that serves all community members — especially those whose voices are hardest to hear.</div>
+      </div>
+      <div class="point-item">
+        <div class="point-num">07</div>
+        <div class="point-name">Effectiveness &amp; Efficiency</div>
+        <div class="point-desc">Civestors evaluate whether their civic investment is producing results — and demand accountability when it is not.</div>
+      </div>
+      <div class="point-item">
+        <div class="point-num">08</div>
+        <div class="point-name">Responsiveness</div>
+        <div class="point-desc">Civestors expect timely, genuine responses from their representatives — and track responsiveness as a civic metric.</div>
+      </div>
+      <div class="point-item">
+        <div class="point-num">09</div>
+        <div class="point-name">Strategic Vision</div>
+        <div class="point-desc">Civestors civest with the long view — advocating for policies that serve long-term community needs and aspirations.</div>
+      </div>
+      <div class="point-item">
+        <div class="point-num">10</div>
+        <div class="point-name">Ethical Leadership</div>
+        <div class="point-desc">Civestors hold their representatives to the highest ethical standards — using tools like CivicSphere to surface conflicts of interest and lapses.</div>
+      </div>
+      <div class="point-item">
+        <div class="point-num">11</div>
+        <div class="point-name">Separation of Powers</div>
+        <div class="point-desc">Civestors defend the structural safeguards of democracy — independent courts, free press, and distributed authority — against erosion from any direction.</div>
+      </div>
+      <div class="point-item">
+        <div class="point-num">12</div>
+        <div class="point-name">Subsidiarity</div>
+        <div class="point-desc">Civestors champion local civic capacity — civesting first with the most immediate institutions of governance and building outward.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ PART V: TRADEMARK ═══════════════════ -->
+<section id="trademark" class="section section-cream">
+  <div class="container">
+    <span class="part-label reveal">Part V</span>
+    <h2 class="section-heading reveal">Trademark &amp; Protection</h2>
+    <div class="gold-rule reveal"></div>
+    <p class="body-text reveal">All three terms — <strong>CIVESTOR™</strong>, <strong>CIVEST™</strong>, and <strong>CIVESTMENT™</strong> — are strong candidates for federal trademark registration. As coined terms — original and invented — they are not descriptive of any existing product or service and qualify as fanciful marks, the strongest category of trademark protection.</p>
+    <div class="pullquote reveal">
+      <p>Recommended: file for trademark protection on CIVESTOR™, CIVEST™, and CIVESTMENT™ in International Class 41 (education services) and Class 42 (software and technology services) before public launch.</p>
+    </div>
+    <p class="body-text reveal">Contact the <strong>Suffolk County Bar Association Lawyer Referral Service</strong> at (631) 234-5577 to find a trademark attorney.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════ CLOSING ═══════════════════ -->
+<section class="closing-section">
+  <div class="closing-wordmark reveal">CIVEST<span>OR</span>™</div>
+  <p class="closing-tagline reveal">verb: civest · noun: civestor · noun: civestment · plural: civestors</p>
+  <div class="gold-rule-center reveal"></div>
+  <p class="closing-cta reveal">Civestors civest. Are you one?</p>
+  <p class="closing-sub reveal">mycivicsphere.com · American Civic Power · 2026</p>
+  <div class="reveal" style="position:relative;z-index:1;">
+    <a href="https://www.mycivicsphere.com/#contact" class="btn-gold">Join the Movement</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-copy">© 2026 Civic Sphere &amp; American Civic Power. CIVESTOR™, CIVEST™, and CIVESTMENT™ are trademarks of American Civic Power.</span>
+  <div class="footer-links">
+    <a href="https://www.mycivicsphere.com" target="_blank">CivicSphere</a>
+    <a href="https://www.americancivicpower.com" target="_blank">American Civic Power</a>
+    <a href="https://www.mycivicsphere.com/content" target="_blank">Content</a>
+  </div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 60);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

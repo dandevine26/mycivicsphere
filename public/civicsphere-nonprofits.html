@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Civic Sphere — Nonprofit & Civic Org Services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  html { scroll-padding-top: 76px; }
+  :root {
+    --forest:  #0E2B1F;
+    --green:   #1A4D35;
+    --sage:    #2E7D52;
+    --gold:    #C8A84B;
+    --cream:   #F5F0E8;
+    --offwhite:#FAF8F4;
+    --charcoal:#2A2A2A;
+    --mid:     #6B7280;
+    --navy:    #0D1F3C;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    padding-top: 6px; /* rainbow band height */
+    background: var(--offwhite);
+    color: var(--charcoal);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    width: 8.5in;
+    min-height: 11in;
+    margin: 0 auto;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--forest);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    margin-top: 76px;
+    display: grid;
+    grid-template-columns: 1fr 2.2in;
+    min-height: 2.4in;
+  }
+  .header-bg {
+    position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(200,168,75,0.05) 39px, rgba(200,168,75,0.05) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(200,168,75,0.05) 39px, rgba(200,168,75,0.05) 40px);
+  }
+  .header-left {
+    padding: 0.55in 0.45in 0.45in 0.55in;
+    position: relative; z-index: 2;
+    border-right: 1px solid rgba(200,168,75,0.2);
+  }
+  .header-eyebrow {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.35em;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.18in;
+  }
+  .header-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.1rem;
+    font-weight: 900;
+    color: var(--cream);
+    line-height: 1.05;
+    margin-bottom: 0.12in;
+  }
+  .header-title span { color: var(--gold); }
+  .header-sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 300;
+    color: rgba(245,240,232,0.6);
+    line-height: 1.6;
+    max-width: 4.2in;
+  }
+  .header-right {
+    padding: 0.45in 0.4in;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.18in;
+    position: relative; z-index: 2;
+  }
+  .stat {
+    text-align: center;
+    padding: 0.14in 0.1in;
+    border: 1px solid rgba(200,168,75,0.2);
+    background: rgba(26,77,53,0.5);
+  }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    color: var(--gold);
+    line-height: 1;
+    display: block;
+  }
+  .stat-label {
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.5);
+    display: block;
+    margin-top: 0.04in;
+  }
+  .gold-bar {
+    height: 3px;
+    background: var(--gold);
+    width: 100%;
+  }
+
+  /* ── BODY ── */
+  .body {
+    display: grid;
+    grid-template-columns: 1fr 2.2in;
+    gap: 0;
+  }
+
+  /* LEFT COLUMN */
+  .main-col {
+    padding: 0.4in 0.4in 0.4in 0.55in;
+    border-right: 1px solid rgba(0,0,0,0.08);
+  }
+
+  .section { margin-bottom: 0.32in; }
+  .section:last-child { margin-bottom: 0; }
+
+  .section-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.07in;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--forest);
+    margin-bottom: 0.1in;
+    line-height: 1.2;
+  }
+  .section-rule {
+    width: 32px; height: 2px;
+    background: var(--gold);
+    margin-bottom: 0.12in;
+  }
+  .body-text {
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: var(--charcoal);
+    line-height: 1.75;
+    margin-bottom: 0.1in;
+  }
+
+  /* SERVICES GRID */
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.12in;
+    margin-top: 0.1in;
+  }
+  .service-card {
+    border: 1px solid rgba(200,168,75,0.25);
+    background: white;
+    padding: 0.14in 0.14in;
+  }
+  .service-tier {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    color: var(--sage);
+    display: block;
+    margin-bottom: 0.04in;
+  }
+  .service-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--forest);
+    margin-bottom: 0.03in;
+    line-height: 1.2;
+  }
+  .service-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.08in;
+    line-height: 1;
+  }
+  .service-items {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.04in;
+  }
+  .service-items li {
+    font-size: 0.68rem;
+    font-weight: 300;
+    color: var(--charcoal);
+    line-height: 1.45;
+    padding-left: 0.12in;
+    position: relative;
+  }
+  .service-items li::before {
+    content: '→';
+    position: absolute; left: 0;
+    color: var(--gold);
+    font-size: 0.6rem;
+  }
+
+  /* DIFFERENTIATORS */
+  .diff-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1in;
+    margin-top: 0.08in;
+  }
+  .diff-item {
+    display: flex;
+    gap: 0.1in;
+    align-items: flex-start;
+  }
+  .diff-icon {
+    width: 0.22in; height: 0.22in;
+    background: var(--gold);
+    color: var(--forest);
+    font-size: 0.6rem;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 0.02in;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 0.05em;
+  }
+  .diff-text {
+    font-size: 0.78rem;
+    font-weight: 300;
+    color: var(--charcoal);
+    line-height: 1.6;
+  }
+  .diff-text strong {
+    font-weight: 500;
+    color: var(--forest);
+  }
+
+  /* RIGHT SIDEBAR */
+  .sidebar {
+    background: var(--forest);
+    padding: 0.38in 0.32in;
+    display: flex;
+    flex-direction: column;
+    gap: 0.28in;
+  }
+  .sidebar-section {}
+  .sidebar-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.1in;
+    padding-bottom: 0.06in;
+    border-bottom: 1px solid rgba(200,168,75,0.2);
+  }
+  .sidebar-text {
+    font-size: 0.72rem;
+    font-weight: 300;
+    color: rgba(245,240,232,0.75);
+    line-height: 1.7;
+  }
+  .sidebar-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.07in;
+  }
+  .sidebar-list li {
+    font-size: 0.7rem;
+    font-weight: 300;
+    color: rgba(245,240,232,0.75);
+    line-height: 1.5;
+    padding-left: 0.14in;
+    position: relative;
+  }
+  .sidebar-list li::before {
+    content: '→';
+    position: absolute; left: 0;
+    color: var(--gold);
+    font-size: 0.62rem;
+  }
+  .cta-box {
+    background: var(--gold);
+    padding: 0.18in 0.16in;
+    text-align: center;
+  }
+  .cta-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--forest);
+    line-height: 1.2;
+    margin-bottom: 0.08in;
+  }
+  .cta-text {
+    font-size: 0.68rem;
+    font-weight: 400;
+    color: var(--forest);
+    line-height: 1.5;
+    opacity: 0.85;
+    margin-bottom: 0.1in;
+  }
+  .cta-contact {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    color: var(--forest);
+    display: block;
+    line-height: 1.6;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: #071A10;
+    padding: 0.16in 0.55in;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid rgba(200,168,75,0.15);
+  }
+  .footer-brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+  }
+  .footer-copy {
+    font-size: 0.62rem;
+    color: rgba(245,240,232,0.3);
+  }
+  .footer-url {
+    font-size: 0.65rem;
+    color: rgba(245,240,232,0.35);
+    text-decoration: none;
+  }
+
+  @media print {
+    body { width: 100%; margin: 0; }
+    .header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .sidebar { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .footer { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .service-card { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+
+  /* ── CIVIC SPHERE HEADER ── */
+  .cs-rainbow-header {
+    position: relative; top: 0; left: 0; right: 0; z-index: 200;
+  }
+  .cs-nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.7rem 2.5rem;
+    background: #0D1B2E;
+  }
+  .cs-brand {
+    display: flex; align-items: center; gap: 0.65rem;
+    text-decoration: none;
+  }
+  .cs-logo-svg { width: 38px; height: 38px; flex-shrink: 0; }
+  .cs-wordmark-wrap { display: flex; flex-direction: column; justify-content: center; }
+  .cs-wordmark {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.15rem; letter-spacing: 0.12em;
+    color: #ffffff; line-height: 1;
+  }
+  .cs-subtitle {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.58rem; font-weight: 400;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: rgba(245,240,232,0.45);
+    margin-top: 0.1rem; line-height: 1;
+  }
+  .cs-rainbow-band {
+    display: flex; height: 3px; width: 100%;
+  }
+  .cs-rainbow-band span { flex: 1; }
+
+
+/* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.9rem 3rem;
+    background: #0D1F3C;
+    backdrop-filter: blur(10px);
+  }
+  .nav-rainbow {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(to right,
+      #1A8A7B 8.33%,   /* 01 Rule of Law - teal */
+      #27AE60 16.66%,  /* 02 Transparency - green */
+      #7D9B3A 25%,     /* 03 Accountability - olive */
+      #E67E22 33.33%,  /* 04 Participation - orange */
+      #E05A3A 41.66%,  /* 05 Consensus - red-orange */
+      #7D3C98 50%,     /* 06 Equity - purple */
+      #A93226 58.33%,  /* 07 Effectiveness - dark red */
+      #7B8EC8 66.66%,  /* 08 Responsiveness - slate blue */
+      #7D6608 75%,     /* 09 Strategic Vision - olive brown */
+      #D4AC0D 83.33%,  /* 10 Ethical Leadership - gold */
+      #1A3A5C 91.66%,  /* 11 Separation - dark navy */
+      #2E86C1 100%     /* 12 Local Power - sky blue */
+    );
+  }
+  .nav-brand {
+    display: flex; align-items: center; gap: 0.85rem;
+    text-decoration: none;
+  }
+  .nav-brand-logo {
+    width: 38px; height: 38px;
+    flex-shrink: 0;
+  }
+  .nav-brand-logo svg { width: 100%; height: 100%; }
+  .nav-brand-info {
+    display: flex; flex-direction: column; gap: 0;
+  }
+  .nav-brand-name {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.05rem; font-weight: 500;
+    color: white; letter-spacing: 0.02em;
+    line-height: 1.2;
+  }
+  .nav-brand-sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.6rem; font-weight: 400;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.2;
+  }
+  .nav-links { display: flex; gap: 2.2rem; list-style: none; align-items: center; }
+  .nav-links a {
+    font-size: 0.82rem; font-weight: 400;
+    color: rgba(255,255,255,0.85); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: white; }
+  .nav-vote {
+    padding: 0.55rem 1.4rem;
+    background: var(--gold); color: var(--navy);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem; font-weight: 500;
+    border-radius: 4px;
+    text-decoration: none; white-space: nowrap;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .nav-vote:hover { background: #d4b060; transform: translateY(-1px); }
+
+/* ── SERVICES DROPDOWN ── */
+  .nav-dropdown { position: relative; }
+  .nav-dropdown-trigger {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem; font-weight: 400;
+    color: rgba(255,255,255,0.85);
+    padding: 0;
+    letter-spacing: 0;
+    transition: color 0.2s;
+    display: flex; align-items: center; gap: 0.35rem;
+  }
+  .nav-dropdown-trigger:hover { color: white; }
+  .nav-dropdown.open .nav-dropdown-trigger { color: var(--gold); }
+  .nav-dropdown-menu {
+    display: none;
+    position: absolute; top: calc(100% + 8px); left: 50%;
+    transform: translateX(-50%);
+    background: #0D1F3C;
+    border: 1px solid rgba(200,168,75,0.2);
+    border-top: 2px solid var(--gold);
+    min-width: 230px;
+    z-index: 200;
+    padding: 0.5rem 0;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  }
+  .nav-dropdown.open .nav-dropdown-menu { display: block; }
+  .nav-dropdown-menu a {
+    display: block;
+    padding: 0.6rem 1.25rem;
+    font-size: 0.78rem; font-weight: 400;
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+    border-left: 2px solid transparent;
+  }
+  .nav-dropdown-menu a:hover {
+    background: rgba(200,168,75,0.08);
+    color: var(--gold);
+    border-left-color: var(--gold);
+  }
+  .nav-dropdown-divider {
+    height: 1px;
+    background: rgba(200,168,75,0.15);
+    margin: 0.4rem 0;
+  }
+  .nav-dropdown-label {
+    padding: 0.3rem 1.25rem 0.1rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.6rem; letter-spacing: 0.3em;
+    color: rgba(200,168,75,0.5);
+  }
+</style>
+</head>
+<body>
+<!-- NAV -->
+<nav>
+  <div class="nav-rainbow"></div>
+  <a href="https://www.mycivicsphere.com" class="nav-brand">
+    <div class="nav-brand-logo">
+      <svg viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg">
+        <!-- Hexagon background -->
+        <polygon points="19,2 34,10.5 34,27.5 19,36 4,27.5 4,10.5" fill="#1A3A6B" stroke="#2E6FBB" stroke-width="1"/>
+        <!-- Connection lines -->
+        <line x1="19" y1="8" x2="19" y2="30" stroke="rgba(200,168,75,0.5)" stroke-width="0.5"/>
+        <line x1="8" y1="14" x2="30" y2="24" stroke="rgba(200,168,75,0.5)" stroke-width="0.5"/>
+        <line x1="30" y1="14" x2="8" y2="24" stroke="rgba(200,168,75,0.5)" stroke-width="0.5"/>
+        <!-- Colored dots around hexagon -->
+        <circle cx="19" cy="4"  r="2.5" fill="#1A8A7B"/>
+        <circle cx="30" cy="10" r="2.5" fill="#27AE60"/>
+        <circle cx="33" cy="19" r="2.5" fill="#E67E22"/>
+        <circle cx="30" cy="28" r="2.5" fill="#7D3C98"/>
+        <circle cx="19" cy="34" r="2.5" fill="#7B8EC8"/>
+        <circle cx="8"  cy="28" r="2.5" fill="#D4AC0D"/>
+        <circle cx="5"  cy="19" r="2.5" fill="#1A3A5C"/>
+        <circle cx="8"  cy="10" r="2.5" fill="#2E86C1"/>
+        <!-- Center dot -->
+        <circle cx="19" cy="19" r="3" fill="white"/>
+      </svg>
+    </div>
+    <div class="nav-brand-info">
+      <span class="nav-brand-name">CivicSphere</span>
+      <span class="nav-brand-sub">Direct Democracy Platform</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#points">Governance</a></li>
+    <li><a href="#slides">Framework</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li class="nav-dropdown">
+      <button class="nav-dropdown-trigger" onclick="toggleDropdown(this)" type="button">Services ▾</button>
+      <div class="nav-dropdown-menu">
+        <div class="nav-dropdown-label">For Campaigns</div>
+        <a href="civicsphere-campaigns.html">Campaign Services</a>
+        <div class="nav-dropdown-divider"></div>
+        <div class="nav-dropdown-label">For Nonprofits</div>
+        <a href="civicsphere-nonprofits.html">Nonprofit Services</a>
+        <div class="nav-dropdown-divider"></div>
+        <div class="nav-dropdown-label">Client Tools</div>
+        <a href="civicsphere-portal.html">Client Portal</a>
+        <a href="governance-assessment-landing.html">Governance Assessment</a>
+        <div class="nav-dropdown-divider"></div>
+        <div class="nav-dropdown-label">Documents</div>
+        <a href="civic-dual-entity-structure.html">Entity Structure</a>
+      </div>
+    </li>
+    <li><a href="/content">Content</a></li>
+    <li><a href="/civestor">Civestor</a></li>
+    <li><a href="https://vote.gov" target="_blank" class="nav-vote">Vote Now →</a></li>
+  </ul>
+</nav>
+<script>
+function toggleDropdown(btn) {
+  var li = btn.closest('.nav-dropdown');
+  var isOpen = li.classList.contains('open');
+  document.querySelectorAll('.nav-dropdown').forEach(function(d) {
+    d.classList.remove('open');
+  });
+  if (!isOpen) li.classList.add('open');
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.nav-dropdown')) {
+    document.querySelectorAll('.nav-dropdown').forEach(function(d) {
+      d.classList.remove('open');
+    });
+  }
+});
+</script>
+<div style="height:60px;"></div>
+
+  <!-- CIVIC SPHERE HEADER -->
+  <div class="cs-rainbow-header">
+    <div class="cs-nav">
+      <a href="https://www.mycivicsphere.com" class="cs-brand">
+        <svg class="cs-logo-svg" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="22.0,6.0 35.9,14.0 35.9,30.0 22.0,38.0 8.1,30.0 8.1,14.0" fill="#1A2E4A" stroke="rgba(200,168,75,0.5)" stroke-width="1"/><circle cx="22.0" cy="6.0" r="2.2" fill="#3ECFB0"/><circle cx="35.9" cy="14.0" r="2.2" fill="#4A90D9"/><circle cx="35.9" cy="30.0" r="2.2" fill="#9B59B6"/><circle cx="22.0" cy="38.0" r="2.2" fill="#E74C3C"/><circle cx="8.1" cy="30.0" r="2.2" fill="#F39C12"/><circle cx="8.1" cy="14.0" r="2.2" fill="#27AE60"/><circle cx="22" cy="22" r="3.2" fill="white"/></svg>
+        <div class="cs-wordmark-wrap">
+          <span class="cs-wordmark">CivicSphere</span>
+          <span class="cs-subtitle">Direct Democracy Platform</span>
+        </div>
+      </a>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:0.7rem;letter-spacing:0.25em;color:rgba(200,168,75,0.6);">Nonprofit &amp; Civic Org Services</div>
+      <a href="https://www.mycivicsphere.com" style="font-family:'DM Sans',sans-serif;font-size:0.72rem;font-weight:400;letter-spacing:0.08em;color:rgba(245,240,232,0.55);text-decoration:none;margin-right:auto;padding-left:1.5rem;transition:color 0.2s;" onmouseover="this.style.color='#C8A84B'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">← mycivicsphere.com</a>
+    </div>
+    <div class="cs-rainbow-band">
+      <span style="background:#E63946"></span><span style="background:#F4722B"></span><span style="background:#F9C74F"></span><span style="background:#90BE6D"></span><span style="background:#43AA8B"></span><span style="background:#4D908E"></span><span style="background:#4361EE"></span><span style="background:#7209B7"></span><span style="background:#B5179E"></span><span style="background:#2E6FBB"></span><span style="background:#C8A84B"></span><span style="background:#2E8B57"></span>
+    </div>
+  </div>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-bg"></div>
+  <div class="header-left">
+    <span class="header-eyebrow">Civic Sphere · AI-Powered Nonprofit Services</span>
+    <h1 class="header-title">More Mission.<br><span>Less Overhead.</span></h1>
+    <p class="header-sub">AI-powered outreach, communications, and civic engagement services for nonprofits and civic organizations — backed by a proprietary civic technology platform and a founder who has spent decades working inside communities like yours.</p>
+  </div>
+  <div class="header-right">
+    <div class="stat">
+      <span class="stat-num">25+</span>
+      <span class="stat-label">Years in Civic Life</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">12</span>
+      <span class="stat-label">Governance Points</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">501c3</span>
+      <span class="stat-label">Nonprofit Expertise</span>
+    </div>
+  </div>
+</div>
+<div class="gold-bar"></div>
+
+<!-- BODY -->
+<div class="body">
+  <div class="main-col">
+
+    <!-- THE PROBLEM -->
+    <div class="section">
+      <span class="section-label">The Challenge</span>
+      <h2 class="section-title">Small Teams. Big Missions. Civic Sphere Bridges the Gap.</h2>
+      <div class="section-rule"></div>
+      <p class="body-text">Most nonprofits and civic organizations are doing important work with limited staff, limited budgets, and limited time. Newsletters go unsent, volunteers go uncoordinated, and grant opportunities go unmissed. Civic Sphere delivers the operational capacity of a full communications and outreach team — at a fraction of the cost — through AI agents managed by an experienced civic professional.</p>
+    </div>
+
+    <!-- SERVICES -->
+    <div class="section">
+      <span class="section-label">Services & Pricing</span>
+      <h2 class="section-title">Three Tiers. Flexible. Year-Round.</h2>
+      <div class="section-rule"></div>
+      <div class="services-grid">
+        <div class="service-card">
+          <span class="service-tier">Tier 1 · Starter</span>
+          <div class="service-name">Community Presence</div>
+          <span class="service-price">$1,000/mo</span>
+          <ul class="service-items">
+            <li>AI-drafted monthly newsletter</li>
+            <li>Social media content (4–6 posts)</li>
+            <li>Member follow-up automation</li>
+            <li>Monthly strategy call (1 hr)</li>
+          </ul>
+        </div>
+        <div class="service-card">
+          <span class="service-tier">Tier 2 · Growth</span>
+          <div class="service-name">Engagement Engine</div>
+          <span class="service-price">$2,500/mo</span>
+          <ul class="service-items">
+            <li>Everything in Tier 1</li>
+            <li>Grant research & LOI drafts</li>
+            <li>Volunteer recruitment automation</li>
+            <li>Event promotion & outreach</li>
+            <li>Quarterly impact report</li>
+          </ul>
+        </div>
+        <div class="service-card">
+          <span class="service-tier">Tier 3 · Full Partnership</span>
+          <div class="service-name">Full Operations</div>
+          <span class="service-price">$4,500/mo</span>
+          <ul class="service-items">
+            <li>Everything in Tier 2</li>
+            <li>Full AI communications stack</li>
+            <li>Board meeting prep & agendas</li>
+            <li>Donor stewardship sequences</li>
+            <li>Legislative monitoring briefs</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- DIFFERENTIATORS -->
+    <div class="section">
+      <span class="section-label">Why Civic Sphere</span>
+      <h2 class="section-title">A Civic Partner, Not Just a Vendor.</h2>
+      <div class="section-rule"></div>
+      <div class="diff-list">
+        <div class="diff-item">
+          <div class="diff-icon">01</div>
+          <p class="diff-text"><strong>Governance Framework Included.</strong> Every partnership includes access to the 12 Points of Good Governance — an original civic education framework you can use in your own programming, member communications, and grant applications.</p>
+        </div>
+        <div class="diff-item">
+          <div class="diff-icon">02</div>
+          <p class="diff-text"><strong>Nonprofit-Fluent.</strong> Civic Sphere understands the unique compliance, communications, and community trust requirements of 501(c)(3) organizations. We speak your language and know what your funders want to see.</p>
+        </div>
+        <div class="diff-item">
+          <div class="diff-icon">03</div>
+          <p class="diff-text"><strong>Dual-Entity Advantage.</strong> American Civic Power — Civic Sphere's nonprofit partner organization — can co-create programming, co-apply for grants, and provide civic education resources that extend your organization's reach at no additional cost.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+
+    <div class="sidebar-section">
+      <span class="sidebar-label">Ideal Clients</span>
+      <ul class="sidebar-list">
+        <li>Civic leagues & associations</li>
+        <li>Community development corps</li>
+        <li>Environmental advocacy orgs</li>
+        <li>Faith-based community orgs</li>
+        <li>League of Women Voters chapters</li>
+        <li>NAACP & civil rights orgs</li>
+        <li>Libraries & literacy nonprofits</li>
+        <li>Labor unions with civic programs</li>
+      </ul>
+    </div>
+
+    <div class="sidebar-section">
+      <span class="sidebar-label">Platform Capabilities</span>
+      <ul class="sidebar-list">
+        <li>AI-drafted newsletters & reports</li>
+        <li>Grant research automation</li>
+        <li>12 Points governance framework</li>
+        <li>Legislative monitoring & briefs</li>
+        <li>Volunteer onboarding workflows</li>
+        <li>Donor stewardship sequences</li>
+        <li>Impact reporting dashboards</li>
+      </ul>
+    </div>
+
+    <div class="sidebar-section">
+      <span class="sidebar-label">Background</span>
+      <p class="sidebar-text">Dan Devine is a Long Island–based civic advocate and founder of American Civic Power (501c3) and Civic Sphere. He has spent 25+ years working in and alongside civic organizations, campaigns, and community groups across New York.</p>
+    </div>
+
+    <div class="cta-box">
+      <div class="cta-headline">Let's talk about your mission.</div>
+      <p class="cta-text">Schedule a free 30-minute discovery call to explore how Civic Sphere can support your organization.</p>
+      <span class="cta-contact">dandevine26@gmail.com</span>
+      <span class="cta-contact">516-749-6690</span>
+      <span class="cta-contact">civicsphere.ai</span>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <span class="footer-brand">Civic Sphere</span>
+  <span class="footer-copy">Civic power, put to work. · civicsphere.ai</span>
+  <span class="footer-url">© 2026 Dan Devine / My Civic Sphere</span>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dual-Entity Structure · American Civic Power & My Civic Sphere</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&family=Source+Serif+4:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:    #0D1F3C;
+    --cobalt:  #1A3A6B;
+    --sky:     #2E6FBB;
+    --gold:    #C8A84B;
+    --cream:   #F5F0E8;
+    --offwhite:#FAF8F4;
+    --charcoal:#2A2A2A;
+    --mid:     #6B7280;
+    --rule:    rgba(200,168,75,0.35);
+    --light-border: rgba(200,168,75,0.2);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--offwhite);
+    color: var(--charcoal);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--navy);
+    padding: 3.5rem 4rem 3rem;
+    border-bottom: 2px solid var(--gold);
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(200,168,75,0.04) 59px, rgba(200,168,75,0.04) 60px),
+      repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(200,168,75,0.04) 59px, rgba(200,168,75,0.04) 60px);
+    pointer-events: none;
+  }
+  .header-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+    display: block;
+    position: relative;
+  }
+  .header-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 900;
+    color: var(--cream);
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+    position: relative;
+  }
+  .header-sub {
+    font-family: 'Source Serif 4', serif;
+    font-size: 1rem;
+    font-style: italic;
+    color: rgba(245,240,232,0.55);
+    position: relative;
+  }
+  .header-meta {
+    display: flex;
+    gap: 2rem;
+    margin-top: 1.5rem;
+    position: relative;
+  }
+  .header-meta span {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    color: rgba(200,168,75,0.6);
+    background: rgba(200,168,75,0.08);
+    border: 1px solid rgba(200,168,75,0.2);
+    padding: 0.3rem 0.8rem;
+  }
+
+  /* ── MAIN ── */
+  main { max-width: 1100px; margin: 0 auto; padding: 3rem 3rem 5rem; }
+
+  /* ── SECTION TITLES ── */
+  .section-eyebrow {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.35em;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 0.75rem;
+  }
+  .section-rule {
+    width: 48px; height: 2px;
+    background: var(--gold);
+    margin-bottom: 2.5rem;
+  }
+
+  /* ── ENTITY OVERVIEW ── */
+  .entity-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 4rem;
+  }
+  .entity-card {
+    border: 1px solid var(--light-border);
+    background: white;
+    overflow: hidden;
+  }
+  .entity-card-header {
+    padding: 1.25rem 1.75rem;
+    border-bottom: 1px solid var(--light-border);
+  }
+  .entity-type {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.3em;
+    color: var(--sky);
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+  .entity-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 0.2rem;
+  }
+  .entity-url {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    color: var(--sky);
+    text-decoration: none;
+  }
+  .entity-url:hover { text-decoration: underline; }
+  .entity-items {
+    padding: 1.5rem 1.75rem;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .entity-items li {
+    font-size: 0.88rem;
+    font-weight: 300;
+    color: var(--charcoal);
+    line-height: 1.5;
+    padding-left: 1.2rem;
+    position: relative;
+  }
+  .entity-items li::before {
+    content: '→';
+    position: absolute; left: 0;
+    color: var(--gold);
+    font-size: 0.8rem;
+  }
+
+  /* ── RELATIONSHIP DIAGRAM ── */
+  .diagram-section { margin-bottom: 4rem; }
+  .diagram-box {
+    background: var(--navy);
+    border: 1.5px solid var(--light-border);
+    padding: 3rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .diagram-box::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(200,168,75,0.04) 39px, rgba(200,168,75,0.04) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(200,168,75,0.04) 39px, rgba(200,168,75,0.04) 40px);
+    pointer-events: none;
+  }
+
+  .diagram-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+    position: relative;
+  }
+  .diagram-node-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.3em;
+    color: rgba(200,168,75,0.6);
+    margin-bottom: 0.3rem;
+  }
+  .diagram-node-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--cream);
+  }
+  .diagram-trademark {
+    margin-top: 0.75rem;
+    border: 1.5px solid var(--gold);
+    padding: 0.5rem 1.25rem;
+    display: inline-block;
+  }
+  .diagram-trademark span {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+  }
+  .diagram-trademark-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.25em;
+    color: rgba(200,168,75,0.5);
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  .diagram-arrow-down {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    margin: 1rem 0;
+    color: rgba(200,168,75,0.5);
+    font-size: 0.72rem;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 0.2em;
+  }
+  .arrow-line {
+    width: 1px;
+    height: 40px;
+    background: var(--rule);
+  }
+
+  .diagram-entities {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    position: relative;
+  }
+  .diagram-entities::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% - 200px);
+    height: 1px;
+    background: var(--rule);
+  }
+
+  .diagram-entity {
+    text-align: center;
+    padding: 1.5rem;
+    border: 1px solid rgba(200,168,75,0.2);
+    background: rgba(26,58,107,0.5);
+  }
+  .diagram-entity-type {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    color: rgba(200,168,75,0.5);
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+  .diagram-entity-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 1rem;
+  }
+  .diagram-entity-income {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .income-tag {
+    font-size: 0.72rem;
+    color: rgba(245,240,232,0.45);
+    font-weight: 300;
+  }
+
+  .diagram-service {
+    text-align: center;
+    margin-top: 1.5rem;
+    position: relative;
+  }
+  .service-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  .service-hr {
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+  .service-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+  .service-desc {
+    font-size: 0.78rem;
+    color: rgba(245,240,232,0.45);
+    font-style: italic;
+  }
+
+  /* ── AGREEMENTS TABLE ── */
+  .agreements-section { margin-bottom: 4rem; }
+  .agreements-intro {
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.95rem;
+    font-style: italic;
+    color: var(--mid);
+    line-height: 1.75;
+    margin-bottom: 1.5rem;
+    padding-left: 1rem;
+    border-left: 2px solid var(--gold);
+  }
+  .agreements-intro strong { font-style: normal; color: var(--navy); font-weight: 600; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+  thead tr {
+    background: var(--navy);
+  }
+  thead th {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    padding: 0.85rem 1.25rem;
+    text-align: left;
+    font-weight: 400;
+  }
+  tbody tr {
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    transition: background 0.2s;
+  }
+  tbody tr:hover { background: rgba(200,168,75,0.04); }
+  tbody td {
+    padding: 1rem 1.25rem;
+    vertical-align: top;
+    line-height: 1.6;
+    color: var(--charcoal);
+    font-weight: 300;
+  }
+  tbody td:first-child {
+    font-weight: 500;
+    color: var(--navy);
+    white-space: nowrap;
+  }
+  tbody td:nth-child(2) {
+    font-size: 0.8rem;
+    color: var(--sky);
+    white-space: nowrap;
+  }
+
+  /* ── NEXT STEPS ── */
+  .steps-section { margin-bottom: 2rem; }
+  .steps-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  .step-card {
+    border: 1px solid var(--light-border);
+    background: white;
+    padding: 1.5rem 1.75rem;
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+    transition: box-shadow 0.3s, transform 0.3s;
+  }
+  .step-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.07); transform: translateY(-2px); }
+  .step-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: var(--gold);
+    line-height: 1;
+    flex-shrink: 0;
+    opacity: 0.6;
+  }
+  .step-content {}
+  .step-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 0.4rem;
+  }
+  .step-text {
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: var(--charcoal);
+    line-height: 1.65;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #08142A;
+    padding: 1.75rem 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid rgba(200,168,75,0.12);
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .footer-copy {
+    font-size: 0.75rem;
+    color: rgba(245,240,232,0.3);
+    letter-spacing: 0.05em;
+  }
+  .footer-disclaimer {
+    font-size: 0.72rem;
+    font-style: italic;
+    color: rgba(245,240,232,0.25);
+    max-width: 500px;
+    text-align: right;
+  }
+
+  @media (max-width: 800px) {
+    header { padding: 2rem 1.5rem; }
+    main { padding: 2rem 1.5rem 4rem; }
+    .entity-grid, .diagram-entities, .steps-grid { grid-template-columns: 1fr; }
+    .diagram-entities::before { display: none; }
+    footer { flex-direction: column; text-align: center; }
+    .footer-disclaimer { text-align: center; }
+  }
+
+  /* ── CIVICSPHERE NAV ── */
+  .cs-rainbow-header {
+    position: relative;
+  }
+  .cs-nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.7rem 2.5rem;
+    background: #0D1B2E;
+  }
+  .cs-brand {
+    display: flex; align-items: center; gap: 0.65rem;
+    text-decoration: none;
+  }
+  .cs-logo-svg { width: 38px; height: 38px; flex-shrink: 0; }
+  .cs-wordmark-wrap { display: flex; flex-direction: column; justify-content: center; }
+  .cs-wordmark {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.15rem; letter-spacing: 0.12em;
+    color: #ffffff; line-height: 1;
+  }
+  .cs-subtitle {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.58rem; font-weight: 400;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: rgba(245,240,232,0.45);
+    margin-top: 0.1rem; line-height: 1;
+  }
+  .cs-home-link {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem; font-weight: 400;
+    letter-spacing: 0.08em;
+    color: rgba(245,240,232,0.55);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .cs-home-link:hover { color: #C8A84B; }
+  .cs-rainbow-band {
+    display: flex; height: 3px; width: 100%;
+  }
+  .cs-rainbow-band span { flex: 1; }
+
+
+/* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.9rem 3rem;
+    background: #0D1F3C;
+    backdrop-filter: blur(10px);
+  }
+  .nav-rainbow {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(to right,
+      #1A8A7B 8.33%,   /* 01 Rule of Law - teal */
+      #27AE60 16.66%,  /* 02 Transparency - green */
+      #7D9B3A 25%,     /* 03 Accountability - olive */
+      #E67E22 33.33%,  /* 04 Participation - orange */
+      #E05A3A 41.66%,  /* 05 Consensus - red-orange */
+      #7D3C98 50%,     /* 06 Equity - purple */
+      #A93226 58.33%,  /* 07 Effectiveness - dark red */
+      #7B8EC8 66.66%,  /* 08 Responsiveness - slate blue */
+      #7D6608 75%,     /* 09 Strategic Vision - olive brown */
+      #D4AC0D 83.33%,  /* 10 Ethical Leadership - gold */
+      #1A3A5C 91.66%,  /* 11 Separation - dark navy */
+      #2E86C1 100%     /* 12 Local Power - sky blue */
+    );
+  }
+  .nav-brand {
+    display: flex; align-items: center; gap: 0.85rem;
+    text-decoration: none;
+  }
+  .nav-brand-logo {
+    width: 38px; height: 38px;
+    flex-shrink: 0;
+  }
+  .nav-brand-logo svg { width: 100%; height: 100%; }
+  .nav-brand-info {
+    display: flex; flex-direction: column; gap: 0;
+  }
+  .nav-brand-name {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.05rem; font-weight: 500;
+    color: white; letter-spacing: 0.02em;
+    line-height: 1.2;
+  }
+  .nav-brand-sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.6rem; font-weight: 400;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.2;
+  }
+  .nav-links { display: flex; gap: 2.2rem; list-style: none; align-items: center; }
+  .nav-links a {
+    font-size: 0.82rem; font-weight: 400;
+    color: rgba(255,255,255,0.85); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: white; }
+  .nav-vote {
+    padding: 0.55rem 1.4rem;
+    background: var(--gold); color: var(--navy);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem; font-weight: 500;
+    border-radius: 4px;
+    text-decoration: none; white-space: nowrap;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .nav-vote:hover { background: #d4b060; transform: translateY(-1px); }
+
+/* ── SERVICES DROPDOWN ── */
+  .nav-dropdown { position: relative; }
+  .nav-dropdown-trigger {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem; font-weight: 400;
+    color: rgba(255,255,255,0.85);
+    padding: 0;
+    letter-spacing: 0;
+    transition: color 0.2s;
+    display: flex; align-items: center; gap: 0.35rem;
+  }
+  .nav-dropdown-trigger:hover { color: white; }
+  .nav-dropdown.open .nav-dropdown-trigger { color: var(--gold); }
+  .nav-dropdown-menu {
+    display: none;
+    position: absolute; top: calc(100% + 8px); left: 50%;
+    transform: translateX(-50%);
+    background: #0D1F3C;
+    border: 1px solid rgba(200,168,75,0.2);
+    border-top: 2px solid var(--gold);
+    min-width: 230px;
+    z-index: 200;
+    padding: 0.5rem 0;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  }
+  .nav-dropdown.open .nav-dropdown-menu { display: block; }
+  .nav-dropdown-menu a {
+    display: block;
+    padding: 0.6rem 1.25rem;
+    font-size: 0.78rem; font-weight: 400;
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+    border-left: 2px solid transparent;
+  }
+  .nav-dropdown-menu a:hover {
+    background: rgba(200,168,75,0.08);
+    color: var(--gold);
+    border-left-color: var(--gold);
+  }
+  .nav-dropdown-divider {
+    height: 1px;
+    background: rgba(200,168,75,0.15);
+    margin: 0.4rem 0;
+  }
+  .nav-dropdown-label {
+    padding: 0.3rem 1.25rem 0.1rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.6rem; letter-spacing: 0.3em;
+    color: rgba(200,168,75,0.5);
+  }
+</style>
+</head>
+<body>
+<!-- NAV -->
+<nav>
+  <div class="nav-rainbow"></div>
+  <a href="https://www.mycivicsphere.com" class="nav-brand">
+    <div class="nav-brand-logo">
+      <svg viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg">
+        <!-- Hexagon background -->
+        <polygon points="19,2 34,10.5 34,27.5 19,36 4,27.5 4,10.5" fill="#1A3A6B" stroke="#2E6FBB" stroke-width="1"/>
+        <!-- Connection lines -->
+        <line x1="19" y1="8" x2="19" y2="30" stroke="rgba(200,168,75,0.5)" stroke-width="0.5"/>
+        <line x1="8" y1="14" x2="30" y2="24" stroke="rgba(200,168,75,0.5)" stroke-width="0.5"/>
+        <line x1="30" y1="14" x2="8" y2="24" stroke="rgba(200,168,75,0.5)" stroke-width="0.5"/>
+        <!-- Colored dots around hexagon -->
+        <circle cx="19" cy="4"  r="2.5" fill="#1A8A7B"/>
+        <circle cx="30" cy="10" r="2.5" fill="#27AE60"/>
+        <circle cx="33" cy="19" r="2.5" fill="#E67E22"/>
+        <circle cx="30" cy="28" r="2.5" fill="#7D3C98"/>
+        <circle cx="19" cy="34" r="2.5" fill="#7B8EC8"/>
+        <circle cx="8"  cy="28" r="2.5" fill="#D4AC0D"/>
+        <circle cx="5"  cy="19" r="2.5" fill="#1A3A5C"/>
+        <circle cx="8"  cy="10" r="2.5" fill="#2E86C1"/>
+        <!-- Center dot -->
+        <circle cx="19" cy="19" r="3" fill="white"/>
+      </svg>
+    </div>
+    <div class="nav-brand-info">
+      <span class="nav-brand-name">CivicSphere</span>
+      <span class="nav-brand-sub">Direct Democracy Platform</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#points">Governance</a></li>
+    <li><a href="#slides">Framework</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li class="nav-dropdown">
+      <button class="nav-dropdown-trigger" onclick="toggleDropdown(this)" type="button">Services ▾</button>
+      <div class="nav-dropdown-menu">
+        <div class="nav-dropdown-label">For Campaigns</div>
+        <a href="civicsphere-campaigns.html">Campaign Services</a>
+        <div class="nav-dropdown-divider"></div>
+        <div class="nav-dropdown-label">For Nonprofits</div>
+        <a href="civicsphere-nonprofits.html">Nonprofit Services</a>
+        <div class="nav-dropdown-divider"></div>
+        <div class="nav-dropdown-label">Client Tools</div>
+        <a href="civicsphere-portal.html">Client Portal</a>
+        <a href="governance-assessment-landing.html">Governance Assessment</a>
+        <div class="nav-dropdown-divider"></div>
+        <div class="nav-dropdown-label">Documents</div>
+        <a href="civic-dual-entity-structure.html">Entity Structure</a>
+      </div>
+    </li>
+    <li><a href="/content">Content</a></li>
+    <li><a href="/civestor">Civestor</a></li>
+    <li><a href="https://vote.gov" target="_blank" class="nav-vote">Vote Now →</a></li>
+  </ul>
+</nav>
+<script>
+function toggleDropdown(btn) {
+  var li = btn.closest('.nav-dropdown');
+  var isOpen = li.classList.contains('open');
+  document.querySelectorAll('.nav-dropdown').forEach(function(d) {
+    d.classList.remove('open');
+  });
+  if (!isOpen) li.classList.add('open');
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.nav-dropdown')) {
+    document.querySelectorAll('.nav-dropdown').forEach(function(d) {
+      d.classList.remove('open');
+    });
+  }
+});
+</script>
+<div style="height:60px;"></div>
+
+<div class="cs-rainbow-header">
+  <div class="cs-nav">
+    <a href="https://www.mycivicsphere.com" class="cs-brand">
+      <svg class="cs-logo-svg" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="14.7,4.4 22.0,4.4 29.3,4.4 39.6,14.7 39.6,22.0 39.6,29.3 29.3,39.6 22.0,39.6 14.7,39.6 4.4,29.3 4.4,22.0 4.4,14.7" fill="none" stroke="rgba(180,160,80,0.35)" stroke-width="0.8"/>
+        <circle cx="14.7" cy="4.4" r="3.5" fill="#3AB89C"/>
+        <circle cx="22.0" cy="4.4" r="3.5" fill="#32C464"/>
+        <circle cx="29.3" cy="4.4" r="3.5" fill="#7AB830"/>
+        <circle cx="39.6" cy="14.7" r="3.5" fill="#E88A0C"/>
+        <circle cx="39.6" cy="22.0" r="3.5" fill="#E84020"/>
+        <circle cx="39.6" cy="29.3" r="3.5" fill="#CC2828"/>
+        <circle cx="29.3" cy="39.6" r="3.5" fill="#A03018"/>
+        <circle cx="22.0" cy="39.6" r="3.5" fill="#9090C8"/>
+        <circle cx="14.7" cy="39.6" r="3.5" fill="#B84818"/>
+        <circle cx="4.4" cy="29.3" r="3.5" fill="#C8A018"/>
+        <circle cx="4.4" cy="22.0" r="3.5" fill="#4898C8"/>
+        <circle cx="4.4" cy="14.7" r="3.5" fill="#2A3858"/>
+        <circle cx="22" cy="22" r="3.8" fill="white"/>
+      </svg>
+      <div class="cs-wordmark-wrap">
+        <span class="cs-wordmark">CivicSphere</span>
+        <span class="cs-subtitle">Direct Democracy Platform</span>
+      </div>
+    </a>
+    <a href="https://www.mycivicsphere.com" class="cs-home-link">← mycivicsphere.com</a>
+  </div>
+  <div class="cs-rainbow-band">
+    <span style="background:#E63946"></span><span style="background:#F4722B"></span><span style="background:#F9C74F"></span><span style="background:#90BE6D"></span><span style="background:#43AA8B"></span><span style="background:#4D908E"></span><span style="background:#4361EE"></span><span style="background:#7209B7"></span><span style="background:#B5179E"></span><span style="background:#2E6FBB"></span><span style="background:#C8A84B"></span><span style="background:#2E8B57"></span>
+  </div>
+</div>
+
+<header>
+  <span class="header-label">Dual-Entity Structure · Confidential Planning Document</span>
+  <h1 class="header-title">American Civic Power<br>&amp; My Civic Sphere</h1>
+  <p class="header-sub">Prepared for Dan Devine</p>
+  <div class="header-meta">
+    <span>April 2026</span>
+    <span>Confidential</span>
+    <span>Planning Document</span>
+  </div>
+</header>
+
+<main>
+
+  <!-- ENTITY OVERVIEW -->
+  <section style="margin-bottom:4rem;">
+    <span class="section-eyebrow">Entity Overview</span>
+    <h2 class="section-title">Two Entities. One Mission.</h2>
+    <div class="section-rule"></div>
+
+    <div class="entity-grid">
+      <div class="entity-card">
+        <div class="entity-card-header">
+          <span class="entity-type">501(c)(3) Nonprofit</span>
+          <div class="entity-name">American Civic Power</div>
+          <a href="https://www.americancivicpower.com" target="_blank" class="entity-url">americancivicpower.com</a>
+        </div>
+        <ul class="entity-items">
+          <li>Civic education &amp; governance literacy</li>
+          <li>12 Points of Good Governance framework</li>
+          <li>Voter engagement programming</li>
+          <li>ED leader support &amp; training tools</li>
+          <li>Grant funding &amp; tax-deductible donations</li>
+          <li>Community workshops &amp; outreach</li>
+          <li>License use of brand/IP from Dan Devine</li>
+        </ul>
+      </div>
+      <div class="entity-card">
+        <div class="entity-card-header">
+          <span class="entity-type">C-Corporation · New York</span>
+          <div class="entity-name">My Civic Sphere</div>
+          <a href="https://www.mycivicsphere.com" target="_blank" class="entity-url">mycivicsphere.com · civicsphere.ai</a>
+        </div>
+        <ul class="entity-items">
+          <li>CivicSphere app &amp; platform technology</li>
+          <li>SaaS / subscription product features</li>
+          <li>Congress.gov API &amp; AI bill summaries</li>
+          <li>Commercial partnerships &amp; licensing</li>
+          <li>Investment-ready corporate structure</li>
+          <li>License use of brand/IP from Dan Devine</li>
+          <li>Can provide tech services to American Civic Power</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- RELATIONSHIP DIAGRAM -->
+  <section class="diagram-section">
+    <span class="section-eyebrow">Structure</span>
+    <h2 class="section-title">Inter-Entity Relationship Diagram</h2>
+    <div class="section-rule"></div>
+
+    <div class="diagram-box">
+      <div class="diagram-top">
+        <span class="diagram-node-label">Founder / Owner</span>
+        <div class="diagram-node-name">Dan Devine</div>
+        <div style="margin-top:1rem; text-align:center;">
+          <div class="diagram-trademark">
+            <span class="diagram-trademark-label">Trademarks (Personal)</span>
+            <span>CIVESTOR™ · CIVEST™</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="diagram-arrow-down">
+        <div class="arrow-line"></div>
+        <span>License Agreements (Fair Market Value)</span>
+        <div class="arrow-line"></div>
+      </div>
+
+      <div class="diagram-entities">
+        <div class="diagram-entity">
+          <span class="diagram-entity-type">501(c)(3) Nonprofit</span>
+          <div class="diagram-entity-name">American Civic Power</div>
+          <div class="diagram-entity-income">
+            <span class="income-tag">Grants · Donations</span>
+            <span class="income-tag">Educational Programs</span>
+            <span class="income-tag">Civic Workshops</span>
+          </div>
+        </div>
+        <div class="diagram-entity">
+          <span class="diagram-entity-type">C-Corp · New York</span>
+          <div class="diagram-entity-name">My Civic Sphere</div>
+          <div class="diagram-entity-income">
+            <span class="income-tag">App Revenue · SaaS</span>
+            <span class="income-tag">Investor Capital</span>
+            <span class="income-tag">Commercial Partnerships</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="diagram-service">
+        <div class="service-line">
+          <div class="service-hr"></div>
+          <div class="service-label">↕ Service Agreement · Fair Market Value</div>
+          <div class="service-hr"></div>
+        </div>
+        <div class="service-desc">Tech services from My Civic Sphere to ACP · Content licensing from ACP to My Civic Sphere</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AGREEMENTS TABLE -->
+  <section class="agreements-section">
+    <span class="section-eyebrow">Legal Framework</span>
+    <h2 class="section-title">Licensing &amp; Service Agreement Outline</h2>
+    <div class="section-rule"></div>
+
+    <p class="agreements-intro">The IRS requires that transactions between related nonprofit and for-profit entities occur at <strong>fair market value</strong>. Below are the core inter-entity agreements to establish with counsel.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Agreement</th>
+          <th>Parties</th>
+          <th>Key Terms</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Trademark License</td>
+          <td>Dan → ACP &amp; MCS</td>
+          <td>Royalty-free or nominal fee license to use CIVESTOR™ and CIVEST™ marks; defined scope and territory; termination clause if entity winds down.</td>
+        </tr>
+        <tr>
+          <td>Technology Services Agreement</td>
+          <td>MCS → ACP</td>
+          <td>My Civic Sphere provides app hosting, development, and tech support to ACP at documented fair market rates; invoiced quarterly; reviewed annually.</td>
+        </tr>
+        <tr>
+          <td>Content License</td>
+          <td>ACP → MCS</td>
+          <td>ACP licenses its civic education content and 12 Points framework for use in the MCS app; license fee at fair market value; non-exclusive.</td>
+        </tr>
+        <tr>
+          <td>Shared Services / Cost Allocation</td>
+          <td>Both entities</td>
+          <td>If staff, office, or systems are shared, a written cost allocation policy must document how expenses are split (IRS requirement for nonprofits).</td>
+        </tr>
+        <tr>
+          <td>Board Independence</td>
+          <td>Both entities</td>
+          <td>ACP board must be majority-independent; Dan may serve on both boards but conflict-of-interest policies must govern any inter-entity votes.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- NEXT STEPS -->
+  <section class="steps-section">
+    <span class="section-eyebrow">Action Plan</span>
+    <h2 class="section-title">Recommended Next Steps</h2>
+    <div class="section-rule"></div>
+
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <div class="step-title">Form My Civic Sphere C-Corp in New York</div>
+          <p class="step-text">File a Certificate of Incorporation with the NYS Department of State. Filing fee is $125. Registered agent address required. Consider using a registered agent service if you don't want your home address public.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <div class="step-title">Obtain EINs for Both Entities</div>
+          <p class="step-text">American Civic Power (if not already obtained) and My Civic Sphere each need a separate Federal EIN from the IRS. Free, done online at irs.gov.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <div class="step-title">File 501(c)(3) Application for ACP</div>
+          <p class="step-text">Use IRS Form 1023 (or 1023-EZ if eligible). Contact Lawyers Alliance for New York for pro bono or low-cost assistance. This process typically takes 3–6 months.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">04</div>
+        <div class="step-content">
+          <div class="step-title">File Trademark Applications</div>
+          <p class="step-text">File for CIVESTOR™ and CIVEST™ with the USPTO. Filing fees start at $250/class. Use an IP attorney or the Trademark Electronic Application System (TEAS). Holding marks personally is fine for now.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">05</div>
+        <div class="step-content">
+          <div class="step-title">Draft Inter-Entity Agreements with an Attorney</div>
+          <p class="step-text">Engage the Suffolk County Bar Association Lawyer Referral Service or Lawyers Alliance for NY. Service agreements, trademark licenses, and cost allocation policy should be in writing before either entity generates revenue or applies for grants.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">06</div>
+        <div class="step-content">
+          <div class="step-title">Open Separate Bank Accounts</div>
+          <p class="step-text">Never commingle funds. ACP should open a nonprofit checking account; MCS a business checking account. Required for both IRS compliance and investor credibility.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <span class="footer-copy">American Civic Power · My Civic Sphere · Dual-Entity Planning Document · April 2026</span>
+  <span class="footer-disclaimer">This document is for planning purposes only and does not constitute legal or tax advice.</span>
+</footer>
+
+</body>
+</html>

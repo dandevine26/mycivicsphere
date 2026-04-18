@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Civic Sphere · 12 Points Governance Assessment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:    #0D1F3C;
+    --cobalt:  #1A3A6B;
+    --sky:     #2E6FBB;
+    --gold:    #C8A84B;
+    --gold-lt: #D4B86A;
+    --cream:   #F5F0E8;
+    --offwhite:#FAF8F4;
+    --charcoal:#2A2A2A;
+    --mid:     #6B7280;
+    --rule:    rgba(200,168,75,0.25);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+
+  body {
+    padding-top: 6px; /* rainbow band height */
+    background: var(--offwhite);
+    color: var(--charcoal);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  
+  /* ── HERO ── */
+  #hero {
+    background: var(--navy);
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative; overflow: hidden;
+  }
+  .hero-grid-bg {
+    position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 79px, rgba(200,168,75,0.04) 79px, rgba(200,168,75,0.04) 80px),
+      repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(200,168,75,0.04) 79px, rgba(200,168,75,0.04) 80px);
+    pointer-events: none;
+  }
+  .hero-left {
+    padding: 9rem 4rem 5rem 5rem;
+    position: relative; z-index: 2;
+    display: flex; flex-direction: column; justify-content: center;
+    border-right: 1px solid var(--rule);
+  }
+  .hero-eyebrow {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.72rem; letter-spacing: 0.45em;
+    color: var(--gold); margin-bottom: 1.25rem; display: block;
+    opacity: 0; animation: fadeUp 0.7s 0.2s forwards;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 4.5vw, 4rem);
+    font-weight: 900; color: var(--cream);
+    line-height: 1.05; margin-bottom: 1rem;
+    opacity: 0; animation: fadeUp 0.7s 0.35s forwards;
+  }
+  .hero-title em { color: var(--gold); font-style: italic; font-weight: 400; display: block; }
+  .hero-sub {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem; font-weight: 300; font-style: italic;
+    color: rgba(245,240,232,0.55); line-height: 1.7;
+    margin-bottom: 2.5rem; max-width: 420px;
+    opacity: 0; animation: fadeUp 0.7s 0.5s forwards;
+  }
+  .hero-price {
+    display: flex; align-items: baseline; gap: 0.5rem;
+    margin-bottom: 2rem;
+    opacity: 0; animation: fadeUp 0.7s 0.65s forwards;
+  }
+  .hero-price-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem; color: var(--gold); line-height: 1;
+  }
+  .hero-price-detail {
+    font-size: 0.82rem; color: rgba(245,240,232,0.45); line-height: 1.5;
+  }
+  .hero-ctas {
+    display: flex; gap: 0.75rem; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 0.7s 0.8s forwards;
+  }
+  .btn-gold {
+    padding: 0.9rem 2.25rem;
+    background: var(--gold); color: var(--navy);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    border: none; cursor: pointer; text-decoration: none;
+    transition: background 0.2s, transform 0.2s; display: inline-block;
+  }
+  .btn-gold:hover { background: var(--gold-lt); transform: translateY(-2px); }
+  .btn-ghost {
+    padding: 0.9rem 2.25rem;
+    background: transparent; color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    border: 1px solid var(--rule); cursor: pointer; text-decoration: none;
+    transition: border-color 0.2s, color 0.2s, transform 0.2s; display: inline-block;
+  }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+  .hero-right {
+    padding: 9rem 4rem 5rem 4rem;
+    position: relative; z-index: 2;
+    display: flex; flex-direction: column; justify-content: center;
+    gap: 1px;
+    opacity: 0; animation: fadeIn 1s 1s forwards;
+  }
+  .hero-point {
+    display: flex; gap: 1rem; align-items: flex-start;
+    padding: 1rem 1.25rem;
+    background: rgba(26,58,107,0.35);
+    border-left: 2px solid transparent;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .hero-point:hover { border-left-color: var(--gold); background: rgba(26,58,107,0.6); }
+  .point-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem; color: rgba(200,168,75,0.4);
+    line-height: 1; flex-shrink: 0; min-width: 22px;
+  }
+  .point-name {
+    font-size: 0.82rem; font-weight: 500;
+    color: rgba(245,240,232,0.75); line-height: 1.3;
+  }
+
+  /* ── SECTIONS ── */
+  section { position: relative; }
+  .container { max-width: 1060px; margin: 0 auto; padding: 0 3rem; }
+  .sec-eyebrow {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.72rem; letter-spacing: 0.4em;
+    color: var(--gold); display: block; margin-bottom: 0.5rem;
+  }
+  .sec-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.7rem, 3vw, 2.5rem);
+    font-weight: 700; color: var(--navy);
+    line-height: 1.15; margin-bottom: 0.75rem;
+  }
+  .sec-rule { width: 44px; height: 2px; background: var(--gold); margin-bottom: 2.5rem; }
+
+  /* ── WHAT YOU GET ── */
+  #what { padding: 6rem 0; background: white; }
+  .what-grid {
+    display: grid; grid-template-columns: repeat(3,1fr);
+    gap: 1.5px; background: rgba(0,0,0,0.06);
+    border: 1.5px solid rgba(0,0,0,0.06);
+  }
+  .what-card {
+    background: white; padding: 2rem 1.75rem;
+    transition: background 0.3s;
+  }
+  .what-card:hover { background: var(--offwhite); }
+  .what-icon { font-size: 1.75rem; margin-bottom: 0.85rem; display: block; }
+  .what-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem; font-weight: 700;
+    color: var(--navy); margin-bottom: 0.5rem; line-height: 1.2;
+  }
+  .what-text { font-size: 0.83rem; font-weight: 300; color: var(--mid); line-height: 1.7; }
+
+  /* ── HOW IT WORKS ── */
+  #how { padding: 6rem 0; background: var(--offwhite); }
+  .how-steps {
+    display: grid; grid-template-columns: repeat(4,1fr);
+    gap: 0; position: relative;
+  }
+  .how-steps::before {
+    content: '';
+    position: absolute; top: 28px; left: 14%; right: 14%;
+    height: 1px; background: var(--rule); z-index: 0;
+  }
+  .how-step { text-align: center; padding: 0 1.25rem; }
+  .how-step-circle {
+    width: 56px; height: 56px;
+    background: var(--navy); border: 2px solid var(--gold);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem; color: var(--gold);
+    margin: 0 auto 1rem; position: relative; z-index: 1;
+  }
+  .how-step-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem; font-weight: 700;
+    color: var(--navy); margin-bottom: 0.4rem; line-height: 1.2;
+  }
+  .how-step-text { font-size: 0.8rem; font-weight: 300; color: var(--mid); line-height: 1.6; }
+
+  /* ── SAMPLE REPORT ── */
+  #sample { padding: 6rem 0; background: white; }
+  .sample-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 3rem; align-items: center;
+  }
+  .sample-preview {
+    background: var(--navy);
+    padding: 2rem;
+    border: 1px solid var(--rule);
+  }
+  .sample-score-row {
+    display: flex; flex-direction: column; gap: 0.6rem;
+    margin-bottom: 1.5rem;
+  }
+  .sample-dim {
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .sample-dim-name {
+    font-size: 0.72rem; font-weight: 500;
+    color: rgba(245,240,232,0.65); min-width: 150px;
+  }
+  .sample-bar-wrap { flex: 1; height: 5px; background: rgba(255,255,255,0.1); }
+  .sample-bar { height: 100%; }
+  .sample-score-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.85rem; min-width: 20px; text-align: right;
+  }
+  .s-green { background: #22C55E; color: #22C55E; }
+  .s-gold  { background: var(--gold); color: var(--gold); }
+  .s-red   { background: #EF4444; color: #EF4444; }
+
+  .sample-total {
+    border-top: 1px solid var(--rule);
+    padding-top: 1rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .sample-total-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.7rem; letter-spacing: 0.25em; color: var(--gold);
+  }
+  .sample-total-score {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem; color: var(--gold); line-height: 1;
+  }
+
+  /* ── PRICING ── */
+  #pricing { padding: 6rem 0; background: var(--navy); }
+  #pricing .sec-title { color: var(--cream); }
+  .pricing-grid {
+    display: grid; grid-template-columns: 1fr 1.2fr 1fr;
+    gap: 1.5px; background: var(--rule); border: 1.5px solid var(--rule);
+  }
+  .pricing-card {
+    background: var(--cobalt); padding: 2.5rem 2rem;
+    transition: background 0.3s; position: relative;
+  }
+  .pricing-card:hover { background: rgba(46,111,187,0.35); }
+  .pricing-card.featured { background: rgba(200,168,75,0.08); }
+  .pricing-card.featured::before {
+    content: 'Most Popular';
+    position: absolute; top: -1px; left: 50%; transform: translateX(-50%);
+    background: var(--gold); color: var(--navy);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.6rem; letter-spacing: 0.2em;
+    padding: 0.2rem 0.8rem;
+  }
+  .pricing-type {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.65rem; letter-spacing: 0.3em;
+    color: rgba(200,168,75,0.6); display: block; margin-bottom: 0.4rem;
+  }
+  .pricing-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem; font-weight: 700;
+    color: var(--cream); margin-bottom: 1rem;
+  }
+  .pricing-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem; color: var(--gold); line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .pricing-price-label {
+    font-size: 0.72rem; color: rgba(245,240,232,0.4);
+    margin-bottom: 1.5rem; display: block;
+  }
+  .pricing-divider {
+    height: 1px; background: var(--rule); margin-bottom: 1.25rem;
+  }
+  .pricing-items {
+    list-style: none; display: flex; flex-direction: column; gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+  .pricing-items li {
+    font-size: 0.8rem; font-weight: 300;
+    color: rgba(245,240,232,0.7);
+    padding-left: 1rem; position: relative; line-height: 1.4;
+  }
+  .pricing-items li::before {
+    content: '→'; position: absolute; left: 0;
+    color: var(--gold); font-size: 0.7rem;
+  }
+  .pricing-btn {
+    width: 100%; padding: 0.8rem;
+    background: var(--gold); color: var(--navy);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    border: none; cursor: pointer; transition: background 0.2s;
+  }
+  .pricing-btn:hover { background: var(--gold-lt); }
+  .pricing-btn.ghost {
+    background: transparent; color: rgba(245,240,232,0.6);
+    border: 1px solid var(--rule);
+  }
+  .pricing-btn.ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ── FAQ ── */
+  #faq { padding: 6rem 0; background: var(--offwhite); }
+  .faq-list { display: flex; flex-direction: column; gap: 0; }
+  .faq-item {
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+  .faq-q {
+    width: 100%; text-align: left; padding: 1.25rem 0;
+    background: transparent; border: none; cursor: pointer;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem; font-weight: 700; color: var(--navy);
+    line-height: 1.3;
+  }
+  .faq-q:hover { color: var(--sky); }
+  .faq-icon {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem; color: var(--gold);
+    transition: transform 0.3s; flex-shrink: 0; margin-left: 1rem;
+  }
+  .faq-item.open .faq-icon { transform: rotate(45deg); }
+  .faq-a {
+    display: none; padding: 0 0 1.25rem;
+    font-size: 0.88rem; font-weight: 300;
+    color: var(--mid); line-height: 1.75;
+  }
+  .faq-item.open .faq-a { display: block; }
+
+  /* ── CTA BANNER ── */
+  #cta {
+    padding: 5rem 0;
+    background: var(--navy);
+    text-align: center;
+    border-top: 3px solid var(--gold);
+  }
+  .cta-eyebrow {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.72rem; letter-spacing: 0.45em;
+    color: var(--gold); display: block; margin-bottom: 1rem;
+  }
+  .cta-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3.5vw, 3rem);
+    font-weight: 700; color: var(--cream);
+    line-height: 1.15; margin-bottom: 1rem;
+  }
+  .cta-sub {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem; font-style: italic; font-weight: 300;
+    color: rgba(245,240,232,0.5); line-height: 1.7;
+    max-width: 520px; margin: 0 auto 2.5rem;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #060F1E; padding: 2rem 3rem;
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid var(--rule); flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem; letter-spacing: 0.15em; color: var(--gold);
+  }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a {
+    font-size: 0.7rem; font-weight: 500; letter-spacing: 0.08em;
+    text-transform: uppercase; color: rgba(245,240,232,0.3);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-copy { font-size: 0.65rem; color: rgba(245,240,232,0.2); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  .reveal { opacity: 1; transform: none; transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.animate-ready { opacity: 0; transform: translateY(24px); }
+  .reveal.animate-ready.visible { opacity: 1; transform: none; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    #hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .container { padding: 0 1.5rem; }
+    .what-grid { grid-template-columns: 1fr 1fr; }
+    .how-steps { grid-template-columns: 1fr 1fr; }
+    .how-steps::before { display: none; }
+    .sample-grid { grid-template-columns: 1fr; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; text-align: center; }
+  }
+  @media (max-width: 600px) {
+    .what-grid { grid-template-columns: 1fr; }
+    .how-steps { grid-template-columns: 1fr; }
+  }
+
+  /* ── CIVIC SPHERE HEADER ── */
+  .cs-rainbow-header {
+    position: relative; top: 0; left: 0; right: 0; z-index: 200;
+  }
+  .cs-nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.7rem 2.5rem;
+    background: #0D1B2E;
+  }
+  .cs-brand {
+    display: flex; align-items: center; gap: 0.65rem;
+    text-decoration: none;
+  }
+  .cs-logo-svg { width: 38px; height: 38px; flex-shrink: 0; }
+  .cs-wordmark-wrap { display: flex; flex-direction: column; justify-content: center; }
+  .cs-wordmark {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.15rem; letter-spacing: 0.12em;
+    color: #ffffff; line-height: 1;
+  }
+  .cs-subtitle {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.58rem; font-weight: 400;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: rgba(245,240,232,0.45);
+    margin-top: 0.1rem; line-height: 1;
+  }
+  .cs-rainbow-band {
+    display: flex; height: 3px; width: 100%;
+  }
+  .cs-rainbow-band span { flex: 1; }
+
+  .nav-vote {
+    padding: 0.55rem 1.4rem;
+    background: var(--gold); color: var(--navy);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem; font-weight: 500;
+    border-radius: 4px;
+    text-decoration: none; white-space: nowrap;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .nav-vote:hover { background: #d4b060; transform: translateY(-1px); }
+
+
+/* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.9rem 3rem;
+    background: #0D1F3C;
+    backdrop-filter: blur(10px);
+  }
+  .nav-rainbow {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(to right,
+      #1A8A7B 8.33%,   /* 01 Rule of Law - teal */
+      #27AE60 16.66%,  /* 02 Transparency - green */
+      #7D9B3A 25%,     /* 03 Accountability - olive */
+      #E67E22 33.33%,  /* 04 Participation - orange */
+      #E05A3A 41.66%,  /* 05 Consensus - red-orange */
+      #7D3C98 50%,     /* 06 Equity - purple */
+      #A93226 58.33%,  /* 07 Effectiveness - dark red */
+      #7B8EC8 66.66%,  /* 08 Responsiveness - slate blue */
+      #7D6608 75%,     /* 09 Strategic Vision - olive brown */
+      #D4AC0D 83.33%,  /* 10 Ethical Leadership - gold */
+      #1A3A5C 91.66%,  /* 11 Separation - dark navy */
+      #2E86C1 100%     /* 12 Local Power - sky blue */
+    );
+  }
+  .nav-brand {
+    display: flex; align-items: center; gap: 0.85rem;
+    text-decoration: none;
+  }
+  .nav-brand-logo {
+    width: 38px; height: 38px;
+    flex-shrink: 0;
+  }
+  .nav-brand-logo svg { width: 100%; height: 100%; }
+  .nav-brand-info {
+    display: flex; flex-direction: column; gap: 0;
+  }
+  .nav-brand-name {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.05rem; font-weight: 500;
+    color: white; letter-spacing: 0.02em;
+    line-height: 1.2;
+  }
+  .nav-brand-sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.6rem; font-weight: 400;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.2;
+  }
+  .nav-links { display: flex; gap: 2.2rem; list-style: none; align-items: center; }
+  .nav-links a {
+    font-size: 0.82rem; font-weight: 400;
+    color: rgba(255,255,255,0.85); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: white; }
+  .nav-vote {
+    padding: 0.55rem 1.4rem;
+    background: var(--gold); color: var(--navy);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem; font-weight: 500;
+    border-radius: 4px;
+    text-decoration: none; white-space: nowrap;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .nav-vote:hover { background: #d4b060; transform: translateY(-1px); }
+
+/* ── SERVICES DROPDOWN ── */
+  .nav-dropdown { position: relative; }
+  .nav-dropdown-trigger {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem; font-weight: 400;
+    color: rgba(255,255,255,0.85);
+    padding: 0;
+    letter-spacing: 0;
+    transition: color 0.2s;
+    display: flex; align-items: center; gap: 0.35rem;
+  }
+  .nav-dropdown-trigger:hover { color: white; }
+  .nav-dropdown.open .nav-dropdown-trigger { color: var(--gold); }
+  .nav-dropdown-menu {
+    display: none;
+    position: absolute; top: calc(100% + 8px); left: 50%;
+    transform: translateX(-50%);
+    background: #0D1F3C;
+    border: 1px solid rgba(200,168,75,0.2);
+    border-top: 2px solid var(--gold);
+    min-width: 230px;
+    z-index: 200;
+    padding: 0.5rem 0;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  }
+  .nav-dropdown.open .nav-dropdown-menu { display: block; }
+  .nav-dropdown-menu a {
+    display: block;
+    padding: 0.6rem 1.25rem;
+    font-size: 0.78rem; font-weight: 400;
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+    border-left: 2px solid transparent;
+  }
+  .nav-dropdown-menu a:hover {
+    background: rgba(200,168,75,0.08);
+    color: var(--gold);
+    border-left-color: var(--gold);
+  }
+  .nav-dropdown-divider {
+    height: 1px;
+    background: rgba(200,168,75,0.15);
+    margin: 0.4rem 0;
+  }
+  .nav-dropdown-label {
+    padding: 0.3rem 1.25rem 0.1rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.6rem; letter-spacing: 0.3em;
+    color: rgba(200,168,75,0.5);
+  }
+</style>
+</head>
+<body>
+<!-- NAV -->
+<nav>
+  <div class="nav-rainbow"></div>
+  <a href="https://www.mycivicsphere.com" class="nav-brand">
+    <div class="nav-brand-logo">
+      <svg viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg">
+        <!-- Hexagon background -->
+        <polygon points="19,2 34,10.5 34,27.5 19,36 4,27.5 4,10.5" fill="#1A3A6B" stroke="#2E6FBB" stroke-width="1"/>
+        <!-- Connection lines -->
+        <line x1="19" y1="8" x2="19" y2="30" stroke="rgba(200,168,75,0.5)" stroke-width="0.5"/>
+        <line x1="8" y1="14" x2="30" y2="24" stroke="rgba(200,168,75,0.5)" stroke-width="0.5"/>
+        <line x1="30" y1="14" x2="8" y2="24" stroke="rgba(200,168,75,0.5)" stroke-width="0.5"/>
+        <!-- Colored dots around hexagon -->
+        <circle cx="19" cy="4"  r="2.5" fill="#1A8A7B"/>
+        <circle cx="30" cy="10" r="2.5" fill="#27AE60"/>
+        <circle cx="33" cy="19" r="2.5" fill="#E67E22"/>
+        <circle cx="30" cy="28" r="2.5" fill="#7D3C98"/>
+        <circle cx="19" cy="34" r="2.5" fill="#7B8EC8"/>
+        <circle cx="8"  cy="28" r="2.5" fill="#D4AC0D"/>
+        <circle cx="5"  cy="19" r="2.5" fill="#1A3A5C"/>
+        <circle cx="8"  cy="10" r="2.5" fill="#2E86C1"/>
+        <!-- Center dot -->
+        <circle cx="19" cy="19" r="3" fill="white"/>
+      </svg>
+    </div>
+    <div class="nav-brand-info">
+      <span class="nav-brand-name">CivicSphere</span>
+      <span class="nav-brand-sub">Direct Democracy Platform</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#points">Governance</a></li>
+    <li><a href="#slides">Framework</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li class="nav-dropdown">
+      <button class="nav-dropdown-trigger" onclick="toggleDropdown(this)" type="button">Services ▾</button>
+      <div class="nav-dropdown-menu">
+        <div class="nav-dropdown-label">For Campaigns</div>
+        <a href="civicsphere-campaigns.html">Campaign Services</a>
+        <div class="nav-dropdown-divider"></div>
+        <div class="nav-dropdown-label">For Nonprofits</div>
+        <a href="civicsphere-nonprofits.html">Nonprofit Services</a>
+        <div class="nav-dropdown-divider"></div>
+        <div class="nav-dropdown-label">Client Tools</div>
+        <a href="civicsphere-portal.html">Client Portal</a>
+        <a href="governance-assessment-landing.html">Governance Assessment</a>
+        <div class="nav-dropdown-divider"></div>
+        <div class="nav-dropdown-label">Documents</div>
+        <a href="civic-dual-entity-structure.html">Entity Structure</a>
+      </div>
+    </li>
+    <li><a href="/content">Content</a></li>
+    <li><a href="/civestor">Civestor</a></li>
+    <li><a href="https://vote.gov" target="_blank" class="nav-vote">Vote Now →</a></li>
+  </ul>
+</nav>
+<script>
+function toggleDropdown(btn) {
+  var li = btn.closest('.nav-dropdown');
+  var isOpen = li.classList.contains('open');
+  document.querySelectorAll('.nav-dropdown').forEach(function(d) {
+    d.classList.remove('open');
+  });
+  if (!isOpen) li.classList.add('open');
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.nav-dropdown')) {
+    document.querySelectorAll('.nav-dropdown').forEach(function(d) {
+      d.classList.remove('open');
+    });
+  }
+});
+</script>
+<div style="height:60px;"></div>
+
+  <!-- CIVIC SPHERE HEADER -->
+  <div class="cs-rainbow-header">
+    <div class="cs-nav">
+      <a href="https://www.mycivicsphere.com" class="cs-brand">
+        <svg class="cs-logo-svg" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="22.0,6.0 35.9,14.0 35.9,30.0 22.0,38.0 8.1,30.0 8.1,14.0" fill="#1A2E4A" stroke="rgba(200,168,75,0.5)" stroke-width="1"/><circle cx="22.0" cy="6.0" r="2.2" fill="#3ECFB0"/><circle cx="35.9" cy="14.0" r="2.2" fill="#4A90D9"/><circle cx="35.9" cy="30.0" r="2.2" fill="#9B59B6"/><circle cx="22.0" cy="38.0" r="2.2" fill="#E74C3C"/><circle cx="8.1" cy="30.0" r="2.2" fill="#F39C12"/><circle cx="8.1" cy="14.0" r="2.2" fill="#27AE60"/><circle cx="22" cy="22" r="3.2" fill="white"/></svg>
+        <div class="cs-wordmark-wrap">
+          <span class="cs-wordmark">CivicSphere</span>
+          <span class="cs-subtitle">Direct Democracy Platform</span>
+        </div>
+      </a>
+      <div class="nav-right">
+        <a href="#how" class="nav-link">How It Works</a>
+        <a href="#pricing" class="nav-link">Pricing</a>
+        <a href="#faq" class="nav-link">FAQ</a>
+        <a href="governance-assessment-questionnaire.html" class="nav-btn">Start Assessment →</a>
+      </div>
+      <a href="https://www.mycivicsphere.com" style="font-family:'DM Sans',sans-serif;font-size:0.72rem;font-weight:400;letter-spacing:0.08em;color:rgba(245,240,232,0.55);text-decoration:none;margin-right:auto;padding-left:1.5rem;transition:color 0.2s;" onmouseover="this.style.color='#C8A84B'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">← mycivicsphere.com</a>
+    </div>
+    <div class="cs-rainbow-band">
+      <span style="background:#E63946"></span><span style="background:#F4722B"></span><span style="background:#F9C74F"></span><span style="background:#90BE6D"></span><span style="background:#43AA8B"></span><span style="background:#4D908E"></span><span style="background:#4361EE"></span><span style="background:#7209B7"></span><span style="background:#B5179E"></span><span style="background:#2E6FBB"></span><span style="background:#C8A84B"></span><span style="background:#2E8B57"></span>
+    </div>
+  </div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-left">
+    <span class="hero-eyebrow">Civic Sphere · 12 Points of Good Governance</span>
+    <h1 class="hero-title">Know Where<br>You Stand.<em>Govern Better.</em></h1>
+    <p class="hero-sub">A comprehensive governance assessment for nonprofits and civic organizations — scored against 12 proven principles of democratic best practice.</p>
+    <div class="hero-price">
+      <div class="hero-price-num">$500</div>
+      <div class="hero-price-detail">One-time assessment fee<br>Includes full written report + 60-min debrief call</div>
+    </div>
+    <div class="hero-ctas">
+      <a href="governance-assessment-questionnaire.html" class="btn-gold">Start the Assessment →</a>
+      <a href="#what" class="btn-ghost">See What's Included</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-point"><span class="point-num">01</span><span class="point-name">Rule of Law</span></div>
+    <div class="hero-point"><span class="point-num">02</span><span class="point-name">Transparency</span></div>
+    <div class="hero-point"><span class="point-num">03</span><span class="point-name">Accountability</span></div>
+    <div class="hero-point"><span class="point-num">04</span><span class="point-name">Participation</span></div>
+    <div class="hero-point"><span class="point-num">05</span><span class="point-name">Local Power</span></div>
+    <div class="hero-point"><span class="point-num">06</span><span class="point-name">Separation of Powers</span></div>
+    <div class="hero-point"><span class="point-num">07</span><span class="point-name">Equity & Inclusion</span></div>
+    <div class="hero-point"><span class="point-num">08</span><span class="point-name">Civic Education</span></div>
+    <div class="hero-point"><span class="point-num">09</span><span class="point-name">Free Communication</span></div>
+    <div class="hero-point"><span class="point-num">10</span><span class="point-name">Democratic Process</span></div>
+    <div class="hero-point"><span class="point-num">11</span><span class="point-name">Civil Rights</span></div>
+    <div class="hero-point"><span class="point-num">12</span><span class="point-name">Public Trust</span></div>
+  </div>
+</section>
+
+<!-- WHAT YOU GET -->
+<section id="what">
+  <div class="container" style="padding-top:6rem;padding-bottom:6rem;">
+    <span class="sec-eyebrow">What's Included</span>
+    <h2 class="sec-title reveal">Everything You Need to Govern Better.</h2>
+    <div class="sec-rule"></div>
+    <div class="what-grid reveal">
+      <div class="what-card">
+        <span class="what-icon">📋</span>
+        <div class="what-title">Comprehensive Questionnaire</div>
+        <p class="what-text">A structured 20–30 minute intake questionnaire covering all 12 governance dimensions. Designed to surface both strengths and hidden gaps across your organization's policies, culture, and practices.</p>
+      </div>
+      <div class="what-card">
+        <span class="what-icon">📊</span>
+        <div class="what-title">Governance Health Report</div>
+        <p class="what-text">A custom 6–10 page written report prepared by Dan Devine within 3–5 business days. Includes dimension-by-dimension scores, specific findings, and a prioritized 90-day action plan.</p>
+      </div>
+      <div class="what-card">
+        <span class="what-icon">📞</span>
+        <div class="what-title">60-Minute Debrief Call</div>
+        <p class="what-text">A scheduled call with Dan to walk through every finding, answer your questions, and discuss the path forward. This is where the real value lives — honest conversation about what the numbers mean for your specific organization.</p>
+      </div>
+      <div class="what-card">
+        <span class="what-icon">🏛</span>
+        <div class="what-title">12 Points Framework</div>
+        <p class="what-text">Your report is grounded in the 12 Points of Good Governance — an original civic education framework developed by Dan Devine covering the foundational principles of democratic organizational health.</p>
+      </div>
+      <div class="what-card">
+        <span class="what-icon">🗺</span>
+        <div class="what-title">90-Day Action Roadmap</div>
+        <p class="what-text">Every report concludes with a sequenced, prioritized action plan — not a vague list of suggestions. You'll know exactly what to tackle first, why it matters, and how to make it happen.</p>
+      </div>
+      <div class="what-card">
+        <span class="what-icon">🔒</span>
+        <div class="what-title">Fully Confidential</div>
+        <p class="what-text">Your responses and report are strictly confidential. They are used only to prepare your assessment and are never shared, published, or referenced without your explicit consent.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="container" style="padding-top:6rem;padding-bottom:6rem;">
+    <span class="sec-eyebrow">Process</span>
+    <h2 class="sec-title reveal">Simple. Structured. Actionable.</h2>
+    <div class="sec-rule"></div>
+    <div class="how-steps reveal">
+      <div class="how-step">
+        <div class="how-step-circle">01</div>
+        <div class="how-step-title">Complete the Questionnaire</div>
+        <p class="how-step-text">20–30 minutes online. Answer honestly — the more candid your responses, the more useful your report.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-step-circle">02</div>
+        <div class="how-step-title">Dan Reviews Your Responses</div>
+        <p class="how-step-text">Within 3–5 business days, Dan analyzes your answers across all 12 dimensions and prepares your custom report.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-step-circle">03</div>
+        <div class="how-step-title">Receive Your Report</div>
+        <p class="how-step-text">Your Governance Health Report is delivered by email — scored, written, and actionable. No generic templates.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-step-circle">04</div>
+        <div class="how-step-title">Debrief & Plan Together</div>
+        <p class="how-step-text">Your 60-minute debrief call with Dan brings the report to life and sets your governance improvement plan in motion.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SAMPLE SCORECARD PREVIEW -->
+<section id="sample">
+  <div class="container" style="padding-top:6rem;padding-bottom:6rem;">
+    <span class="sec-eyebrow">Sample Output</span>
+    <h2 class="sec-title reveal">What Your Scorecard Looks Like</h2>
+    <div class="sec-rule"></div>
+    <div class="sample-grid">
+      <div class="reveal">
+        <p style="font-size:0.9rem;font-weight:300;color:var(--mid);line-height:1.8;margin-bottom:1.5rem;">Every dimension is scored on a 1–5 scale based on your questionnaire responses. Your report includes not just the scores but the narrative context behind each one — what they mean for your specific organization and what to do about them.</p>
+        <p style="font-size:0.9rem;font-weight:300;color:var(--mid);line-height:1.8;margin-bottom:1.5rem;">Scores are color-coded: <strong style="color:#166534;">Green (4–5)</strong> indicates strong governance practice, <strong style="color:#D97706;">Gold (3)</strong> indicates adequate but improvable, and <strong style="color:#991B1B;">Red (1–2)</strong> indicates a significant gap requiring prompt attention.</p>
+        <p style="font-size:0.9rem;font-weight:300;color:var(--mid);line-height:1.8;">The overall score out of 60 gives you a single governance health benchmark you can track over time — and use in grant applications, board recruitment, and stakeholder communications.</p>
+      </div>
+      <div class="sample-preview reveal">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:0.65rem;letter-spacing:0.3em;color:rgba(200,168,75,0.5);margin-bottom:1rem;">Sample Governance Scorecard</div>
+        <div class="sample-score-row">
+          <div class="sample-dim">
+            <span class="sample-dim-name">Rule of Law</span>
+            <div class="sample-bar-wrap"><div class="sample-bar s-gold" style="width:60%"></div></div>
+            <span class="sample-score-val s-gold">3.0</span>
+          </div>
+          <div class="sample-dim">
+            <span class="sample-dim-name">Transparency</span>
+            <div class="sample-bar-wrap"><div class="sample-bar s-green" style="width:80%"></div></div>
+            <span class="sample-score-val s-green">4.0</span>
+          </div>
+          <div class="sample-dim">
+            <span class="sample-dim-name">Accountability</span>
+            <div class="sample-bar-wrap"><div class="sample-bar s-red" style="width:25%"></div></div>
+            <span class="sample-score-val s-red">1.5</span>
+          </div>
+          <div class="sample-dim">
+            <span class="sample-dim-name">Participation</span>
+            <div class="sample-bar-wrap"><div class="sample-bar s-green" style="width:70%"></div></div>
+            <span class="sample-score-val s-green">3.5</span>
+          </div>
+          <div class="sample-dim">
+            <span class="sample-dim-name">Local Power</span>
+            <div class="sample-bar-wrap"><div class="sample-bar s-green" style="width:90%"></div></div>
+            <span class="sample-score-val s-green">4.5</span>
+          </div>
+          <div class="sample-dim">
+            <span class="sample-dim-name">Separation of Powers</span>
+            <div class="sample-bar-wrap"><div class="sample-bar s-red" style="width:30%"></div></div>
+            <span class="sample-score-val s-red">2.0</span>
+          </div>
+          <div class="sample-dim">
+            <span class="sample-dim-name">Equity & Inclusion</span>
+            <div class="sample-bar-wrap"><div class="sample-bar s-gold" style="width:55%"></div></div>
+            <span class="sample-score-val s-gold">3.0</span>
+          </div>
+          <div class="sample-dim">
+            <span class="sample-dim-name">Civic Education</span>
+            <div class="sample-bar-wrap"><div class="sample-bar s-green" style="width:85%"></div></div>
+            <span class="sample-score-val s-green">4.5</span>
+          </div>
+          <div class="sample-dim">
+            <span class="sample-dim-name">Free Communication</span>
+            <div class="sample-bar-wrap"><div class="sample-bar s-gold" style="width:65%"></div></div>
+            <span class="sample-score-val s-gold">3.5</span>
+          </div>
+          <div class="sample-dim">
+            <span class="sample-dim-name">Democratic Process</span>
+            <div class="sample-bar-wrap"><div class="sample-bar s-green" style="width:75%"></div></div>
+            <span class="sample-score-val s-green">4.0</span>
+          </div>
+          <div class="sample-dim">
+            <span class="sample-dim-name">Civil Rights</span>
+            <div class="sample-bar-wrap"><div class="sample-bar s-gold" style="width:60%"></div></div>
+            <span class="sample-score-val s-gold">3.0</span>
+          </div>
+          <div class="sample-dim">
+            <span class="sample-dim-name">Public Trust</span>
+            <div class="sample-bar-wrap"><div class="sample-bar s-green" style="width:75%"></div></div>
+            <span class="sample-score-val s-green">4.0</span>
+          </div>
+        </div>
+        <div class="sample-total">
+          <span class="sample-total-label">Overall Score</span>
+          <span class="sample-total-score">40.5 <span style="font-size:1rem;opacity:0.4;">/ 60</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="container" style="padding-top:6rem;padding-bottom:6rem;">
+    <span class="sec-eyebrow" style="color:var(--gold);">Pricing</span>
+    <h2 class="sec-title reveal">Simple, Transparent Pricing.</h2>
+    <div class="sec-rule"></div>
+    <div class="pricing-grid reveal">
+      <div class="pricing-card">
+        <span class="pricing-type">Basic</span>
+        <div class="pricing-name">Assessment Only</div>
+        <div class="pricing-price">$350</div>
+        <span class="pricing-price-label">One-time fee</span>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-items">
+          <li>Full 12-point questionnaire</li>
+          <li>Written Governance Health Report</li>
+          <li>Dimension-by-dimension scores</li>
+          <li>Prioritized 90-day action plan</li>
+          <li>Delivered within 5 business days</li>
+        </ul>
+        <button class="pricing-btn ghost" onclick="window.location.href='governance-assessment-questionnaire.html'">Get Started</button>
+      </div>
+
+      <div class="pricing-card featured">
+        <span class="pricing-type">Complete</span>
+        <div class="pricing-name">Assessment + Debrief</div>
+        <div class="pricing-price">$500</div>
+        <span class="pricing-price-label">One-time fee · Most popular</span>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-items">
+          <li>Everything in Basic</li>
+          <li>60-minute debrief call with Dan</li>
+          <li>Walk-through of every finding</li>
+          <li>Live Q&A and strategic discussion</li>
+          <li>Retainer proposal if desired</li>
+          <li>Delivered within 3 business days</li>
+        </ul>
+        <button class="pricing-btn" onclick="window.location.href='governance-assessment-questionnaire.html'">Start Assessment →</button>
+      </div>
+
+      <div class="pricing-card">
+        <span class="pricing-type">Advanced</span>
+        <div class="pricing-name">Assessment + Follow-Up</div>
+        <div class="pricing-price">$750</div>
+        <span class="pricing-price-label">One-time fee</span>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-items">
+          <li>Everything in Complete</li>
+          <li>Second 30-min check-in at 60 days</li>
+          <li>Progress review against action plan</li>
+          <li>Updated recommendations</li>
+          <li>Priority scheduling for retainer</li>
+        </ul>
+        <button class="pricing-btn ghost" onclick="window.location.href='governance-assessment-questionnaire.html'">Get Started</button>
+      </div>
+    </div>
+
+    <p style="text-align:center;margin-top:1.5rem;font-size:0.78rem;color:rgba(245,240,232,0.3);font-style:italic;">Fee can be applied as a credit toward a Civic Sphere monthly retainer engagement.</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="container" style="padding-top:6rem;padding-bottom:6rem;">
+    <span class="sec-eyebrow">FAQ</span>
+    <h2 class="sec-title reveal">Questions Answered.</h2>
+    <div class="sec-rule"></div>
+    <div class="faq-list reveal" style="max-width:720px;">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">Who is this assessment for?<span class="faq-icon">+</span></button>
+        <div class="faq-a">This assessment is designed for nonprofits, civic organizations, political campaigns, Democratic clubs and committees, community organizations, and any group that wants an honest, structured look at how well it's governed. It's especially useful for organizations that are growing, seeking grants, rebuilding trust, or preparing for leadership transitions.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">How long does the questionnaire take?<span class="faq-icon">+</span></button>
+        <div class="faq-a">Most respondents complete it in 20–30 minutes. You can save and return at any time. The more thoughtfully you complete it, the more useful your report will be — honesty is more valuable than speed here.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">Who sees my responses?<span class="faq-icon">+</span></button>
+        <div class="faq-a">Only Dan Devine. Your responses are strictly confidential and are used exclusively to prepare your Governance Health Report. They are never shared, published, cited, or referenced in any other context without your explicit written consent.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">What is the 12 Points of Good Governance framework?<span class="faq-icon">+</span></button>
+        <div class="faq-a">The 12 Points of Good Governance is an original civic education framework developed by Dan Devine covering twelve foundational principles of democratic organizational health: Rule of Law, Transparency, Accountability, Participation, Local Power, Separation of Powers, Equity & Inclusion, Civic Education, Free Communication, Democratic Process, Civil Rights, and Public Trust. It was developed through Civic Sphere and American Civic Power as a tool for civic leaders, educators, and organizations.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">Can we use this report for grant applications?<span class="faq-icon">+</span></button>
+        <div class="faq-a">Absolutely. Many funders look for evidence of strong governance practices — particularly conflict of interest policies, board independence, and financial transparency. A Civic Sphere Governance Health Report documents your organization's governance profile and action plan in a format that can strengthen grant narratives and funder relationships.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">What happens after the assessment?<span class="faq-icon">+</span></button>
+        <div class="faq-a">After your debrief call, you'll have a clear action plan and a full written report. If you'd like ongoing support implementing your recommendations, Dan can discuss a Civic Sphere monthly retainer engagement — which includes AI-powered communications, volunteer coordination, grant research, and more. The assessment fee is applied as a credit toward your first month.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">How is this different from other governance assessments?<span class="faq-icon">+</span></button>
+        <div class="faq-a">Most governance assessments are either generic checklists or expensive consulting engagements. This assessment is built around an original civic framework, delivered by a practitioner with 25+ years of organizing and civic work experience, and priced accessibly for small to mid-size nonprofits and campaigns. You get a real human reviewer, a custom narrative report, and a direct conversation — not an automated PDF.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="container">
+    <span class="cta-eyebrow">Ready to Begin?</span>
+    <h2 class="cta-title">Know Where You Stand.<br>Govern Better.</h2>
+    <p class="cta-sub">The assessment takes 20–30 minutes. Your report arrives within 3–5 days. Your debrief call with Dan follows. That's it.</p>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:2rem;">
+      <a href="governance-assessment-questionnaire.html" class="btn-gold">Start the Assessment →</a>
+      <a href="mailto:dandevine26@gmail.com" class="btn-ghost">Ask Dan a Question</a>
+    </div>
+    <div style="font-size:0.75rem;color:rgba(245,240,232,0.25);">
+      dandevine26@gmail.com · 516-749-6690 · civicsphere.ai
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-brand">Civic Sphere</span>
+  <div class="footer-links">
+    <a href="https://www.civicsphere.ai">civicsphere.ai</a>
+    <a href="https://www.americancivicpower.com">American Civic Power</a>
+    <a href="https://www.danielpdevine.com">danielpdevine.com</a>
+    <a href="mailto:dandevine26@gmail.com">Contact</a>
+  </div>
+  <span class="footer-copy">© 2026 Dan Devine / My Civic Sphere · Civic power, put to work.</span>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  reveals.forEach(el => el.classList.add('animate-ready'));
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // FAQ toggle
+  function toggleFAQ(btn) {
+    const item = btn.closest('.faq-item');
+    item.classList.toggle('open');
+  }
+</script>
+</body>
+</html>
