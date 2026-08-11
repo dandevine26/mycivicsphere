@@ -1251,4 +1251,5 @@ document.addEventListener('click', function(e) {
         observer.unobserve(entry.target);
       }
     });
-  }
+  });
+  reveals.forEach(el => observer.observe(el));
