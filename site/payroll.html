@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NY State Payroll Transparency 2025 — CivicSphere</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:   #0D1F3C;
+    --cobalt: #1A3A6B;
+    --sky:    #2E6FBB;
+    --gold:   #C8A84B;
+    --cream:  #F5F0E8;
+    --off:    #FAF8F4;
+    --dark:   #2A2A2A;
+    --mid:    #6B7280;
+    --rule:   rgba(200,168,75,0.3);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--navy);
+    color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV (identical to index.html) ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.9rem 3rem;
+    background: #0D1F3C;
+    backdrop-filter: blur(10px);
+  }
+  .nav-rainbow {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(to right,
+      #2B7BB9 8.33%, #2E9E6B 16.66%, #3DAD6A 25%, #C9A227 33.33%,
+      #4DAA57 41.66%, #E07B39 50%, #E06030 58.33%, #C04A3A 66.66%,
+      #7B5EA7 75%, #B03A2E 83.33%, #5B6EA7 91.66%, #8B6914 100%);
+  }
+  .nav-brand { display: flex; align-items: center; gap: 0.85rem; text-decoration: none; }
+  .nav-brand-logo { width: 38px; height: 38px; flex-shrink: 0; }
+  .nav-brand-logo svg { width: 100%; height: 100%; }
+  .nav-brand-info { display: flex; flex-direction: column; gap: 0; }
+  .nav-brand-name { font-family: 'DM Sans', sans-serif; font-size: 1.05rem; font-weight: 500; color: white; letter-spacing: 0.02em; line-height: 1.2; }
+  .nav-brand-sub { font-family: 'DM Sans', sans-serif; font-size: 0.6rem; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.5); line-height: 1.2; }
+  .nav-links { display: flex; gap: 2.2rem; list-style: none; align-items: center; }
+  .nav-links a { font-size: 0.82rem; font-weight: 400; color: rgba(255,255,255,0.85); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: white; }
+  .nav-links a.active { color: var(--gold); }
+  .nav-vote { padding: 0.55rem 1.4rem; background: var(--gold); color: var(--navy); font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 500; border-radius: 4px; text-decoration: none; white-space: nowrap; transition: background 0.2s, transform 0.2s; }
+  .nav-vote:hover { background: #d4b060; transform: translateY(-1px); }
+  .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+  .nav-hamburger span { display: block; width: 24px; height: 2px; background: var(--gold); border-radius: 2px; }
+  .nav-dropdown { position: relative; }
+  .nav-dropdown-trigger { background: none; border: none; color: rgba(255,255,255,0.85); font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 400; cursor: pointer; padding: 0; }
+  .nav-dropdown-trigger:hover { color: white; }
+  .nav-dropdown-menu { display: none; position: absolute; top: 100%; right: 0; background: #0D1F3C; border: 1px solid rgba(200,168,75,0.2); min-width: 200px; padding: 0.5rem 0; z-index: 200; margin-top: 0.5rem; }
+  .nav-dropdown-menu.open { display: block; }
+  .nav-dropdown-menu a { display: block; padding: 0.5rem 1.2rem; font-size: 0.78rem; color: rgba(245,240,232,0.7); text-decoration: none; transition: color 0.2s, background 0.2s; }
+  .nav-dropdown-menu a:hover { color: var(--gold); background: rgba(200,168,75,0.05); }
+  .nav-dropdown-label { padding: 0.4rem 1.2rem 0.1rem; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(200,168,75,0.5); }
+  .nav-dropdown-divider { height: 1px; background: rgba(200,168,75,0.1); margin: 0.3rem 0; }
+
+  /* ── PAGE HERO ── */
+  .page-hero {
+    padding: 8rem 3rem 4rem;
+    background: var(--navy);
+    position: relative; overflow: hidden;
+  }
+  .page-hero::before {
+    content: '';
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(200,168,75,0.04) 59px, rgba(200,168,75,0.04) 60px),
+      repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(200,168,75,0.04) 59px, rgba(200,168,75,0.04) 60px);
+  }
+  .page-hero-inner { max-width: 1100px; margin: 0 auto; position: relative; }
+  .page-eyebrow { font-family: 'Bebas Neue', sans-serif; font-size: 0.78rem; letter-spacing: 0.35em; color: var(--gold); margin-bottom: 1rem; display: block; }
+  .page-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 700; line-height: 1.05; color: var(--cream); margin-bottom: 0.5rem; }
+  .page-title .accent { color: var(--gold); }
+  .gold-rule { width: 48px; height: 2px; background: var(--gold); margin: 1.2rem 0; }
+  .page-subtitle { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-style: italic; color: rgba(245,240,232,0.65); max-width: 580px; line-height: 1.7; }
+  .hero-meta { display: flex; gap: 2rem; margin-top: 1.8rem; flex-wrap: wrap; }
+  .hero-meta-item { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(200,168,75,0.7); }
+  .hero-meta-item strong { display: block; font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--gold); letter-spacing: 0; text-transform: none; font-style: normal; line-height: 1; margin-bottom: 2px; }
+
+  /* ── DASHBOARD SECTION ── */
+  .dashboard-section { padding: 0 3rem 5rem; }
+  .dashboard-inner { max-width: 1300px; margin: 0 auto; }
+
+  /* ── LOADING ── */
+  .loading-wrap {
+    background: rgba(26,58,107,0.3); border: 1px solid rgba(200,168,75,0.15);
+    padding: 3rem; text-align: center; margin-bottom: 2rem;
+  }
+  .loading-wrap p { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-style: italic; color: rgba(245,240,232,0.6); margin-bottom: 1rem; }
+  .progress-track { background: rgba(200,168,75,0.1); height: 3px; overflow: hidden; max-width: 400px; margin: 0 auto; }
+  .progress-fill { background: var(--gold); height: 100%; transition: width 0.4s; width: 0%; }
+
+  /* ── STATS ROW ── */
+  .stats-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; margin-bottom: 2rem; background: rgba(200,168,75,0.1); border: 1px solid rgba(200,168,75,0.1); }
+  .stat-card { background: var(--navy); padding: 1.4rem 1.6rem; border-top: 2px solid var(--gold); }
+  .stat-label { font-family: 'Bebas Neue', sans-serif; font-size: 0.65rem; letter-spacing: 0.3em; color: rgba(200,168,75,0.6); margin-bottom: 0.4rem; }
+  .stat-value { font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--gold); line-height: 1; }
+  .stat-sub { font-size: 0.7rem; color: rgba(245,240,232,0.35); margin-top: 0.25rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* ── BRANCH TABS ── */
+  .branch-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.2rem; }
+  .branch-tab {
+    background: transparent; border: 1px solid rgba(200,168,75,0.2);
+    color: rgba(245,240,232,0.5); font-family: 'DM Sans', sans-serif;
+    font-size: 0.72rem; font-weight: 400; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 6px 14px; cursor: pointer;
+    transition: all 0.15s;
+  }
+  .branch-tab:hover { border-color: var(--gold); color: var(--gold); }
+  .branch-tab.active { background: var(--gold); color: var(--navy); border-color: var(--gold); font-weight: 500; }
+
+  /* ── CONTROLS ── */
+  .controls {
+    background: rgba(26,58,107,0.25); border: 1px solid rgba(200,168,75,0.12);
+    padding: 1.4rem 1.6rem; margin-bottom: 1.2rem;
+    display: flex; gap: 1rem; flex-wrap: wrap; align-items: flex-end;
+  }
+  .ctrl-group { display: flex; flex-direction: column; gap: 0.35rem; flex: 1; min-width: 140px; }
+  .ctrl-label { font-family: 'Bebas Neue', sans-serif; font-size: 0.6rem; letter-spacing: 0.3em; color: rgba(200,168,75,0.7); }
+  .ctrl-group input, .ctrl-group select {
+    background: rgba(13,31,60,0.8); border: 1px solid rgba(200,168,75,0.2);
+    color: var(--cream); font-family: 'DM Sans', sans-serif; font-size: 0.85rem;
+    padding: 0.55rem 0.9rem; outline: none; transition: border-color 0.2s;
+  }
+  .ctrl-group input:focus, .ctrl-group select:focus { border-color: var(--gold); }
+  .ctrl-group select option { background: #0D1F3C; }
+  .btn-ctrl {
+    font-family: 'DM Sans', sans-serif; font-size: 0.72rem; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase; padding: 0.55rem 1.4rem;
+    cursor: pointer; transition: all 0.2s; align-self: flex-end; border: none;
+  }
+  .btn-reset { background: transparent; border: 1px solid rgba(200,168,75,0.3); color: var(--gold); }
+  .btn-reset:hover { background: rgba(200,168,75,0.1); }
+  .btn-export { background: var(--gold); color: var(--navy); font-weight: 500; }
+  .btn-export:hover { background: #d4b060; }
+
+  /* ── RESULTS INFO ── */
+  .results-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; font-size: 0.75rem; color: rgba(245,240,232,0.4); flex-wrap: wrap; gap: 0.5rem; }
+  .results-info span { color: var(--gold); font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-style: italic; }
+
+  /* ── TABLE ── */
+  .table-wrap { overflow-x: auto; border: 1px solid rgba(200,168,75,0.12); }
+  table { width: 100%; border-collapse: collapse; font-size: 0.82rem; table-layout: fixed; }
+  th:nth-child(1), td:nth-child(1) { width: 22%; }
+  th:nth-child(2), td:nth-child(2) { width: 16%; }
+  th:nth-child(3), td:nth-child(3) { width: 12%; }
+  th:nth-child(4), td:nth-child(4) { width: 22%; }
+  th:nth-child(5), td:nth-child(5) { width: 10%; }
+  th:nth-child(6), td:nth-child(6) { width: 10%; }
+  th:nth-child(7), td:nth-child(7) { width: 8%; }
+  thead { background: rgba(26,58,107,0.95); position: sticky; top: 0; z-index: 10; }
+  th {
+    padding: 0.75rem 1rem; text-align: left;
+    font-family: 'Bebas Neue', sans-serif; font-size: 0.65rem;
+    letter-spacing: 0.2em; color: rgba(200,168,75,0.7);
+    cursor: pointer; user-select: none; white-space: nowrap;
+    border-bottom: 1px solid rgba(200,168,75,0.15); transition: color 0.15s;
+  }
+  th:hover, th.sorted { color: var(--gold); }
+  th .si { margin-left: 3px; opacity: 0.4; }
+  th.sorted .si { opacity: 1; }
+  tbody tr { border-bottom: 1px solid rgba(255,255,255,0.04); transition: background 0.1s; }
+  tbody tr:hover { background: rgba(200,168,75,0.04); }
+  td { padding: 0.7rem 1rem; vertical-align: middle; }
+  td.name { font-weight: 500; color: var(--cream); }
+  td.agency { color: rgba(245,240,232,0.7); font-size: 0.8rem; }
+  td.pay { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--gold); font-weight: 600; }
+  td.title { color: rgba(245,240,232,0.45); font-size: 0.78rem; }
+  td.type { color: rgba(245,240,232,0.4); font-size: 0.75rem; }
+  .btag { display: inline-block; padding: 2px 7px; font-size: 0.65rem; letter-spacing: 0.05em; font-family: 'DM Sans', sans-serif; }
+  .btag-towns    { background: rgba(46,158,107,0.15); color: #4ecb8a; border: 1px solid rgba(46,158,107,0.2); }
+  .btag-cities   { background: rgba(46,111,187,0.15); color: #7ab8f5; border: 1px solid rgba(46,111,187,0.2); }
+  .btag-counties { background: rgba(123,94,167,0.15); color: #c090e0; border: 1px solid rgba(123,94,167,0.2); }
+  .btag-nyc      { background: rgba(192,74,58,0.15);  color: #f08080; border: 1px solid rgba(192,74,58,0.2); }
+  .btag-state    { background: rgba(200,168,75,0.12); color: var(--gold); border: 1px solid rgba(200,168,75,0.2); }
+  .btag-special  { background: rgba(224,123,57,0.15); color: #f0a070; border: 1px solid rgba(224,123,57,0.2); }
+  .btag-public   { background: rgba(91,110,167,0.15); color: #90a8e0; border: 1px solid rgba(91,110,167,0.2); }
+  .pay-bar-bg { background: rgba(200,168,75,0.08); height: 3px; overflow: hidden; width: 70px; margin-top: 3px; }
+  .pay-bar-fill { background: var(--gold); height: 100%; }
+
+  /* ── PAGINATION ── */
+  .pagination { display: flex; align-items: center; justify-content: center; gap: 5px; margin-top: 1.5rem; padding-bottom: 1rem; flex-wrap: wrap; }
+  .page-btn {
+    background: transparent; border: 1px solid rgba(200,168,75,0.15);
+    color: rgba(245,240,232,0.4); font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem; padding: 5px 11px; cursor: pointer; transition: all 0.15s;
+  }
+  .page-btn:hover, .page-btn.active { background: var(--gold); color: var(--navy); border-color: var(--gold); font-weight: 500; }
+  .page-btn:disabled { opacity: 0.2; cursor: default; pointer-events: none; }
+  .page-info { font-size: 0.72rem; color: rgba(245,240,232,0.3); padding: 0 6px; }
+
+  /* ── FOIL CALLOUT ── */
+  .foil-callout {
+    margin-top: 3rem;
+    background: rgba(26,58,107,0.2);
+    border: 1px solid rgba(200,168,75,0.15);
+    border-left: 3px solid var(--gold);
+    padding: 1.6rem 2rem;
+    display: flex; align-items: flex-start; gap: 1.5rem; flex-wrap: wrap;
+  }
+  .foil-callout-text h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: var(--gold); margin-bottom: 0.4rem; }
+  .foil-callout-text p { font-size: 0.82rem; color: rgba(245,240,232,0.5); line-height: 1.7; max-width: 600px; }
+  .foil-callout-text p a { color: var(--gold); text-decoration: none; border-bottom: 1px solid rgba(200,168,75,0.3); }
+
+  /* ── FOOTER (identical to index.html) ── */
+  footer { background: #08142A; border-top: 1px solid rgba(200,168,75,0.1); }
+
+  .hidden { display: none !important; }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1.2rem; }
+    .page-hero { padding: 7rem 1.5rem 3rem; }
+    .dashboard-section { padding: 0 1.5rem 4rem; }
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .nav-hamburger { display: flex; }
+    .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: var(--navy); padding: 1.5rem 2rem; gap: 1.2rem; z-index: 200; border-top: 1px solid rgba(200,168,75,0.3); }
+    .stats-row { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-rainbow"></div>
+  <a href="https://www.mycivicsphere.com" class="nav-brand">
+    <div class="nav-brand-logo">
+      <svg viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="19,2 34,10.5 34,27.5 19,36 4,27.5 4,10.5" fill="#1A3A6B" stroke="#2E6FBB" stroke-width="1"/>
+        <line x1="19" y1="8" x2="19" y2="30" stroke="rgba(200,168,75,0.5)" stroke-width="0.5"/>
+        <line x1="8" y1="14" x2="30" y2="24" stroke="rgba(200,168,75,0.5)" stroke-width="0.5"/>
+        <line x1="30" y1="14" x2="8" y2="24" stroke="rgba(200,168,75,0.5)" stroke-width="0.5"/>
+        <circle cx="19" cy="4"  r="2.5" fill="#1A8A7B"/>
+        <circle cx="30" cy="10" r="2.5" fill="#27AE60"/>
+        <circle cx="33" cy="19" r="2.5" fill="#E67E22"/>
+        <circle cx="30" cy="28" r="2.5" fill="#7D3C98"/>
+        <circle cx="19" cy="34" r="2.5" fill="#7B8EC8"/>
+        <circle cx="8"  cy="28" r="2.5" fill="#D4AC0D"/>
+        <circle cx="5"  cy="19" r="2.5" fill="#1A3A5C"/>
+        <circle cx="8"  cy="10" r="2.5" fill="#2E86C1"/>
+        <circle cx="19" cy="19" r="3"   fill="white"/>
+      </svg>
+    </div>
+    <div class="nav-brand-info">
+      <span class="nav-brand-name">CivicSphere</span>
+      <span class="nav-brand-sub">Direct Democracy Platform</span>
+    </div>
+  </a>
+  <button class="nav-hamburger" onclick="this.nextElementSibling.classList.toggle('open')" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links">
+    <li><a href="/#points">Governance</a></li>
+    <li><a href="/#slides">Framework</a></li>
+    <li><a href="/#about">About</a></li>
+    <li><a href="/#contact">Contact</a></li>
+    <li class="nav-dropdown">
+      <button class="nav-dropdown-trigger" onclick="toggleDropdown(this)" type="button">Services ▾</button>
+      <div class="nav-dropdown-menu">
+        <div class="nav-dropdown-label">For Campaigns</div>
+        <a href="civicsphere-campaigns.html">Campaign Services</a>
+        <div class="nav-dropdown-divider"></div>
+        <div class="nav-dropdown-label">For Nonprofits</div>
+        <a href="civicsphere-nonprofits.html">Nonprofit Services</a>
+        <div class="nav-dropdown-divider"></div>
+        <div class="nav-dropdown-label">Client Tools</div>
+        <a href="civicsphere-portal.html">Client Portal</a>
+        <a href="governance-assessment-landing.html">Governance Assessment</a>
+        <div class="nav-dropdown-divider"></div>
+        <div class="nav-dropdown-label">Documents</div>
+        <a href="civic-dual-entity-structure.html">Entity Structure</a>
+      </div>
+    </li>
+    <li><a href="/content">Content</a></li>
+    <li><a href="civictech_landscape.html">Explore</a></li>
+    <li><a href="/civestor">Civestor</a></li>
+    <li><a href="/contact-your-rep">Contact Your Rep</a></li>
+    <li><a href="payroll.html" class="active">Payroll</a></li>
+    <li><a href="https://vote.gov" target="_blank" class="nav-vote">Vote Now →</a></li>
+  </ul>
+</nav>
+
+<!-- ── PAGE HERO ── -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <span class="page-eyebrow">Civic Accountability · Transparency · Open Government</span>
+    <h1 class="page-title">New York State<br><span class="accent">Payroll Transparency</span></h1>
+    <div class="gold-rule"></div>
+    <p class="page-subtitle">Every public employee. Every branch of government. Your tax dollars, made visible — in service of the 12 Points of Good Governance.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><strong>231,389</strong>Public Employees</div>
+      <div class="hero-meta-item"><strong>7</strong>Government Branches</div>
+      <div class="hero-meta-item"><strong>1,082</strong>Agencies & Districts</div>
+      <div class="hero-meta-item"><strong>2025</strong>Fiscal Year</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── DASHBOARD ── -->
+<div class="dashboard-section">
+  <div class="dashboard-inner">
+
+    <!-- Loading -->
+    <div class="loading-wrap" id="loadingWrap">
+      <p>Loading payroll data — 231,389 records across New York State…</p>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+
+    <!-- Dashboard (hidden until loaded) -->
+    <div id="dashboard" class="hidden">
+
+      <div class="stats-row" id="statsRow"></div>
+
+      <div class="branch-tabs" id="branchTabs"></div>
+
+      <div class="controls">
+        <div class="ctrl-group" style="flex:2;min-width:200px;">
+          <div class="ctrl-label">Search Name, Title, or Agency</div>
+          <input type="text" id="searchInput" placeholder="e.g. Fire Chief, Superintendent, Huntington…">
+        </div>
+        <div class="ctrl-group" style="flex:2;min-width:180px;">
+          <div class="ctrl-label">Agency / Organization</div>
+          <select id="agencyFilter"><option value="">All Agencies</option></select>
+        </div>
+        <div class="ctrl-group">
+          <div class="ctrl-label">Min Pay ($)</div>
+          <input type="number" id="minPay" placeholder="0">
+        </div>
+        <div class="ctrl-group">
+          <div class="ctrl-label">Max Pay ($)</div>
+          <input type="number" id="maxPay" placeholder="500000">
+        </div>
+        <button class="btn-ctrl btn-reset" onclick="resetFilters()">Reset</button>
+        <button class="btn-ctrl btn-export" onclick="exportCSV()">↓ Export CSV</button>
+      </div>
+
+      <div class="results-info">
+        <div>Showing <span id="showingCount">0</span> of <span id="totalCount">0</span> employees</div>
+        <div>Filtered payroll: <span id="totalPay">$0</span></div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th onclick="sortBy('Name')" id="th-Name">Name <span class="si">↕</span></th>
+              <th onclick="sortBy('Agency')" id="th-Agency">Agency <span class="si">↕</span></th>
+              <th onclick="sortBy('Total Pay')" id="th-TotalPay" class="sorted">Total Pay <span class="si">↓</span></th>
+              <th onclick="sortBy('Title')" id="th-Title">Title <span class="si">↕</span></th>
+              <th onclick="sortBy('SubAgency/Type')" id="th-Type">Type <span class="si">↕</span></th>
+              <th onclick="sortBy('Branch')" id="th-Branch">Branch <span class="si">↕</span></th>
+              <th>Pay Bar</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+
+      <div class="pagination" id="pagination"></div>
+
+      <!-- FOIL callout -->
+      <div class="foil-callout">
+        <div class="foil-callout-text">
+          <h3>Missing Your Village or District?</h3>
+          <p>Incorporated villages are not required to report to state payroll systems, so many are absent from this database. American Civic Power is filing Freedom of Information Law (FOIL) requests with Nassau and Suffolk County villages to close this gap. Data sourced from <a href="https://www.seethroughny.net" target="_blank">SeeThroughNY.net</a> / Empire Center for Public Policy.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div style="max-width:1100px;margin:0 auto;padding:2.5rem 3rem;">
+    <div style="display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:3rem;margin-bottom:2rem;">
+      <div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.15em;color:var(--gold);margin-bottom:0.5rem;">CivicSphere</div>
+        <div style="font-size:0.72rem;color:rgba(245,240,232,0.35);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:1rem;">Direct Democracy Platform</div>
+        <p style="font-size:0.78rem;color:rgba(245,240,232,0.4);line-height:1.65;">Civic power, put to work — for every community, at every level of democracy.</p>
+      </div>
+      <div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:0.65rem;letter-spacing:0.3em;color:rgba(200,168,75,0.5);margin-bottom:0.75rem;">Services</div>
+        <div style="display:flex;flex-direction:column;gap:0.45rem;">
+          <a href="civicsphere-campaigns.html" style="font-size:0.78rem;color:rgba(245,240,232,0.55);text-decoration:none;" onmouseover="this.style.color='#C8A84B'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Campaign Services</a>
+          <a href="civicsphere-nonprofits.html" style="font-size:0.78rem;color:rgba(245,240,232,0.55);text-decoration:none;" onmouseover="this.style.color='#C8A84B'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Nonprofit Services</a>
+          <a href="civicsphere-portal.html" style="font-size:0.78rem;color:rgba(245,240,232,0.55);text-decoration:none;" onmouseover="this.style.color='#C8A84B'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Client Portal</a>
+          <a href="governance-assessment-landing.html" style="font-size:0.78rem;color:rgba(245,240,232,0.55);text-decoration:none;" onmouseover="this.style.color='#C8A84B'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Governance Assessment</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:0.65rem;letter-spacing:0.3em;color:rgba(200,168,75,0.5);margin-bottom:0.75rem;">Organization</div>
+        <div style="display:flex;flex-direction:column;gap:0.45rem;">
+          <a href="https://www.americancivicpower.com" target="_blank" style="font-size:0.78rem;color:rgba(245,240,232,0.55);text-decoration:none;" onmouseover="this.style.color='#C8A84B'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">American Civic Power</a>
+          <a href="https://www.danielpdevine.com" target="_blank" style="font-size:0.78rem;color:rgba(245,240,232,0.55);text-decoration:none;" onmouseover="this.style.color='#C8A84B'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">danielpdevine.com</a>
+          <a href="https://www.linkedin.com/in/danielpdevine" target="_blank" style="font-size:0.78rem;color:rgba(245,240,232,0.55);text-decoration:none;" onmouseover="this.style.color='#C8A84B'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">LinkedIn</a>
+          <a href="civic-dual-entity-structure.html" style="font-size:0.78rem;color:rgba(245,240,232,0.55);text-decoration:none;" onmouseover="this.style.color='#C8A84B'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Entity Structure</a>
+          <a href="https://board.mycivicsphere.com" target="_blank" style="font-size:0.78rem;color:rgba(245,240,232,0.55);text-decoration:none;" onmouseover="this.style.color='#C8A84B'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Board Tools</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:0.65rem;letter-spacing:0.3em;color:rgba(200,168,75,0.5);margin-bottom:0.75rem;">Civic</div>
+        <div style="display:flex;flex-direction:column;gap:0.45rem;">
+          <a href="https://vote.gov" target="_blank" style="font-size:0.78rem;color:rgba(245,240,232,0.55);text-decoration:none;" onmouseover="this.style.color='#C8A84B'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Register to Vote</a>
+          <a href="payroll.html" style="font-size:0.78rem;color:rgba(245,240,232,0.55);text-decoration:none;" onmouseover="this.style.color='#C8A84B'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Payroll Transparency</a>
+          <a href="/#points" style="font-size:0.78rem;color:rgba(245,240,232,0.55);text-decoration:none;" onmouseover="this.style.color='#C8A84B'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">12 Points Framework</a>
+          <a href="/#contact" style="font-size:0.78rem;color:rgba(245,240,232,0.55);text-decoration:none;" onmouseover="this.style.color='#C8A84B'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Contact</a>
+        </div>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(200,168,75,0.12);padding-top:1.25rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;">
+      <span style="font-size:0.68rem;color:rgba(245,240,232,0.25);">© 2026 Civic Sphere / My Civic Sphere. Civic Power, Put to Work.</span>
+      <span style="font-size:0.68rem;color:rgba(245,240,232,0.2);">civicsphere.ai · mycivicsphere.com · Data: SeeThroughNY.net</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+let allData = [], filtered = [];
+let sortCol = 'Total Pay', sortDir = -1;
+let currentPage = 1;
+const PER_PAGE = 50;
+let activeBranch = 'All';
+let branchCounts = {};
+
+const BRANCH_TAGS = {
+  'Towns': 'btag-towns', 'Cities': 'btag-cities', 'Counties': 'btag-counties',
+  'NYC': 'btag-nyc', 'State (Exec)': 'btag-state', 'State (Jud)': 'btag-state',
+  'Special Dist.': 'btag-special', 'Public Auth.': 'btag-public',
+};
+
+function toggleDropdown(btn) {
+  btn.nextElementSibling.classList.toggle('open');
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('.nav-dropdown')) {
+    document.querySelectorAll('.nav-dropdown-menu').forEach(m => m.classList.remove('open'));
+  }
+});
+
+// Auto-fetch CSV from same directory
+window.addEventListener('load', () => {
+  const fill = document.getElementById('progressFill');
+  fill.style.width = '20%';
+  fetch('ny_payroll_2025_web.csv')
+    .then(r => {
+      if (!r.ok) throw new Error('CSV not found');
+      fill.style.width = '50%';
+      return r.text();
+    })
+    .then(text => {
+      fill.style.width = '80%';
+      setTimeout(() => parseCSV(text), 30);
+    })
+    .catch(err => {
+      document.getElementById('loadingWrap').innerHTML =
+        '<p style="color:rgba(200,168,75,0.7);">⚠ Could not load payroll data. Please ensure ny_payroll_2025_web.csv is deployed alongside this file.</p>';
+      console.error(err);
+    });
+});
+
+function parseCSV(text) {
+  const lines = text.trim().split('\n');
+  const headers = lines[0].split(',').map(h => h.replace(/"/g,'').trim());
+  allData = [];
+  for (let i = 1; i < lines.length; i++) {
+    const cols = []; let cur = '', inQ = false;
+    for (let ch of lines[i]) {
+      if (ch === '"') inQ = !inQ;
+      else if (ch === ',' && !inQ) { cols.push(cur.trim()); cur = ''; }
+      else cur += ch;
+    }
+    cols.push(cur.trim());
+    const obj = {};
+    headers.forEach((h, idx) => obj[h] = (cols[idx]||'').replace(/"/g,''));
+    obj._pay = parseFloat((obj['Total Pay']||'0').replace(/[$,]/g,'')) || 0;
+    if (obj['Name']) allData.push(obj);
+  }
+  document.getElementById('progressFill').style.width = '100%';
+  branchCounts = {};
+  allData.forEach(r => { const b = r['Branch']||'Unknown'; branchCounts[b] = (branchCounts[b]||0)+1; });
+  populateAgencyFilter();
+  buildBranchTabs();
+  setTimeout(() => {
+    document.getElementById('loadingWrap').classList.add('hidden');
+    document.getElementById('dashboard').classList.remove('hidden');
+    applyFilters();
+  }, 150);
+}
+
+function buildBranchTabs() {
+  const branches = ['All', ...Object.keys(branchCounts).sort()];
+  document.getElementById('branchTabs').innerHTML = branches.map(b => `
+    <button class="branch-tab ${b===activeBranch?'active':''}" onclick="setBranch('${b}', event)">
+      ${b}${b!=='All'?` <small style="opacity:0.6">(${branchCounts[b].toLocaleString()})</small>`:''}
+    </button>`).join('');
+}
+
+function setBranch(b, e) {
+  activeBranch = b;
+  document.querySelectorAll('.branch-tab').forEach(t => t.classList.remove('active'));
+  e.target.closest('.branch-tab').classList.add('active');
+  populateAgencyFilter();
+  applyFilters();
+}
+
+function populateAgencyFilter() {
+  const subset = activeBranch==='All' ? allData : allData.filter(r=>r['Branch']===activeBranch);
+  const agencies = [...new Set(subset.map(r=>r['Agency']))].filter(Boolean).sort();
+  const sel = document.getElementById('agencyFilter');
+  const cur = sel.value;
+  sel.innerHTML = '<option value="">All Agencies</option>';
+  agencies.forEach(a => {
+    const opt = document.createElement('option');
+    opt.value = a; opt.textContent = a;
+    if (a===cur) opt.selected = true;
+    sel.appendChild(opt);
+  });
+}
+
+function applyFilters() {
+  const search = document.getElementById('searchInput').value.toLowerCase();
+  const agency = document.getElementById('agencyFilter').value;
+  const minP = parseFloat(document.getElementById('minPay').value)||0;
+  const maxP = parseFloat(document.getElementById('maxPay').value)||Infinity;
+  filtered = allData.filter(r => {
+    if (activeBranch!=='All' && r['Branch']!==activeBranch) return false;
+    if (agency && r['Agency']!==agency) return false;
+    if (r._pay < minP || r._pay > maxP) return false;
+    if (search && !r['Name'].toLowerCase().includes(search) &&
+        !(r['Title']||'').toLowerCase().includes(search) &&
+        !(r['Agency']||'').toLowerCase().includes(search)) return false;
+    return true;
+  });
+  filtered.sort((a,b) => {
+    let av = a[sortCol]||'', bv = b[sortCol]||'';
+    if (sortCol==='Total Pay') { av=a._pay; bv=b._pay; }
+    if (typeof av==='string') return sortDir*av.localeCompare(bv);
+    return sortDir*(av-bv);
+  });
+  currentPage = 1;
+  updateStats(); renderTable(); renderPagination();
+}
+
+function updateStats() {
+  const total = filtered.length;
+  const paySum = filtered.reduce((s,r)=>s+r._pay,0);
+  const avg = total ? paySum/total : 0;
+  const top = filtered[0];
+  const agencies = new Set(filtered.map(r=>r['Agency'])).size;
+  document.getElementById('showingCount').textContent = total.toLocaleString();
+  document.getElementById('totalCount').textContent = allData.length.toLocaleString();
+  document.getElementById('totalPay').textContent = '$'+paySum.toLocaleString(undefined,{maximumFractionDigits:0});
+  document.getElementById('statsRow').innerHTML = `
+    <div class="stat-card"><div class="stat-label">Employees</div><div class="stat-value">${total.toLocaleString()}</div><div class="stat-sub">${activeBranch==='All'?'All Branches':activeBranch}</div></div>
+    <div class="stat-card"><div class="stat-label">Agencies</div><div class="stat-value">${agencies.toLocaleString()}</div><div class="stat-sub">unique organizations</div></div>
+    <div class="stat-card"><div class="stat-label">Total Payroll</div><div class="stat-value">$${(paySum/1e9).toFixed(2)}B</div><div class="stat-sub">filtered results</div></div>
+    <div class="stat-card"><div class="stat-label">Average Pay</div><div class="stat-value">$${Math.round(avg).toLocaleString()}</div><div class="stat-sub">per employee</div></div>
+    <div class="stat-card"><div class="stat-label">Top Earner</div><div class="stat-value">$${top?Math.round(top._pay).toLocaleString():'—'}</div><div class="stat-sub">${top?top['Name']:'—'}</div></div>`;
+}
+
+function renderTable() {
+  const start = (currentPage-1)*PER_PAGE;
+  const page = filtered.slice(start, start+PER_PAGE);
+  const localMax = filtered.length ? filtered[0]._pay : 1;
+  document.getElementById('tableBody').innerHTML = page.map(r => {
+    const b = r['Branch']||'';
+    const tagClass = BRANCH_TAGS[b]||'btag-state';
+    const pay = r._pay > 0 ? '$'+r._pay.toLocaleString() : r['Total Pay']||'—';
+    return `<tr>
+      <td class="name">${r['Name']}</td>
+      <td class="agency">${r['Agency']||'—'}</td>
+      <td class="pay">${pay}<div class="pay-bar-bg"><div class="pay-bar-fill" style="width:${Math.round((r._pay/localMax)*100)}%"></div></div></td>
+      <td class="title">${r['Title']||'—'}</td>
+      <td class="type">${r['SubAgency/Type']||'—'}</td>
+      <td><span class="btag ${tagClass}">${b}</span></td>
+      <td></td>
+    </tr>`;
+  }).join('');
+}
+
+function renderPagination() {
+  const totalPages = Math.ceil(filtered.length/PER_PAGE);
+  const pag = document.getElementById('pagination');
+  if (totalPages<=1){pag.innerHTML='';return;}
+  let pages=[];
+  if(totalPages<=7) pages=Array.from({length:totalPages},(_,i)=>i+1);
+  else {
+    pages=[1];
+    if(currentPage>3) pages.push('...');
+    for(let i=Math.max(2,currentPage-1);i<=Math.min(totalPages-1,currentPage+1);i++) pages.push(i);
+    if(currentPage<totalPages-2) pages.push('...');
+    pages.push(totalPages);
+  }
+  let html=`<button class="page-btn" onclick="goPage(${currentPage-1})" ${currentPage===1?'disabled':''}>← Prev</button>`;
+  pages.forEach(p=>{
+    if(p==='...') html+=`<span class="page-info">…</span>`;
+    else html+=`<button class="page-btn ${p===currentPage?'active':''}" onclick="goPage(${p})">${p}</button>`;
+  });
+  html+=`<button class="page-btn" onclick="goPage(${currentPage+1})" ${currentPage===totalPages?'disabled':''}>Next →</button>`;
+  html+=`<span class="page-info">${currentPage} / ${totalPages}</span>`;
+  pag.innerHTML=html;
+}
+
+function goPage(p) {
+  const tot=Math.ceil(filtered.length/PER_PAGE);
+  if(p<1||p>tot) return;
+  currentPage=p; renderTable(); renderPagination();
+  window.scrollTo({top:document.querySelector('.dashboard-section').offsetTop-80,behavior:'smooth'});
+}
+
+function sortBy(col) {
+  if(sortCol===col) sortDir*=-1; else{sortCol=col;sortDir=col==='Total Pay'?-1:1;}
+  document.querySelectorAll('th').forEach(th=>{th.classList.remove('sorted');th.querySelector('.si').textContent='↕';});
+  const ids={'Name':'th-Name','Agency':'th-Agency','Total Pay':'th-TotalPay','Title':'th-Title','SubAgency/Type':'th-Type','Branch':'th-Branch'};
+  if(ids[col]){const th=document.getElementById(ids[col]);th.classList.add('sorted');th.querySelector('.si').textContent=sortDir===-1?'↓':'↑';}
+  applyFilters();
+}
+
+function resetFilters() {
+  document.getElementById('searchInput').value='';
+  document.getElementById('agencyFilter').value='';
+  document.getElementById('minPay').value='';
+  document.getElementById('maxPay').value='';
+  activeBranch='All'; buildBranchTabs(); populateAgencyFilter(); applyFilters();
+}
+
+function exportCSV() {
+  const headers=['Name','Agency','Total Pay','Title','SubAgency/Type','Branch'];
+  const rows=filtered.map(r=>headers.map(h=>`"${(r[h]||'').replace(/"/g,'""')}"`).join(','));
+  const blob=new Blob([headers.join(',')+'\n'+rows.join('\n')],{type:'text/csv'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download=`ny_payroll_2025_${activeBranch.toLowerCase().replace(/\s+/g,'_')}.csv`;a.click();
+}
+
+['searchInput','agencyFilter','minPay','maxPay'].forEach(id=>{
+  document.getElementById(id).addEventListener('input',applyFilters);
+});
+</script>
+</body>
+</html>

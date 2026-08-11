@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Property Tax Analyzer · CivicSphere</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Reset & tokens ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:        #1a1a18;
+      --ink-2:      #4a4a46;
+      --ink-3:      #8a8a84;
+      --paper:      #f5f3ee;
+      --paper-2:    #eceae3;
+      --paper-3:    #e2dfd6;
+      --rule:       #d4d0c6;
+      --accent:     #1d6b4a;       /* civic green */
+      --accent-lt:  #e6f2ec;
+      --blue:       #1e4fa3;
+      --blue-lt:    #e8eef9;
+      --amber:      #b06820;
+      --amber-lt:   #faf0e4;
+      --purple:     #5b3fa8;
+      --purple-lt:  #eeebf8;
+      --red:        #b03030;
+
+      --font-display: 'DM Serif Display', Georgia, serif;
+      --font-body:    'Instrument Sans', sans-serif;
+      --font-mono:    'DM Mono', 'Courier New', monospace;
+
+      --radius:    6px;
+      --radius-lg: 12px;
+      --shadow:    0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.05);
+    }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--paper);
+      color: var(--ink);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* ── Layout ─────────────────────────────────────────────────────── */
+    .page-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 1.25rem 4rem;
+    }
+
+    /* ── Header ─────────────────────────────────────────────────────── */
+    .site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 0;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 2.5rem;
+    }
+
+    .site-logo {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .site-nav a {
+      font-size: 13px;
+      color: var(--ink-2);
+      text-decoration: none;
+      margin-left: 1.5rem;
+    }
+
+    .site-nav a:hover { color: var(--ink); }
+
+    /* ── Hero ───────────────────────────────────────────────────────── */
+    .hero {
+      margin-bottom: 2rem;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: .6rem;
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 2.75rem);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: .75rem;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: 15px;
+      color: var(--ink-2);
+      max-width: 540px;
+      line-height: 1.65;
+    }
+
+    /* ── Search card ────────────────────────────────────────────────── */
+    .search-card {
+      background: white;
+      border: 1px solid var(--rule);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      box-shadow: var(--shadow);
+    }
+
+    .search-card h2 {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      margin-bottom: 1rem;
+    }
+
+    .input-row {
+      display: grid;
+      grid-template-columns: 2fr 3fr 1fr;
+      gap: .5rem;
+      margin-bottom: .75rem;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .input-group label {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--ink-3);
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .input-group input {
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--ink);
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+      padding: .55rem .75rem;
+      outline: none;
+      transition: border-color .15s, box-shadow .15s;
+    }
+
+    .input-group input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-lt);
+    }
+
+    .input-group input::placeholder { color: var(--ink-3); }
+
+    .search-hint {
+      font-size: 12px;
+      color: var(--ink-3);
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+
+    .search-hint strong { color: var(--ink-2); font-weight: 500; }
+
+    .btn-lookup {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 600;
+      color: white;
+      background: var(--accent);
+      border: none;
+      border-radius: var(--radius);
+      padding: .65rem 1.5rem;
+      cursor: pointer;
+      transition: background .15s, transform .1s;
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+    }
+
+    .btn-lookup:hover:not(:disabled) { background: #175c3e; }
+    .btn-lookup:active:not(:disabled) { transform: scale(.98); }
+    .btn-lookup:disabled { opacity: .55; cursor: not-allowed; }
+
+    .btn-lookup .spinner {
+      width: 14px; height: 14px;
+      border: 2px solid rgba(255,255,255,.35);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+      display: none;
+    }
+
+    .btn-lookup.loading .spinner { display: block; }
+    .btn-lookup.loading .btn-label { opacity: .7; }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Loading bar ────────────────────────────────────────────────── */
+    #loading {
+      height: 3px;
+      background: var(--paper-2);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+
+    #loading::after {
+      content: '';
+      display: block;
+      height: 100%;
+      width: 40%;
+      background: var(--accent);
+      border-radius: 2px;
+      animation: slide 1.2s ease-in-out infinite;
+    }
+
+    @keyframes slide {
+      0%   { transform: translateX(-100%); }
+      100% { transform: translateX(350%); }
+    }
+
+    /* ── Error ──────────────────────────────────────────────────────── */
+    #error-msg {
+      background: #fff5f5;
+      border: 1px solid #fecaca;
+      border-radius: var(--radius);
+      padding: .75rem 1rem;
+      font-size: 14px;
+      color: var(--red);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: flex-start;
+      gap: .5rem;
+    }
+
+    #error-msg::before { content: '⚠'; flex-shrink: 0; }
+
+    /* ── Results wrapper ────────────────────────────────────────────── */
+    #results {
+      animation: fadeUp .35s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Section headers ────────────────────────────────────────────── */
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      margin-bottom: .75rem;
+      padding-bottom: .4rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    /* ── Property identity bar ──────────────────────────────────────── */
+    .prop-bar {
+      background: white;
+      border: 1px solid var(--rule);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1rem;
+      box-shadow: var(--shadow);
+    }
+
+    .prop-address {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      color: var(--ink);
+      margin-bottom: .35rem;
+    }
+
+    .prop-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .4rem;
+      align-items: center;
+    }
+
+    .badge {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 99px;
+      border: 1px solid var(--rule);
+      color: var(--ink-2);
+      background: var(--paper);
+    }
+
+    .badge-sbl { color: var(--accent); border-color: var(--accent); background: var(--accent-lt); }
+
+    /* ── Metric grid ────────────────────────────────────────────────── */
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: .75rem;
+      margin-bottom: 1rem;
+    }
+
+    .metric-card {
+      background: white;
+      border: 1px solid var(--rule);
+      border-radius: var(--radius-lg);
+      padding: 1rem 1.1rem;
+      box-shadow: var(--shadow);
+    }
+
+    .metric-card.accent-green { border-top: 3px solid var(--accent); }
+    .metric-card.accent-blue  { border-top: 3px solid var(--blue); }
+    .metric-card.accent-amber { border-top: 3px solid var(--amber); }
+    .metric-card.accent-purple{ border-top: 3px solid var(--purple); }
+
+    .metric-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      margin-bottom: .3rem;
+    }
+
+    .metric-value {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      color: var(--ink);
+      line-height: 1.1;
+    }
+
+    .metric-sub {
+      font-size: 11px;
+      color: var(--ink-3);
+      margin-top: .2rem;
+    }
+
+    /* ── Breakdown bars ─────────────────────────────────────────────── */
+    .breakdown-card {
+      background: white;
+      border: 1px solid var(--rule);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1rem;
+      box-shadow: var(--shadow);
+    }
+
+    .breakdown-row {
+      display: grid;
+      grid-template-columns: 160px 1fr 80px 44px;
+      align-items: center;
+      gap: .75rem;
+      margin-bottom: .75rem;
+    }
+
+    .breakdown-row:last-child { margin-bottom: 0; }
+
+    .breakdown-label {
+      font-size: 13px;
+      color: var(--ink-2);
+    }
+
+    .bar-track {
+      height: 8px;
+      background: var(--paper-2);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width .6s cubic-bezier(.25,.46,.45,.94);
+    }
+
+    .breakdown-amount {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--ink);
+      text-align: right;
+    }
+
+    .breakdown-pct {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--ink-3);
+      text-align: right;
+    }
+
+    .breakdown-divider {
+      border: none;
+      border-top: 1px solid var(--rule);
+      margin: .75rem 0;
+    }
+
+    .breakdown-total-row {
+      display: grid;
+      grid-template-columns: 160px 1fr 80px 44px;
+      align-items: center;
+      gap: .75rem;
+    }
+
+    .breakdown-total-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .breakdown-total-amount {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink);
+      text-align: right;
+    }
+
+    /* ── Exemptions ─────────────────────────────────────────────────── */
+    .exemption-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 3px 9px;
+      border-radius: 99px;
+      background: var(--amber-lt);
+      color: var(--amber);
+      border: 1px solid #e8c89a;
+      margin: 2px;
+    }
+
+    /* ── Town context card ──────────────────────────────────────────── */
+    .context-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: .75rem;
+      margin-bottom: 1rem;
+    }
+
+    .context-card {
+      background: white;
+      border: 1px solid var(--rule);
+      border-radius: var(--radius-lg);
+      padding: 1rem 1.1rem;
+      box-shadow: var(--shadow);
+    }
+
+    /* ── Insight strip ──────────────────────────────────────────────── */
+    .insight-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: .75rem;
+      margin-bottom: 1rem;
+    }
+
+    .insight {
+      background: var(--accent-lt);
+      border: 1px solid #b8d9c8;
+      border-radius: var(--radius-lg);
+      padding: 1rem 1.1rem;
+      font-size: 13px;
+      color: #1a4a35;
+      line-height: 1.55;
+    }
+
+    .insight strong {
+      display: block;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--accent);
+      margin-bottom: .3rem;
+    }
+
+    /* ── Footer strip ───────────────────────────────────────────────── */
+    .result-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: .5rem;
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--rule);
+      font-size: 12px;
+      color: var(--ink-3);
+    }
+
+    .result-footer a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .result-footer a:hover { text-decoration: underline; }
+
+    /* ── About strip ────────────────────────────────────────────────── */
+    .about-strip {
+      margin-top: 3rem;
+      padding: 1.5rem;
+      background: var(--paper-2);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--rule);
+    }
+
+    .about-strip h3 {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 400;
+      margin-bottom: .5rem;
+    }
+
+    .about-strip p {
+      font-size: 13px;
+      color: var(--ink-2);
+      line-height: 1.65;
+      max-width: 580px;
+    }
+
+    .about-strip p + p { margin-top: .5rem; }
+
+    /* ── Responsive ─────────────────────────────────────────────────── */
+    @media (max-width: 580px) {
+      .input-row           { grid-template-columns: 1fr 1fr; }
+      .input-row .zip-group { grid-column: 1 / -1; }
+      .breakdown-row,
+      .breakdown-total-row { grid-template-columns: 1fr 80px 36px; }
+      .breakdown-row .bar-track,
+      .breakdown-total-row .bar-track { display: none; }
+      .context-grid        { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+  <!-- ── Header ─────────────────────────────────────────────────────── -->
+  <header class="site-header">
+    <a href="/" class="site-logo">CivicSphere</a>
+    <nav class="site-nav">
+      <a href="/legislation.html">Legislation</a>
+      <a href="/contact-rep.html">Contact Rep</a>
+      <a href="/tax-analyzer.html" aria-current="page">Tax Analyzer</a>
+    </nav>
+  </header>
+
+  <!-- ── Hero ───────────────────────────────────────────────────────── -->
+  <section class="hero">
+    <p class="hero-eyebrow">Nassau County · Town of Oyster Bay</p>
+    <h1>Your property tax,<br><em>fully explained.</em></h1>
+    <p class="hero-sub">
+      Enter your address to see exactly how your annual tax bill breaks down —
+      school district, town, county, and special districts — and what share of
+      the Town of Oyster Bay's $242 million levy you personally carry.
+    </p>
+  </section>
+
+  <!-- ── Search card ────────────────────────────────────────────────── -->
+  <div class="search-card">
+    <h2>Look up a property</h2>
+    <div class="input-row">
+      <div class="input-group">
+        <label for="housenum">House number</label>
+        <input id="housenum" type="text" placeholder="e.g. 100" autocomplete="off" />
+      </div>
+      <div class="input-group">
+        <label for="street">Street name</label>
+        <input id="street" type="text" placeholder="e.g. Main (no St/Ave/Rd)" autocomplete="off" />
+      </div>
+      <div class="input-group zip-group">
+        <label for="zip">ZIP</label>
+        <input id="zip" type="text" placeholder="11801" maxlength="5" autocomplete="off" />
+      </div>
+    </div>
+    <p class="search-hint">
+      <strong>Street name only</strong> — omit directionals (N/S/E/W) and suffixes (St, Ave, Rd, Blvd).
+      Data sourced from the Nassau County Land Records Viewer.
+    </p>
+    <button class="btn-lookup" id="lookup-btn">
+      <span class="spinner" aria-hidden="true"></span>
+      <span class="btn-label">Look up property</span>
+    </button>
+  </div>
+
+  <!-- ── Loading bar ────────────────────────────────────────────────── -->
+  <div id="loading" hidden aria-live="polite" aria-label="Loading property data"></div>
+
+  <!-- ── Error ──────────────────────────────────────────────────────── -->
+  <div id="error-msg" hidden role="alert"></div>
+
+  <!-- ── Results ────────────────────────────────────────────────────── -->
+  <section id="results" hidden aria-live="polite">
+
+    <!-- Property identity -->
+    <div class="prop-bar">
+      <div class="prop-address" id="result-address">—</div>
+      <div class="prop-meta">
+        <span class="badge badge-sbl" id="result-sbl"></span>
+        <span class="badge" id="result-school"></span>
+        <span class="badge" id="result-fire"></span>
+      </div>
+    </div>
+
+    <!-- Metric cards -->
+    <div class="section-label">Valuation &amp; total tax</div>
+    <div class="metric-grid">
+      <div class="metric-card accent-green">
+        <div class="metric-label">Total taxes paid</div>
+        <div class="metric-value" id="result-total-tax">—</div>
+        <div class="metric-sub" id="result-tax-year"></div>
+      </div>
+      <div class="metric-card accent-blue">
+        <div class="metric-label" id="result-market-label">Market value</div>
+        <div class="metric-value" id="result-market">—</div>
+        <div class="metric-sub">Est. sale value</div>
+      </div>
+      <div class="metric-card accent-amber">
+        <div class="metric-label">Assessed value</div>
+        <div class="metric-value" id="result-assessed">—</div>
+        <div class="metric-sub">Nassau County AV</div>
+      </div>
+      <div class="metric-card accent-purple">
+        <div class="metric-label">Effective rate</div>
+        <div class="metric-value" id="result-effective-rate">—</div>
+        <div class="metric-sub">% of market value</div>
+      </div>
+    </div>
+
+    <!-- Exemptions -->
+    <div class="section-label">Exemptions on record</div>
+    <div class="breakdown-card" style="margin-bottom:1rem;">
+      <div id="result-exemptions" style="font-size:14px; color:var(--ink-2);">—</div>
+    </div>
+
+    <!-- Tax breakdown bars -->
+    <div class="section-label">Tax bill breakdown</div>
+    <div class="breakdown-card">
+      <div id="result-breakdown"></div>
+      <hr class="breakdown-divider" />
+      <div class="breakdown-total-row">
+        <span class="breakdown-total-label">Total</span>
+        <span></span>
+        <span class="breakdown-total-amount" id="result-total-tax-2">—</span>
+        <span></span>
+      </div>
+    </div>
+
+    <!-- Town of Oyster Bay context -->
+    <div class="section-label">Your share of the Town of Oyster Bay budget</div>
+    <div class="context-grid">
+      <div class="context-card">
+        <div class="metric-label">Your town tax</div>
+        <div class="metric-value" id="result-town-tax">—</div>
+        <div class="metric-sub">Paid to TOB</div>
+      </div>
+      <div class="context-card">
+        <div class="metric-label">Town levy <span id="result-levy-year" style="font-weight:400"></span></div>
+        <div class="metric-value" id="result-levy">—</div>
+        <div class="metric-sub">Total collected from all property owners</div>
+      </div>
+      <div class="context-card">
+        <div class="metric-label">Your share of levy</div>
+        <div class="metric-value" style="font-size:1.2rem;" id="result-share">—</div>
+        <div class="metric-sub">Of the total town property tax collected</div>
+      </div>
+      <div class="context-card">
+        <div class="metric-label">Daily cost to town</div>
+        <div class="metric-value" id="result-daily">—</div>
+        <div class="metric-sub">What you contribute per day</div>
+      </div>
+    </div>
+
+    <!-- Insight strip -->
+    <div class="insight-strip">
+      <div class="insight">
+        <strong>Budget context</strong>
+        The Town of Oyster Bay's 2026 budget totals $354 million. Of that, $242.2 million
+        comes from the property tax levy — the share funded directly by homeowners like you.
+      </div>
+      <div class="insight">
+        <strong>2026 tax increase</strong>
+        The 2026 levy rose 3.81% (+$9.2M) — the first increase since 2017 after seven
+        consecutive years of frozen town taxes.
+        <span id="result-levy-change"></span>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="result-footer">
+      <span id="result-retrieved"></span>
+      <span>
+        <a href="https://lrv.nassaucountyny.gov/" target="_blank" rel="noopener">
+          View full record on Nassau LRV ↗
+        </a>
+      </span>
+    </div>
+
+  </section><!-- /#results -->
+
+  <!-- ── About ───────────────────────────────────────────────────────── -->
+  <div class="about-strip">
+    <h3>About this tool</h3>
+    <p>
+      Property tax data is pulled live from the
+      <a href="https://lrv.nassaucountyny.gov/" target="_blank" rel="noopener">Nassau County Land Records Viewer</a>,
+      a public database maintained by the Nassau County Department of Assessment.
+      Market value estimates, when available, are sourced from Zillow.
+    </p>
+    <p>
+      Budget context reflects the Town of Oyster Bay's adopted 2026 budget ($354M total,
+      $242.2M tax levy), passed unanimously by the Town Board on October 21, 2025.
+      This tool is provided by <a href="https://mycivicsphere.com">CivicSphere</a> as a
+      free public resource. It is not affiliated with Nassau County or the Town of Oyster Bay.
+    </p>
+  </div>
+
+</div><!-- /.page-wrap -->
+
+<!-- ── Scripts ─────────────────────────────────────────────────────────────── -->
+<script src="/js/tax-analyzer.js"></script>
+
+</body>
+</html>

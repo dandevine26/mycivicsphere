@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Your Representative — Civic Sphere</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:   #0D1F3C;
+      --cobalt: #1A3A6B;
+      --sky:    #2E6FBB;
+      --gold:   #C8A84B;
+      --cream:  #F5F0E8;
+      --off:    #FAF8F4;
+      --dark:   #2A2A2A;
+      --mid:    #6B7280;
+      --rule:   rgba(200,168,75,0.3);
+      --green:  #2E7D52;
+      --red:    #C0392B;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--off);
+      color: var(--dark);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      background: var(--navy);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 2px solid var(--gold);
+    }
+    .nav-brand { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+    .nav-brand-text { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; color: #fff; letter-spacing: 0.08em; }
+    .nav-brand-sub { font-size: 0.65rem; color: var(--gold); letter-spacing: 0.15em; text-transform: uppercase; display: block; line-height: 1; }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+    .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 0.82rem; letter-spacing: 0.05em; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--gold); }
+
+    /* RAINBOW */
+    .rainbow {
+      height: 5px;
+      background: linear-gradient(90deg,#e74c3c,#e67e22,#f1c40f,#2ecc71,#1abc9c,#3498db,#2980b9,#9b59b6,#8e44ad,#e91e8c,#e74c3c,#c0392b);
+    }
+
+    /* HERO */
+    .hero {
+      background: var(--navy);
+      color: #fff;
+      padding: 4rem 2rem 3rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 60% 40%, rgba(46,111,187,0.25) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-tag { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; display: block; }
+    .hero h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.4rem, 6vw, 4rem); letter-spacing: 0.06em; line-height: 1.05; margin-bottom: 1rem; }
+    .hero p { max-width: 560px; margin: 0 auto; color: rgba(255,255,255,0.75); font-size: 1rem; line-height: 1.7; }
+
+    /* MAIN LAYOUT */
+    .page-wrap { max-width: 960px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+
+    /* LOOKUP CARD */
+    .lookup-card {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-top: 4px solid var(--gold);
+      border-radius: 4px;
+      padding: 2rem 2rem 1.5rem;
+      margin-bottom: 2.5rem;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    }
+    .lookup-card h2 { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 0.06em; color: var(--navy); margin-bottom: 0.4rem; }
+    .lookup-card p { font-size: 0.88rem; color: var(--mid); margin-bottom: 1.25rem; }
+    .lookup-row { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .lookup-row input {
+      flex: 1; min-width: 140px; max-width: 200px;
+      padding: 0.7rem 1rem;
+      border: 1.5px solid #ddd; border-radius: 3px;
+      font-family: 'DM Sans', sans-serif; font-size: 0.9rem; color: var(--dark);
+      outline: none; transition: border-color 0.2s;
+    }
+    .lookup-row input:focus { border-color: var(--sky); }
+    .btn-lookup {
+      background: var(--navy); color: #fff; border: none;
+      padding: 0.7rem 1.5rem; border-radius: 3px;
+      font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 500;
+      letter-spacing: 0.05em; text-transform: uppercase;
+      cursor: pointer; transition: background 0.2s; white-space: nowrap;
+    }
+    .btn-lookup:hover { background: var(--cobalt); }
+    .btn-lookup:disabled { background: #7a9fc0; cursor: default; }
+    #lookup-status { margin-top: 0.75rem; font-size: 0.83rem; color: var(--mid); min-height: 1.2em; }
+    #lookup-status.error { color: var(--red); }
+    .btn-outside-link {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      margin-top: 1rem;
+      padding: 0.6rem 1.1rem;
+      background: #fff; color: var(--navy);
+      border: 1.5px solid var(--navy); border-radius: 3px;
+      font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 500;
+      text-decoration: none; transition: all 0.2s;
+    }
+    .btn-outside-link:hover { background: var(--navy); color: #fff; }
+
+    /* FILTER TABS */
+    .filter-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .filter-btn {
+      padding: 5px 16px; border: 1.5px solid #ccc; border-radius: 20px;
+      background: #fff; font-family: 'DM Sans', sans-serif; font-size: 0.8rem;
+      cursor: pointer; transition: all 0.15s; color: var(--dark);
+    }
+    .filter-btn.active { background: var(--navy); border-color: var(--navy); color: #fff; }
+    .filter-btn:hover:not(.active) { border-color: var(--sky); color: var(--sky); }
+
+    /* REPS GRID */
+    .reps-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 1rem; margin-bottom: 2.5rem; }
+    .rep-card {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-left: 4px solid var(--sky);
+      border-radius: 4px;
+      padding: 1.25rem 1.5rem;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+      transition: box-shadow 0.2s, transform 0.2s;
+      animation: fadeUp 0.35s ease;
+    }
+    .rep-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); transform: translateY(-2px); }
+    .rep-card.rep-R { border-left-color: var(--red); }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .rep-card-header { display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 0.75rem; }
+    .rep-initials {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--cobalt); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .rep-initials.rep-R { background: var(--red); }
+    .rep-card-name { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 600; color: var(--navy); line-height: 1.3; }
+    .rep-card-role { font-size: 0.75rem; color: var(--mid); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 2px; }
+
+    .rep-card-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.75rem; }
+    .rep-action-btn {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 5px 11px; border-radius: 3px;
+      font-family: 'DM Sans', sans-serif; font-size: 0.76rem; font-weight: 500;
+      text-decoration: none; transition: opacity 0.15s; border: none; cursor: pointer;
+    }
+    .rep-action-btn:hover { opacity: 0.85; }
+    .btn-rep-phone { background: #eef4ff; color: var(--cobalt); }
+    .btn-rep-web { background: var(--navy); color: #fff; }
+    .btn-rep-email { background: #e8f5e9; color: var(--green); }
+
+    .select-rep-btn {
+      margin-top: 0.6rem;
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 4px 10px; border-radius: 3px;
+      font-size: 0.76rem; font-weight: 500;
+      background: var(--gold); color: var(--navy);
+      border: none; cursor: pointer; font-family: 'DM Sans', sans-serif;
+      transition: opacity 0.15s;
+    }
+    .select-rep-btn:hover { opacity: 0.85; }
+    .select-rep-btn.selected { background: var(--green); color: #fff; }
+
+    .empty-state { text-align: center; padding: 2rem; color: var(--mid); font-size: 0.88rem; }
+
+    /* YOUR REP badge */
+    .your-rep-badge {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--navy);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 2px;
+      margin-bottom: 6px;
+    }
+    .rep-card.your-rep {
+      border-left-color: var(--gold);
+      box-shadow: 0 2px 12px rgba(200,168,75,0.25);
+    }
+    .rep-card.your-rep .rep-initials { background: var(--gold); color: var(--navy); }
+
+    /* District note */
+    .district-note {
+      font-size: 0.78rem;
+      color: var(--mid);
+      margin-bottom: 1.25rem;
+      padding: 0.6rem 0.9rem;
+      background: rgba(13,31,60,0.04);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 3px 3px 0;
+    }
+    .district-note strong { color: var(--navy); }
+
+    /* STATE & LOCAL LINKS CARD */
+    .state-links-card {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-top: 4px solid var(--cobalt);
+      border-radius: 4px;
+      padding: 1.75rem 2rem;
+      margin-bottom: 2.5rem;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+    }
+    .state-links-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+    .state-links-icon { font-size: 2rem; }
+    .state-links-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
+      letter-spacing: 0.06em;
+      color: var(--navy);
+    }
+    .state-links-sub { font-size: 0.82rem; color: var(--mid); margin-top: 2px; }
+    .state-links-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+    .state-links-group { display: flex; flex-direction: column; gap: 0.5rem; }
+    .state-links-group-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mid);
+    }
+    .state-links-btns { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .state-link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 0.55rem 1rem;
+      border: 1.5px solid #ddd;
+      border-radius: 3px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--navy);
+      text-decoration: none;
+      background: #fff;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .state-link-btn:hover { border-color: var(--sky); color: var(--sky); background: #f0f6ff; }
+    .state-link-btn-gold {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--navy);
+      font-weight: 600;
+    }
+    .state-link-btn-gold:hover { background: #b8943a; border-color: #b8943a; color: #fff; }
+
+    /* SECTION LABEL */
+    .section-label {
+      font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem;
+      letter-spacing: 0.08em; color: var(--navy);
+      border-bottom: 2px solid var(--rule);
+      padding-bottom: 0.5rem; margin-bottom: 1.5rem;
+    }
+
+    /* MESSAGE TEMPLATES */
+    .templates-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; margin-bottom: 2.5rem; }
+    .template-card {
+      background: #fff; border: 1px solid rgba(0,0,0,0.08); border-radius: 4px;
+      padding: 1.25rem; cursor: pointer; transition: all 0.2s;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+    }
+    .template-card:hover { border-color: var(--sky); box-shadow: 0 4px 16px rgba(46,111,187,0.12); transform: translateY(-2px); }
+    .template-card.active { border-color: var(--sky); border-left: 4px solid var(--sky); }
+    .template-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+    .template-card h4 { font-size: 0.9rem; font-weight: 600; color: var(--navy); margin-bottom: 0.3rem; }
+    .template-card p { font-size: 0.78rem; color: var(--mid); line-height: 1.5; }
+
+    /* COMPOSE */
+    .compose-area {
+      background: #fff; border: 1px solid rgba(0,0,0,0.08); border-top: 4px solid var(--sky);
+      border-radius: 4px; padding: 2rem; margin-bottom: 2.5rem;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+    }
+    .compose-area h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 0.06em; color: var(--navy); margin-bottom: 1.25rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+    @media (max-width: 560px) { .form-row { grid-template-columns: 1fr; } }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
+    .form-group label { font-size: 0.78rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--mid); }
+    .form-group input, .form-group textarea {
+      padding: 0.65rem 0.85rem; border: 1.5px solid #ddd; border-radius: 3px;
+      font-family: 'DM Sans', sans-serif; font-size: 0.9rem; color: var(--dark);
+      outline: none; transition: border-color 0.2s; resize: vertical;
+    }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--sky); }
+    .form-group textarea { min-height: 180px; line-height: 1.7; }
+    .char-count { font-size: 0.75rem; color: var(--mid); text-align: right; }
+    .compose-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1rem; }
+    .btn-send { background: var(--green); color: #fff; border: none; padding: 0.75rem 1.75rem; border-radius: 3px; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; transition: background 0.2s; }
+    .btn-send:hover { background: #256944; }
+    .btn-copy { background: transparent; color: var(--navy); border: 1.5px solid var(--navy); padding: 0.75rem 1.25rem; border-radius: 3px; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+    .btn-copy:hover { background: var(--navy); color: #fff; }
+    .btn-clear { background: transparent; color: var(--mid); border: 1.5px solid #ddd; padding: 0.75rem 1.25rem; border-radius: 3px; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; cursor: pointer; transition: all 0.2s; }
+    .btn-clear:hover { border-color: var(--mid); color: var(--dark); }
+
+    /* TIPS */
+    .tips-box { background: rgba(13,31,60,0.04); border-left: 4px solid var(--gold); border-radius: 0 4px 4px 0; padding: 1.25rem 1.5rem; margin-bottom: 2.5rem; }
+    .tips-box h4 { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--navy); margin-bottom: 0.75rem; }
+    .tips-box ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+    .tips-box li { font-size: 0.85rem; color: var(--dark); line-height: 1.5; padding-left: 1.2rem; position: relative; }
+    .tips-box li::before { content: '→'; position: absolute; left: 0; color: var(--gold); font-weight: 600; }
+
+    /* TOAST */
+    .toast {
+      position: fixed; bottom: 2rem; right: 2rem;
+      background: var(--navy); color: #fff;
+      padding: 0.85rem 1.5rem; border-radius: 4px;
+      font-size: 0.88rem; box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      transform: translateY(80px); opacity: 0; transition: all 0.3s ease;
+      z-index: 999; border-left: 4px solid var(--gold);
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    /* FOOTER */
+    footer { background: var(--navy); color: rgba(255,255,255,0.6); text-align: center; padding: 2rem; font-size: 0.8rem; }
+    footer a { color: var(--gold); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    .footer-links { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
+
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .hero { padding: 2.5rem 1.25rem 2rem; }
+      .page-wrap { padding: 2rem 1rem 4rem; }
+      .lookup-card, .compose-area { padding: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-brand">
+    <div>
+      <span class="nav-brand-text">CivicSphere</span>
+      <span class="nav-brand-sub">Direct Democracy Platform</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/#points">Governance</a></li>
+    <li><a href="/#about">About</a></li>
+    <li><a href="/civestor">Civestor</a></li>
+    <li><a href="https://www.americancivicpower.com" target="_blank">ACP</a></li>
+    <li><a href="/#contact">Contact</a></li>
+  </ul>
+</nav>
+<div class="rainbow"></div>
+
+<!-- HERO -->
+<section class="hero">
+  <span class="hero-tag">Civic Participation · Point 12 — Responsiveness</span>
+  <h1>Contact Your<br>Representative</h1>
+  <p>Democracy works when citizens speak up. Find your elected officials, use our message templates, and make your voice heard — in minutes.</p>
+</section>
+
+<!-- MAIN -->
+<div class="page-wrap">
+
+  <!-- ZIP LOOKUP -->
+  <div class="lookup-card">
+    <h2>Find Your Representatives</h2>
+    <p>Enter your ZIP code to instantly see all your U.S. House members and Senators with direct contact information.</p>
+    <div class="lookup-row">
+      <input type="text" id="zip-input" inputmode="numeric" maxlength="5" placeholder="Your ZIP code" />
+      <button class="btn-lookup" id="btn-lookup" onclick="findReps()">🔍 Find My Reps</button>
+    </div>
+    <div id="lookup-status"></div>
+    <a class="btn-outside-link" href="https://www.commoncause.org/find-your-representative/" target="_blank" rel="noopener">
+      🏛️ Also find state &amp; local reps via Common Cause
+    </a>
+  </div>
+
+  <!-- FILTER + REP CARDS -->
+  <div id="filter-area" style="display:none;">
+    <div class="filter-row">
+      <button class="filter-btn active" onclick="setFilter('all',this)">All</button>
+      <button class="filter-btn" onclick="setFilter('Senator',this)">Senators</button>
+      <button class="filter-btn" onclick="setFilter('Representative',this)">Representatives</button>
+      <button class="filter-btn" onclick="setFilter('Democrat',this)">Democrat</button>
+      <button class="filter-btn" onclick="setFilter('Republican',this)">Republican</button>
+    </div>
+  </div>
+  <div id="reps-container"></div>
+
+  <div class="section-label">Choose a Message Template</div>
+  <div class="templates-grid">
+    <div class="template-card active" onclick="loadTemplate('healthcare',event)">
+      <div class="template-icon">🏥</div>
+      <h4>Healthcare Access</h4>
+      <p>Urge your rep to protect Medicaid, Medicare, and affordable care access for constituents.</p>
+    </div>
+    <div class="template-card" onclick="loadTemplate('housing',event)">
+      <div class="template-icon">🏘️</div>
+      <h4>Affordable Housing</h4>
+      <p>Call for action on housing affordability and the national housing crisis.</p>
+    </div>
+    <div class="template-card" onclick="loadTemplate('environment',event)">
+      <div class="template-icon">🌊</div>
+      <h4>Environment & Climate</h4>
+      <p>Advocate for protecting our environment, local waterways, and climate action.</p>
+    </div>
+    <div class="template-card" onclick="loadTemplate('democracy',event)">
+      <div class="template-icon">🗳️</div>
+      <h4>Voting Rights</h4>
+      <p>Support legislation protecting voting access and election integrity for all Americans.</p>
+    </div>
+    <div class="template-card" onclick="loadTemplate('economy',event)">
+      <div class="template-icon">💼</div>
+      <h4>Local Economy & Jobs</h4>
+      <p>Request investment in infrastructure, small businesses, and good-paying jobs in our community.</p>
+    </div>
+    <div class="template-card" onclick="loadTemplate('blank',event)">
+      <div class="template-icon">✏️</div>
+      <h4>Write Your Own</h4>
+      <p>Start with a blank message and write your own personal letter to your representative.</p>
+    </div>
+  </div>
+
+  <!-- COMPOSE -->
+  <div class="compose-area">
+    <h3>Compose Your Message</h3>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" id="sender-name" placeholder="Jane Smith" />
+      </div>
+      <div class="form-group">
+        <label>Your City / Town</label>
+        <input type="text" id="sender-city" placeholder="Huntington Station, NY" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Subject</label>
+      <input type="text" id="msg-subject" placeholder="Message subject" />
+    </div>
+    <div class="form-group">
+      <label>Message</label>
+      <textarea id="msg-body" oninput="updateCount()"></textarea>
+      <div class="char-count"><span id="char-count">0</span> characters</div>
+    </div>
+    <div class="compose-actions">
+      <button class="btn-send" onclick="sendMessage()">📨 Open in Email App</button>
+      <button class="btn-copy" onclick="copyMessage()">📋 Copy to Clipboard</button>
+      <button class="btn-clear" onclick="clearMessage()">✕ Clear</button>
+    </div>
+  </div>
+
+  <!-- TIPS -->
+  <div class="tips-box">
+    <h4>💡 Tips for Effective Constituent Communication</h4>
+    <ul>
+      <li>Identify yourself as a constituent and include your address — staff track contact by district.</li>
+      <li>Be specific: mention a bill number (e.g. H.R. 1234) or a concrete local issue.</li>
+      <li>Keep it personal — a short, genuine message from a real constituent carries more weight than form letters.</li>
+      <li>Phone calls are the most impactful — a 30-second call to the district office counts more than an email.</li>
+      <li>Follow up. Representatives' offices track constituent contacts; repeated voices on the same issue matter.</li>
+    </ul>
+  </div>
+
+  <!-- STATE & LOCAL LINKS — always visible -->
+  <div class="state-links-card">
+    <div class="state-links-header">
+      <span class="state-links-icon">🏛️</span>
+      <div>
+        <div class="state-links-title">State &amp; Local Representatives</div>
+        <div class="state-links-sub">Find your New York State and Suffolk County elected officials</div>
+      </div>
+    </div>
+    <div class="state-links-row">
+      <div class="state-links-group">
+        <div class="state-links-group-label">New York State</div>
+        <div class="state-links-btns">
+          <a class="state-link-btn" href="https://www.nyassembly.gov/mem/search/" target="_blank" rel="noopener">🗽 NY State Assembly</a>
+          <a class="state-link-btn" href="https://www.nysenate.gov/find-my-senator" target="_blank" rel="noopener">🏛️ NY State Senate</a>
+        </div>
+      </div>
+      <div class="state-links-group">
+        <div class="state-links-group-label">Suffolk County</div>
+        <div class="state-links-btns">
+          <a class="state-link-btn" href="https://www.suffolkcountyny.gov/Departments/County-Legislature" target="_blank" rel="noopener">📍 Suffolk County Legislature</a>
+        </div>
+      </div>
+      <div class="state-links-group">
+        <div class="state-links-group-label">Find Any Representative</div>
+        <div class="state-links-btns">
+          <a class="state-link-btn state-link-btn-gold" href="https://www.commoncause.org/find-your-representative/#" target="_blank" rel="noopener">🔍 Find Your Representative — Common Cause</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /page-wrap -->
+
+<div class="rainbow"></div>
+<footer>
+  <div class="footer-links">
+    <a href="/">CivicSphere Home</a>
+    <a href="https://www.americancivicpower.com" target="_blank">American Civic Power</a>
+    <a href="/#points">12 Points of Good Governance</a>
+    <a href="/#contact">Contact Us</a>
+  </div>
+  &copy; 2026 Civic Sphere / My Civic Sphere. Civic Power, Put to Work.
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  // ── REPRESENTATIVE LOOKUP (powered by mycivicsphere.com Netlify function) ──
+
+  // ZIP -> likely House district(s) for NY (119th Congress)
+  // ZIPs that span two districts return an array
+  var NY_ZIP_DISTRICT = {
+    // NY-1 (LaLota) - Eastern Suffolk / East End
+    // NY-1 (LaLota) - Eastern Suffolk: Brookhaven north, Smithtown, Riverhead, East End
+    // Huntington town portions in NY-1: Centerport, Dix Hills, East Northport, Elwood, Greenlawn, Melville, S.Huntington
+    '11720':'1','11721':'1','11725':'1','11727':'1','11733':'1',
+    '11738':'1','11741':'1','11742':'1','11754':'1','11755':'1','11763':'1',
+    '11764':'1','11766':'1','11767':'1','11776':'1','11777':'1','11778':'1',
+    '11779':'1','11780':'1','11782':'1','11784':'1','11786':'1','11787':'1',
+    '11788':'1','11789':'1','11790':'1','11794':'1',
+    '11901':'1','11930':'1','11931':'1','11932':'1','11933':'1','11934':'1',
+    '11935':'1','11937':'1','11939':'1','11940':'1','11941':'1','11942':'1',
+    '11944':'1','11946':'1','11947':'1','11948':'1','11949':'1','11950':'1',
+    '11951':'1','11952':'1','11953':'1','11954':'1','11955':'1','11956':'1',
+    '11957':'1','11958':'1','11959':'1','11960':'1','11961':'1','11962':'1',
+    '11963':'1','11964':'1','11965':'1','11967':'1','11968':'1','11969':'1',
+    '11970':'1','11971':'1','11972':'1','11973':'1','11975':'1','11976':'1',
+    '11977':'1','11978':'1','11980':'1',
+    // NY-2 (Garbarino) - Western Suffolk
+    '11701':'2','11702':'2','11703':'2','11704':'2','11705':'2','11706':'2',
+    '11707':'2','11708':'2','11713':'2','11715':'2','11716':'2','11717':'2',
+    '11718':'2','11719':'2','11722':'2','11726':'2','11729':'2','11730':'2',
+    '11739':'2','11740':'2','11747':'2','11749':'2',
+    '11751':'2','11752':'2','11757':'2','11769':'2','11770':'2','11772':'2',
+    '11795':'2','11796':'2','11798':'2',
+    // 11746 (Huntington Station) straddles NY-1 (LaLota) and NY-3 (Suozzi)
+    '11746':['1','3'],
+    // 11743 (Huntington CDP) straddles NY-1 and NY-3
+    '11743':['1','3'],
+    // 11724 (Cold Spring Harbor) is NY-3 (Suozzi)
+    '11724':'3',
+    // NY-3 (Suozzi) - Nassau North Shore
+    '11020':'3','11021':'3','11022':'3','11023':'3','11024':'3','11030':'3',
+    '11040':'3','11042':'3','11050':'3','11501':'3','11507':'3','11514':'3',
+    '11530':'3','11531':'3','11542':'3','11545':'3','11547':'3','11548':'3',
+    '11560':'3','11568':'3','11576':'3','11577':'3','11579':'3','11590':'3',
+    '11596':'3','11709':'3','11710':'3','11714':'3','11732':'3','11735':'3',
+    '11737':'3','11753':'3','11756':'3','11758':'3','11762':'3','11765':'3',
+    '11771':'3','11791':'3','11797':'3','11801':'3','11802':'3','11803':'3','11804':'3',
+    // NY-4 (Gillen) - Nassau South Shore
+    '11509':'4','11510':'4','11516':'4','11518':'4','11520':'4','11549':'4',
+    '11550':'4','11551':'4','11552':'4','11553':'4','11554':'4','11555':'4',
+    '11557':'4','11558':'4','11559':'4','11561':'4','11563':'4','11565':'4',
+    '11566':'4','11569':'4','11570':'4','11571':'4','11572':'4','11575':'4',
+    '11580':'4','11581':'4','11582':'4','11592':'4','11598':'4',
+    // NYC districts (approximate — many ZIPs straddle districts)
+    '10001':'12','10002':'5','10003':'12','10004':'10','10005':'10',
+    '10006':'10','10007':'10','10009':'12','10010':'12','10011':'12',
+    '10012':'12','10013':'10','10014':'12','10016':'12','10017':'12',
+    '10018':'12','10019':'12','10021':'12','10022':'12','10023':'12',
+    '10024':'13','10025':'13','10026':'13','10027':'13','10028':'12',
+    '10029':'13','10030':'13','10031':'13','10032':'13','10033':'13',
+    '10034':'13','10035':'13','10036':'12','10037':'13','10038':'10',
+    '10039':'13','10040':'13','10044':'12','10065':'12','10069':'12',
+    '10075':'12','10128':'12','10162':'12',
+    // Brooklyn
+    '11201':'8','11203':'9','11204':'11','11205':'8','11206':'7','11207':'8',
+    '11208':'8','11209':'11','11210':'9','11211':'7','11212':'9','11213':'9',
+    '11214':'11','11215':'8','11216':'9','11217':'8','11218':'9','11219':'11',
+    '11220':'11','11221':'7','11222':'7','11223':'11','11224':'11','11225':'9',
+    '11226':'9','11228':'11','11229':'9','11230':'9','11231':'8','11232':'11',
+    '11233':'8','11234':'9','11235':'11','11236':'9','11237':'7','11238':'8',
+    '11239':'8',
+    // Queens
+    '11101':'5','11102':'5','11103':'5','11104':'5','11105':'5','11106':'5',
+    '11354':'6','11355':'6','11356':'6','11357':'6','11358':'6','11360':'6',
+    '11361':'6','11362':'6','11363':'6','11364':'6','11365':'6','11366':'6',
+    '11367':'6','11368':'14','11369':'14','11370':'14','11372':'6','11373':'6',
+    '11374':'6','11375':'6','11377':'6','11378':'6','11379':'6','11385':'7',
+    '11411':'5','11412':'5','11413':'5','11414':'5','11415':'5','11416':'5',
+    '11417':'5','11418':'5','11419':'5','11420':'5','11421':'5','11422':'5',
+    '11423':'5','11426':'6','11427':'6','11428':'6','11429':'6','11432':'5',
+    '11433':'5','11434':'5','11435':'5','11436':'5',
+    // Bronx
+    '10451':'15','10452':'15','10453':'15','10454':'15','10455':'15',
+    '10456':'15','10457':'15','10458':'16','10459':'15','10460':'15',
+    '10461':'16','10462':'16','10463':'16','10464':'16','10465':'16',
+    '10466':'16','10467':'16','10468':'16','10469':'16','10470':'16',
+    '10471':'16','10472':'15','10473':'15','10474':'15','10475':'16',
+    // Staten Island
+    '10301':'11','10302':'11','10303':'11','10304':'11','10305':'11',
+    '10306':'11','10307':'11','10308':'11','10309':'11','10310':'11',
+    '10312':'11','10314':'11',
+    // Westchester / Hudson Valley (partial)
+    '10550':'17','10552':'17','10553':'17','10566':'17','10567':'17',
+    '10570':'17','10591':'17','10595':'17','10601':'17','10603':'17',
+    '10605':'17','10701':'16','10703':'16','10704':'16','10705':'16',
+    '10710':'16','10801':'16','10804':'16','10901':'18','10956':'18',
+    '10960':'17','10977':'17','10994':'17',
+    // Capital Region / Upstate (partial)
+    '12180':'20','12182':'20','12183':'20','12188':'20','12189':'20',
+    '12201':'20','12203':'20','12204':'20','12205':'20','12206':'20',
+    '12207':'20','12208':'20','12209':'20','12210':'20','12047':'20',
+  };
+
+  function getDistrictForZip(zip) {
+    var d = NY_ZIP_DISTRICT[zip];
+    if (!d) return [];
+    return Array.isArray(d) ? d : [d];
+  }
+
+  var allMembers = [];
+  var currentFilter = 'all';
+  var currentZip = '';
+  var selectedRepName = 'Your Representative';
+
+  document.getElementById('zip-input').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') findReps();
+  });
+
+  async function findReps() {
+    var zip = document.getElementById('zip-input').value.trim();
+    var statusEl = document.getElementById('lookup-status');
+    var btn = document.getElementById('btn-lookup');
+
+    if (!/^\d{5}$/.test(zip)) {
+      statusEl.textContent = 'Please enter a valid 5-digit ZIP code.';
+      statusEl.className = 'error';
+      return;
+    }
+
+    btn.disabled = true;
+    statusEl.className = '';
+    statusEl.textContent = 'Looking up your representatives\u2026';
+    document.getElementById('reps-container').innerHTML = '';
+    document.getElementById('filter-area').style.display = 'none';
+
+    try {
+      var res = await fetch('https://mycivicsphere.com/.netlify/functions/get-reps?zip=' + zip);
+      var data = await res.json();
+
+      if (!res.ok || data.error) {
+        statusEl.textContent = data.error || 'Something went wrong. Please try again.';
+        statusEl.className = 'error';
+        return;
+      }
+
+      allMembers = data.members;
+      currentZip = zip;
+      var districts = getDistrictForZip(zip);
+      var districtNote = '';
+      if (data.state === 'NY' && districts.length > 0) {
+        if (districts.length === 1) {
+          districtNote = '<strong>Your House district: NY-' + districts[0] + '.</strong> Your rep is highlighted in gold below. Both senators represent all of New York.';
+        } else {
+          districtNote = '<strong>Your ZIP straddles districts NY-' + districts.join(' and NY-') + '.</strong> Both likely reps are highlighted. Both senators represent all of New York.';
+        }
+      } else {
+        districtNote = 'All U.S. senators and representatives for <strong>' + data.state + '</strong> are shown. Your two senators represent the whole state — contact any of them on issues that matter to you.';
+      }
+      statusEl.textContent = 'Found ' + allMembers.length + ' representatives for ZIP ' + zip + ' (' + data.state + ')';
+      var noteEl = document.getElementById('district-note');
+      if (!noteEl) {
+        noteEl = document.createElement('div');
+        noteEl.id = 'district-note';
+        noteEl.className = 'district-note';
+        document.getElementById('filter-area').insertAdjacentElement('afterbegin', noteEl);
+      }
+      noteEl.innerHTML = districtNote;
+      document.getElementById('filter-area').style.display = 'block';
+      setFilter('all', document.querySelector('.filter-btn'));
+      renderReps();
+    } catch(err) {
+      statusEl.textContent = 'Network error. Please try again.';
+      statusEl.className = 'error';
+    } finally {
+      btn.disabled = false;
+    }
+  }
+
+  function setFilter(filter, el) {
+    currentFilter = filter;
+    document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+    if (el) el.classList.add('active');
+    renderReps();
+  }
+
+  function renderReps() {
+    var container = document.getElementById('reps-container');
+    var filtered = allMembers;
+
+    if (currentFilter === 'Senator') filtered = allMembers.filter(function(m) { return m.type === 'Senator'; });
+    else if (currentFilter === 'Representative') filtered = allMembers.filter(function(m) { return m.type === 'Representative'; });
+    else if (currentFilter === 'Democrat') filtered = allMembers.filter(function(m) { return m.party === 'Democrat'; });
+    else if (currentFilter === 'Republican') filtered = allMembers.filter(function(m) { return m.party === 'Republican'; });
+
+    if (filtered.length === 0) {
+      container.innerHTML = '<div class="empty-state">No representatives match this filter.</div>';
+      return;
+    }
+
+    var districts = getDistrictForZip(currentZip);
+
+    var isYourRep = function(m) {
+      if (m.type === 'Senator') return false;
+      return districts.indexOf(String(m.district)) !== -1;
+    };
+
+    var sorted = filtered.slice().sort(function(a, b) {
+      var aYours = isYourRep(a) ? 0 : 1;
+      var bYours = isYourRep(b) ? 0 : 1;
+      if (aYours !== bYours) return aYours - bYours;
+      if (a.type === 'Senator' && b.type !== 'Senator') return -1;
+      if (b.type === 'Senator' && a.type !== 'Senator') return 1;
+      return (a.district || 0) - (b.district || 0);
+    });
+
+    var isR = function(m) { return m.party === 'Republican'; };
+    var initials = function(name) { return name.split(' ').map(function(w){return w[0]||'';}).join('').slice(0,2).toUpperCase(); };
+
+    var html = '<div class="reps-grid">';
+    sorted.forEach(function(m, i) {
+      var yourRep = isYourRep(m);
+      var rClass = yourRep ? ' your-rep' : (isR(m) ? ' rep-R' : '');
+      var iClass = yourRep ? '' : (isR(m) ? ' rep-R' : '');
+      var badge = yourRep ? '<div class="your-rep-badge">\u2605 Your House Rep</div>' : '';
+      var roleLabel = m.type === 'Senator'
+        ? 'U.S. Senator \u00b7 ' + m.state + ' \u00b7 ' + m.party
+        : 'U.S. Rep. \u00b7 ' + m.state + '-' + m.district + ' \u00b7 ' + m.party;
+
+      var actions = '';
+      if (m.phone) actions += '<a class="rep-action-btn btn-rep-phone" href="tel:' + m.phone + '">\uD83D\uDCDE ' + m.phone + '</a>';
+      if (m.url) actions += '<a class="rep-action-btn btn-rep-web" href="' + m.url + '" target="_blank" rel="noopener">\uD83C\uDF10 Website</a>';
+      if (m.contactForm) actions += '<a class="rep-action-btn btn-rep-email" href="' + m.contactForm + '" target="_blank" rel="noopener">\u2709\uFE0F Email</a>';
+
+      var selectLabel = (selectedRepName === m.name) ? '\u2713 Selected for Message' : '\u270F Use in Message';
+      var selectClass = (selectedRepName === m.name) ? ' selected' : '';
+
+      html += '<div class="rep-card' + rClass + '">'
+        + badge
+        + '<div class="rep-card-header">'
+        + '<div class="rep-initials' + iClass + '">' + initials(m.name) + '</div>'
+        + '<div><div class="rep-card-name">' + m.name + '</div>'
+        + '<div class="rep-card-role">' + roleLabel + '</div></div>'
+        + '</div>'
+        + '<div class="rep-card-actions">' + actions + '</div>'
+        + '<button class="select-rep-btn' + selectClass + '" onclick="selectForMessage(' + JSON.stringify(m.name) + ',this)">' + selectLabel + '</button>'
+        + '</div>';
+    });
+    html += '</div>';
+    container.innerHTML = html;
+  }
+
+  function selectForMessage(name, btn) {
+    selectedRepName = name;
+    // Update all select buttons
+    document.querySelectorAll('.select-rep-btn').forEach(function(b) {
+      b.classList.remove('selected');
+      b.textContent = '\u270F Use in Message';
+    });
+    btn.classList.add('selected');
+    btn.textContent = '\u2713 Selected for Message';
+    // Refresh template with new name
+    var activeCard = document.querySelector('.template-card.active');
+    if (activeCard) {
+      var key = activeCard.getAttribute('data-key');
+      if (key) applyTemplate(key);
+    }
+    showToast('\u270F ' + name + ' selected — now pick a template below.');
+    // Smooth scroll to templates
+    document.querySelector('.section-label').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // ── TEMPLATES ──
+  var templates = {
+    healthcare: {
+      subject: "Please Protect Healthcare Access for My Community",
+      body: "Dear Representative [REP_NAME],\n\nMy name is [YOUR_NAME], and I am a constituent writing to you from [YOUR_CITY].\n\nI am writing to urge you to protect and strengthen healthcare access for families in our district. Many of my neighbors rely on Medicaid, Medicare, and the Affordable Care Act for essential medical care. Any cuts to these programs would cause real harm to real people in our community.\n\nI respectfully ask that you:\n\u2022 Oppose any legislation that would cut Medicaid or Medicare benefits\n\u2022 Support policies that lower prescription drug costs\n\u2022 Ensure that Americans with pre-existing conditions remain protected\n\nOur community's health depends on bold leadership. I am counting on you to stand up for your constituents.\n\nThank you for your time and service.\n\nSincerely,\n[YOUR_NAME]\n[YOUR_CITY]"
+    },
+    housing: {
+      subject: "Action Needed on Affordable Housing in Our District",
+      body: "Dear Representative [REP_NAME],\n\nMy name is [YOUR_NAME], a resident of [YOUR_CITY] writing to you about the urgent affordable housing crisis facing families in our community.\n\nHousing costs across America are at historic highs. Working families, young people, seniors, and essential workers are being priced out of the communities they helped build. This is a crisis that requires federal action.\n\nI urge you to:\n\u2022 Support federal funding for affordable housing development\n\u2022 Advocate for down payment assistance programs for first-time homebuyers\n\u2022 Back legislation expanding rental assistance to low- and middle-income families\n\nOur community needs housing solutions. I ask you to make affordable housing a legislative priority.\n\nRespectfully,\n[YOUR_NAME]\n[YOUR_CITY]"
+    },
+    environment: {
+      subject: "Please Support Strong Environmental Protections",
+      body: "Dear Representative [REP_NAME],\n\nI am [YOUR_NAME] from [YOUR_CITY], writing to urge your support for strong environmental protections for our community and our country.\n\nClean air, clean water, and a stable climate are vital to the health, quality of life, and economic future of every American community.\n\nI ask that you:\n\u2022 Oppose any rollbacks to the Clean Water Act and Clean Air Act\n\u2022 Support federal investment in water quality and environmental resilience\n\u2022 Back climate legislation that protects communities from the growing impacts of extreme weather\n\nAmericans across the country depend on a healthy environment. Please be a champion for our natural resources.\n\nThank you,\n[YOUR_NAME]\n[YOUR_CITY]"
+    },
+    democracy: {
+      subject: "Please Protect Voting Rights for All Americans",
+      body: "Dear Representative [REP_NAME],\n\nMy name is [YOUR_NAME], and I am writing to you as a constituent from [YOUR_CITY] to urge your support for voting rights legislation.\n\nThe right to vote is the foundation of our democracy. Every eligible American should be able to cast a ballot without facing unnecessary barriers.\n\nI respectfully request that you:\n\u2022 Support legislation to protect and expand voting access\n\u2022 Oppose efforts to purge voter rolls unfairly or limit early voting\n\u2022 Back measures to modernize our elections and ensure every vote counts\n\nA healthy democracy requires that every citizen can participate. I trust you to stand up for that principle.\n\nSincerely,\n[YOUR_NAME]\n[YOUR_CITY]"
+    },
+    economy: {
+      subject: "Investing in Our Community's Economy and Working Families",
+      body: "Dear Representative [REP_NAME],\n\nI am [YOUR_NAME] from [YOUR_CITY], and I am writing to urge you to prioritize investments in our community's economy and working families.\n\nAmerica's middle class is under pressure from rising costs, stagnant wages, and aging infrastructure.\n\nI ask that you support:\n\u2022 Infrastructure funding for our roads, bridges, and public transportation\n\u2022 Small business programs that support local entrepreneurs\n\u2022 Workforce development and job training programs for working Americans\n\nOur district deserves a representative who fights hard for our economic future.\n\nThank you,\n[YOUR_NAME]\n[YOUR_CITY]"
+    },
+    blank: {
+      subject: "",
+      body: "Dear Representative [REP_NAME],\n\nMy name is [YOUR_NAME], and I am a constituent writing from [YOUR_CITY].\n\n[Write your message here.]\n\nThank you for your time and service.\n\nSincerely,\n[YOUR_NAME]\n[YOUR_CITY]"
+    }
+  };
+
+  function loadTemplate(key, evt) {
+    document.querySelectorAll('.template-card').forEach(function(c) {
+      c.classList.remove('active');
+      c.setAttribute('data-key', c.getAttribute('data-key') || '');
+    });
+    var card = evt.currentTarget;
+    card.classList.add('active');
+    card.setAttribute('data-key', key);
+    applyTemplate(key);
+  }
+
+  function applyTemplate(key) {
+    var t = templates[key];
+    if (!t) return;
+    var name = document.getElementById('sender-name').value || '[YOUR_NAME]';
+    var city = document.getElementById('sender-city').value || '[YOUR_CITY]';
+    document.getElementById('msg-subject').value = t.subject;
+    document.getElementById('msg-body').value = t.body
+      .replace(/\[REP_NAME\]/g, selectedRepName)
+      .replace(/\[YOUR_NAME\]/g, name)
+      .replace(/\[YOUR_CITY\]/g, city);
+    updateCount();
+  }
+
+  function updateCount() {
+    document.getElementById('char-count').textContent = document.getElementById('msg-body').value.length.toLocaleString();
+  }
+
+  function sendMessage() {
+    var subject = encodeURIComponent(document.getElementById('msg-subject').value || 'Message from Constituent');
+    var body = encodeURIComponent(document.getElementById('msg-body').value);
+    window.open('mailto:?subject=' + subject + '&body=' + body);
+    showToast('Opening your email app\u2026');
+  }
+
+  function copyMessage() {
+    var subject = document.getElementById('msg-subject').value;
+    var body = document.getElementById('msg-body').value;
+    var full = subject ? 'Subject: ' + subject + '\n\n' + body : body;
+    navigator.clipboard.writeText(full).then(function() {
+      showToast('\u2705 Message copied to clipboard!');
+    });
+  }
+
+  function clearMessage() {
+    document.getElementById('msg-subject').value = '';
+    document.getElementById('msg-body').value = '';
+    updateCount();
+  }
+
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 3000);
+  }
+
+  // Init
+  window.addEventListener('DOMContentLoaded', function() {
+    var firstCard = document.querySelectorAll('.template-card')[0];
+    if (firstCard) {
+      firstCard.setAttribute('data-key', 'healthcare');
+      var t = templates['healthcare'];
+      document.getElementById('msg-subject').value = t.subject;
+      document.getElementById('msg-body').value = t.body
+        .replace(/\[REP_NAME\]/g, 'Your Representative')
+        .replace(/\[YOUR_NAME\]/g, '[YOUR_NAME]')
+        .replace(/\[YOUR_CITY\]/g, '[YOUR_CITY]');
+      updateCount();
+    }
+  });
+</script>
+</body>
+</html>

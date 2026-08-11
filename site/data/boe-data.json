@@ -1,0 +1,145 @@
+{
+  "generatedAt": "2026-08-10T20:47:55.185Z",
+  "reportYear": "2026",
+  "source": "New York State Board of Elections — Campaign Finance Bulk Download",
+  "sourceUrl": "https://publicreporting.elections.ny.gov/DownloadCampaignFinanceData/DownloadCampaignFinanceData",
+  "statewide": {
+    "totalReceipts": 104299.53,
+    "totalExpenditures": 77782.64,
+    "recordCount": 809
+  },
+  "topCommitteesByReceipts": [
+    {
+      "name": "Luke Wochensky for Mayor",
+      "receipts": 13131.77,
+      "expenditures": 11172.48
+    },
+    {
+      "name": "VGC Community Party",
+      "receipts": 12737.55,
+      "expenditures": 5222.63
+    },
+    {
+      "name": "Fairport Rising",
+      "receipts": 12295.14,
+      "expenditures": 6582.61
+    },
+    {
+      "name": "Friends of Michelle Cleary",
+      "receipts": 11050.99,
+      "expenditures": 13680.66
+    },
+    {
+      "name": "Lewiston Democratic Committee",
+      "receipts": 8954,
+      "expenditures": 6903.03
+    },
+    {
+      "name": "Brockport For You",
+      "receipts": 6674,
+      "expenditures": 3143.83
+    },
+    {
+      "name": "School Administrators Association of New York State Political Action Committee",
+      "receipts": 6450,
+      "expenditures": 0
+    },
+    {
+      "name": "Saranac Lake Democratic Committee",
+      "receipts": 5929.48,
+      "expenditures": 1446.68
+    },
+    {
+      "name": "Elmsford Republican Committee",
+      "receipts": 5100,
+      "expenditures": 7504.73
+    },
+    {
+      "name": "Friends of Michael Sengillo",
+      "receipts": 4500.16,
+      "expenditures": 4225.91
+    },
+    {
+      "name": "Independent Brockport",
+      "receipts": 3715.44,
+      "expenditures": 2289.87
+    },
+    {
+      "name": "Goshen Forward",
+      "receipts": 3541.94,
+      "expenditures": 1631.42
+    },
+    {
+      "name": "Community Party Village of Lansing",
+      "receipts": 2355,
+      "expenditures": 1270.56
+    },
+    {
+      "name": "Town Of Dryden Democratic Committee",
+      "receipts": 2263.92,
+      "expenditures": 2144.08
+    },
+    {
+      "name": "Hilton Forward 2026",
+      "receipts": 1375,
+      "expenditures": 1313.36
+    },
+    {
+      "name": "Brian  Spindler",
+      "receipts": 1311.59,
+      "expenditures": 1496.82
+    },
+    {
+      "name": "Town Of Nassau Democratic Committee",
+      "receipts": 1139,
+      "expenditures": 500
+    },
+    {
+      "name": "Hilton's Future Committee",
+      "receipts": 650,
+      "expenditures": 1293.09
+    },
+    {
+      "name": "Town Of Warsaw Democratic Committee",
+      "receipts": 450,
+      "expenditures": 278
+    },
+    {
+      "name": "Catskill Democratic Committee",
+      "receipts": 255,
+      "expenditures": 1027.14
+    },
+    {
+      "name": "Friends of Pat Hahn",
+      "receipts": 152.05,
+      "expenditures": 0
+    },
+    {
+      "name": "Ashley Dmitrieff for Montgomery",
+      "receipts": 145,
+      "expenditures": 40.34
+    },
+    {
+      "name": "Erich  Asperschlager",
+      "receipts": 122.5,
+      "expenditures": 0
+    },
+    {
+      "name": "Committee To Elect Jeff Smith For Sheriff",
+      "receipts": 0,
+      "expenditures": 300
+    },
+    {
+      "name": "Brockport Proud",
+      "receipts": 0,
+      "expenditures": 13.16
+    }
+  ],
+  "links": {
+    "searchContributions": "https://publicreporting.elections.ny.gov/Contributions/Contributions",
+    "searchExpenditures": "https://publicreporting.elections.ny.gov/ExpenditureByExpender/ExpenditureByExpender",
+    "candidateCommitteeDisclosures": "https://publicreporting.elections.ny.gov/CandidateCommitteeDisclosure/CandidateCommitteeDisclosure",
+    "electedOfficials": "https://publicreporting.elections.ny.gov/ElectedOfficials/ElectedOfficials",
+    "listOfFilers": "https://publicreporting.elections.ny.gov/ActiveDeactiveFiler/ActiveDeactiveFiler"
+  }
+}

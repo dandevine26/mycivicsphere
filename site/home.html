@@ -578,12 +578,15 @@
         <div class="nav-dropdown-divider"></div>
         <div class="nav-dropdown-label">Documents</div>
         <a href="civic-dual-entity-structure.html">Entity Structure</a>
+        <div class="nav-dropdown-divider"></div>
+        <div class="nav-dropdown-label">Board</div>
+        <a href="https://board.mycivicsphere.com" target="_blank">Board Recruitment Suite</a>
       </div>
     </li>
     <li><a href="/content">Content</a></li>
     <li><a href="/civestor">Civestor</a></li>
-    <li><a href="/board/recruitment">Board Recruitment</a></li>
-    <li><a href="/board/tracker">Board Tracker</a></li>
+    <li><a href="/contact-your-rep">Contact Your Rep</a></li>
+    <li><a href="/civicsphere_app.html">Active Legislation</a></li>
     <li><a href="https://vote.gov" target="_blank" class="nav-vote">Vote Now →</a></li>
   </ul>
 </nav>
@@ -874,18 +877,14 @@ document.addEventListener('click', function(e) {
             <div class="contact-icon">📞</div>
             <a href="tel:6314069767">631-406-9767</a>
           </div>
-          <div class="contact-item">
-            <div class="contact-icon">✉️</div>
-            <a href="/cdn-cgi/l/email-protection#f3909a859a9080839b968196c2c4c4c5b3949e929a9fdd909c9e"><span class="__cf_email__" data-cfemail="b3d0dac5dad0c0c3dbd6c1d682848485f3d4ded2dadf9dd0dcde">[email&#160;protected]</span></a>
-          </div>
-          <div class="contact-item">
-            <div class="contact-icon">🌐</div>
+                     <div class="contact-icon">🌐</div>
             <a href="https://www.americancivicpower.com" target="_blank">americancivicpower.com</a>
           </div>
         </div>
       </div>
       <div>
-        <form class="contact-form" onsubmit="handleSubmit(event)">
+        <form class="contact-form" name="contact" method="POST" data-netlify="true" action="/success.html">
+          <input type="hidden" name="form-name" value="contact">
           <div class="form-row">
             <div class="form-group">
               <label class="form-label">Name</label>

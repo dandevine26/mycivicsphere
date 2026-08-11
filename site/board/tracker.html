@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Board Tracker — American Civic Power</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0D1F3C;
+    --navy-mid: #132848;
+    --navy-light: #1a3560;
+    --gold: #C8A84B;
+    --gold-light: #e0c06a;
+    --gold-dim: rgba(200,168,75,0.15);
+    --white: #F5F0E8;
+    --muted: rgba(245,240,232,0.5);
+    --critical: #c0392b;
+    --high: #C8A84B;
+    --medium: #2ecc71;
+    --pending: #7f8c8d;
+    --reviewing: #2980b9;
+    --accepted: #27ae60;
+    --declined: #c0392b;
+    --border: rgba(200,168,75,0.2);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    background: linear-gradient(180deg, #0a1828 0%, var(--navy) 100%);
+    border-bottom: 2px solid var(--gold);
+    padding: 2.5rem 2rem 2rem;
+    text-align: center;
+  }
+
+  .header-eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 900;
+    line-height: 1.1;
+    color: var(--white);
+  }
+
+  header h1 span {
+    color: var(--gold);
+    display: block;
+  }
+
+  header p {
+    margin-top: 0.75rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  /* MAIN */
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  /* STATS BAR */
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .stat-card {
+    background: var(--navy-mid);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .stat-card .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .stat-card .stat-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 0.25rem;
+  }
+
+  /* TOOLBAR */
+  .toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .toolbar-left {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.05em;
+  }
+
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--gold-dim);
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  .btn-add {
+    background: var(--gold);
+    color: var(--navy);
+    border: none;
+    padding: 0.6rem 1.4rem;
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    transition: background 0.2s;
+  }
+
+  .btn-add:hover { background: var(--gold-light); }
+
+  /* TABLE */
+  .table-wrap {
+    background: var(--navy-mid);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  thead th {
+    background: var(--navy-light);
+    padding: 0.9rem 1rem;
+    text-align: left;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+    border-bottom: 1px solid var(--border);
+  }
+
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(200,168,75,0.05); }
+
+  tbody td {
+    padding: 1rem;
+    font-size: 0.875rem;
+    vertical-align: middle;
+  }
+
+  .td-name { font-weight: 600; color: var(--white); }
+  .td-role { color: var(--muted); font-size: 0.82rem; }
+  .td-date { color: var(--muted); font-size: 0.8rem; }
+  .td-notes { color: var(--muted); font-size: 0.8rem; max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* STATUS BADGE */
+  .badge {
+    display: inline-block;
+    padding: 0.25rem 0.65rem;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .badge-pending   { background: rgba(127,140,141,0.2); color: #b2bec3; border: 1px solid rgba(127,140,141,0.3); }
+  .badge-reviewing { background: rgba(41,128,185,0.2);  color: #74b9ff; border: 1px solid rgba(41,128,185,0.3); }
+  .badge-accepted  { background: rgba(39,174,96,0.2);   color: #55efc4; border: 1px solid rgba(39,174,96,0.3); }
+  .badge-declined  { background: rgba(192,57,43,0.2);   color: #ff7675; border: 1px solid rgba(192,57,43,0.3); }
+
+  /* PRIORITY BADGE */
+  .priority {
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .priority-critical { background: rgba(192,57,43,0.25); color: #ff7675; }
+  .priority-high     { background: rgba(200,168,75,0.25); color: var(--gold); }
+  .priority-medium   { background: rgba(46,204,113,0.2);  color: #55efc4; }
+
+  /* ACTION BUTTONS */
+  .actions { display: flex; gap: 0.4rem; }
+
+  .btn-edit, .btn-delete {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    width: 28px; height: 28px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .btn-edit:hover  { border-color: var(--gold); color: var(--gold); }
+  .btn-delete:hover { border-color: #ff7675; color: #ff7675; }
+
+  /* EMPTY STATE */
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--muted);
+  }
+
+  .empty-state .empty-icon { font-size: 3rem; margin-bottom: 1rem; }
+  .empty-state p { font-size: 0.9rem; }
+
+  /* MODAL */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(5,12,24,0.85);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--navy-mid);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 520px;
+    margin: 1rem;
+  }
+
+  .modal h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+
+  .form-group {
+    margin-bottom: 1.1rem;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.4rem;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    background: var(--navy);
+    border: 1px solid var(--border);
+    color: var(--white);
+    padding: 0.6rem 0.8rem;
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.875rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--gold);
+  }
+
+  .form-group select option { background: var(--navy); }
+  .form-group textarea { resize: vertical; min-height: 80px; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .btn-cancel {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-cancel:hover { border-color: var(--white); color: var(--white); }
+
+  .btn-save {
+    background: var(--gold);
+    color: var(--navy);
+    border: none;
+    padding: 0.6rem 1.4rem;
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .btn-save:hover { background: var(--gold-light); }
+
+  /* RAINBOW BORDER TOP */
+  .rainbow-bar {
+    height: 4px;
+    background: linear-gradient(90deg,
+      #c0392b 0%, #e67e22 14.28%, #f1c40f 28.57%,
+      #2ecc71 42.85%, #1abc9c 57.14%, #3498db 71.42%,
+      #9b59b6 85.71%, #c0392b 100%);
+  }
+
+  @media (max-width: 700px) {
+    .stats-bar { grid-template-columns: repeat(3, 1fr); }
+    .form-row { grid-template-columns: 1fr; }
+    thead th:nth-child(4), td:nth-child(4),
+    thead th:nth-child(5), td:nth-child(5) { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="rainbow-bar"></div>
+
+<header>
+  <div class="header-eyebrow">American Civic Power</div>
+  <h1>Board Application <span>Tracker</span></h1>
+  <p>Track prospective board member applications and status.</p>
+</header>
+
+<main>
+  <!-- STATS -->
+  <div class="stats-bar" id="statsBar">
+    <div class="stat-card"><div class="stat-num" id="statTotal">0</div><div class="stat-label">Total</div></div>
+    <div class="stat-card"><div class="stat-num" id="statPending">0</div><div class="stat-label">Pending</div></div>
+    <div class="stat-card"><div class="stat-num" id="statReviewing">0</div><div class="stat-label">Reviewing</div></div>
+    <div class="stat-card"><div class="stat-num" id="statAccepted">0</div><div class="stat-label">Accepted</div></div>
+    <div class="stat-card"><div class="stat-num" id="statDeclined">0</div><div class="stat-label">Declined</div></div>
+  </div>
+
+  <!-- TOOLBAR -->
+  <div class="toolbar">
+    <div class="toolbar-left">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="pending">Pending</button>
+      <button class="filter-btn" data-filter="reviewing">Reviewing</button>
+      <button class="filter-btn" data-filter="accepted">Accepted</button>
+      <button class="filter-btn" data-filter="declined">Declined</button>
+    </div>
+    <button class="btn-add" onclick="openModal()">+ Add Applicant</button>
+  </div>
+
+  <!-- TABLE -->
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Role / Expertise</th>
+          <th>Priority</th>
+          <th>Date Added</th>
+          <th>Notes</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+    <div class="empty-state" id="emptyState" style="display:none">
+      <div class="empty-icon">📋</div>
+      <p>No applicants yet. Click <strong>+ Add Applicant</strong> to get started.</p>
+    </div>
+  </div>
+</main>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h2 id="modalTitle">Add Applicant</h2>
+    <div class="form-row">
+      <div class="form-group">
+        <label>First Name</label>
+        <input type="text" id="fFirstName" placeholder="First">
+      </div>
+      <div class="form-group">
+        <label>Last Name</label>
+        <input type="text" id="fLastName" placeholder="Last">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" id="fEmail" placeholder="email@example.com">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Role / Expertise</label>
+        <select id="fRole">
+          <option value="Legal & Compliance">Legal & Compliance</option>
+          <option value="Finance & Accounting">Finance & Accounting</option>
+          <option value="Civic / Government Affairs">Civic / Government Affairs</option>
+          <option value="Technology & Digital">Technology & Digital</option>
+          <option value="Communications & Media">Communications & Media</option>
+          <option value="Education & Academia">Education & Academia</option>
+          <option value="Fundraising & Development">Fundraising & Development</option>
+          <option value="Community / Organizing">Community / Organizing</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Priority</label>
+        <select id="fPriority">
+          <option value="critical">Critical</option>
+          <option value="high">High</option>
+          <option value="medium">Medium</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Status</label>
+      <select id="fStatus">
+        <option value="pending">Pending</option>
+        <option value="reviewing">Reviewing</option>
+        <option value="accepted">Accepted</option>
+        <option value="declined">Declined</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Notes</label>
+      <textarea id="fNotes" placeholder="Connection, referral source, key strengths..."></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-save" onclick="saveApplicant()">Save</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const STORAGE_KEY = 'acp_board_tracker';
+  let applicants = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+  let editingId = null;
+  let currentFilter = 'all';
+
+  function save() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(applicants));
+  }
+
+  function render() {
+    const tbody = document.getElementById('tableBody');
+    const empty = document.getElementById('emptyState');
+    const filtered = currentFilter === 'all'
+      ? applicants
+      : applicants.filter(a => a.status === currentFilter);
+
+    // Stats
+    document.getElementById('statTotal').textContent = applicants.length;
+    document.getElementById('statPending').textContent = applicants.filter(a => a.status === 'pending').length;
+    document.getElementById('statReviewing').textContent = applicants.filter(a => a.status === 'reviewing').length;
+    document.getElementById('statAccepted').textContent = applicants.filter(a => a.status === 'accepted').length;
+    document.getElementById('statDeclined').textContent = applicants.filter(a => a.status === 'declined').length;
+
+    if (filtered.length === 0) {
+      tbody.innerHTML = '';
+      empty.style.display = 'block';
+      return;
+    }
+    empty.style.display = 'none';
+
+    tbody.innerHTML = filtered.map(a => `
+      <tr>
+        <td>
+          <div class="td-name">${a.firstName} ${a.lastName}</div>
+          <div class="td-role">${a.email || ''}</div>
+        </td>
+        <td class="td-role">${a.role}</td>
+        <td><span class="priority priority-${a.priority}">${a.priority}</span></td>
+        <td class="td-date">${a.date}</td>
+        <td class="td-notes" title="${a.notes || ''}">${a.notes || '—'}</td>
+        <td>
+          <select class="badge badge-${a.status}" onchange="updateStatus('${a.id}', this.value)" style="background:transparent;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:0.7rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;outline:none;">
+            <option value="pending"   ${a.status==='pending'   ? 'selected':''}>Pending</option>
+            <option value="reviewing" ${a.status==='reviewing' ? 'selected':''}>Reviewing</option>
+            <option value="accepted"  ${a.status==='accepted'  ? 'selected':''}>Accepted</option>
+            <option value="declined"  ${a.status==='declined'  ? 'selected':''}>Declined</option>
+          </select>
+        </td>
+        <td>
+          <div class="actions">
+            <button class="btn-edit" onclick="editApplicant('${a.id}')" title="Edit">✏️</button>
+            <button class="btn-delete" onclick="deleteApplicant('${a.id}')" title="Delete">🗑</button>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  function updateStatus(id, status) {
+    const a = applicants.find(x => x.id === id);
+    if (a) { a.status = status; save(); render(); }
+  }
+
+  function openModal(id = null) {
+    editingId = id;
+    document.getElementById('modalTitle').textContent = id ? 'Edit Applicant' : 'Add Applicant';
+    if (id) {
+      const a = applicants.find(x => x.id === id);
+      document.getElementById('fFirstName').value = a.firstName;
+      document.getElementById('fLastName').value = a.lastName;
+      document.getElementById('fEmail').value = a.email || '';
+      document.getElementById('fRole').value = a.role;
+      document.getElementById('fPriority').value = a.priority;
+      document.getElementById('fStatus').value = a.status;
+      document.getElementById('fNotes').value = a.notes || '';
+    } else {
+      document.getElementById('fFirstName').value = '';
+      document.getElementById('fLastName').value = '';
+      document.getElementById('fEmail').value = '';
+      document.getElementById('fRole').value = 'Legal & Compliance';
+      document.getElementById('fPriority').value = 'critical';
+      document.getElementById('fStatus').value = 'pending';
+      document.getElementById('fNotes').value = '';
+    }
+    document.getElementById('modalOverlay').classList.add('open');
+  }
+
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('open');
+    editingId = null;
+  }
+
+  function saveApplicant() {
+    const firstName = document.getElementById('fFirstName').value.trim();
+    const lastName = document.getElementById('fLastName').value.trim();
+    if (!firstName || !lastName) { alert('Please enter a name.'); return; }
+
+    const data = {
+      id: editingId || Date.now().toString(),
+      firstName,
+      lastName,
+      email: document.getElementById('fEmail').value.trim(),
+      role: document.getElementById('fRole').value,
+      priority: document.getElementById('fPriority').value,
+      status: document.getElementById('fStatus').value,
+      notes: document.getElementById('fNotes').value.trim(),
+      date: editingId
+        ? applicants.find(x => x.id === editingId).date
+        : new Date().toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'})
+    };
+
+    if (editingId) {
+      const idx = applicants.findIndex(x => x.id === editingId);
+      applicants[idx] = data;
+    } else {
+      applicants.push(data);
+    }
+
+    save();
+    render();
+    closeModal();
+  }
+
+  function editApplicant(id) { openModal(id); }
+
+  function deleteApplicant(id) {
+    if (!confirm('Remove this applicant?')) return;
+    applicants = applicants.filter(x => x.id !== id);
+    save();
+    render();
+  }
+
+  // Filter buttons
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentFilter = btn.dataset.filter;
+      render();
+    });
+  });
+
+  // Close modal on overlay click
+  document.getElementById('modalOverlay').addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeModal();
+  });
+
+  render();
+</script>
+</body>
+</html>

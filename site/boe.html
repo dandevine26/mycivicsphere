@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NYS Board of Elections Dashboard | CivicSphere</title>
+<style>
+  :root {
+    --navy: #0a1628;
+    --navy-2: #0f1f38;
+    --gold: #c9a227;
+    --gold-light: #e0c158;
+    --paper: #f7f5ef;
+    --ink: #1b2433;
+    --muted: #6b7280;
+    --line: #e3e0d6;
+    --blue: #2f6fa8;
+    --green: #4c7a4f;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+  }
+  h1, h2, .display {
+    font-family: Georgia, "Times New Roman", serif;
+  }
+  header.hero {
+    background: var(--navy);
+    color: #fff;
+    padding: 56px 24px 48px;
+  }
+  .hero-inner { max-width: 1100px; margin: 0 auto; }
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 12px;
+    color: var(--gold-light);
+    margin-bottom: 12px;
+  }
+  h1.display {
+    font-size: 40px;
+    margin: 0 0 14px;
+    line-height: 1.15;
+  }
+  .hero-sub {
+    max-width: 620px;
+    color: #c9d2e0;
+    line-height: 1.55;
+    font-size: 16px;
+  }
+  .source-line {
+    margin-top: 20px;
+    font-size: 13px;
+    color: #93a1b8;
+  }
+  .source-line a { color: var(--gold-light); }
+
+  main { max-width: 1100px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin: -32px 0 40px;
+  }
+  .stat-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 22px;
+    box-shadow: 0 6px 20px rgba(10,22,40,0.06);
+  }
+  .stat-value { font-size: 28px; font-weight: 700; color: var(--navy); }
+  .stat-label { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+  section { margin-bottom: 48px; }
+  section h2 {
+    font-size: 22px;
+    border-bottom: 2px solid var(--gold);
+    padding-bottom: 10px;
+    margin-bottom: 18px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  th, td {
+    text-align: left;
+    padding: 12px 14px;
+    font-size: 14px;
+    border-bottom: 1px solid var(--line);
+  }
+  th {
+    background: var(--navy-2);
+    color: #fff;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  tr:last-child td { border-bottom: none; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+
+  .tool-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+  }
+  .tool-card {
+    display: block;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-top: 4px solid var(--blue);
+    border-radius: 8px;
+    padding: 18px;
+    text-decoration: none;
+    color: var(--ink);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .tool-card:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(10,22,40,0.10); }
+  .tool-card.green { border-top-color: var(--green); }
+  .tool-card.gold { border-top-color: var(--gold); }
+  .tool-card h3 { margin: 0 0 6px; font-size: 15px; }
+  .tool-card p { margin: 0; font-size: 13px; color: var(--muted); line-height: 1.45; }
+  .tool-card .arrow { font-size: 12px; color: var(--blue); margin-top: 10px; display: inline-block; }
+
+  .note {
+    font-size: 13px;
+    color: var(--muted);
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 14px 16px;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 720px) {
+    .stat-grid { grid-template-columns: 1fr; margin-top: 12px; }
+    h1.display { font-size: 30px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Good Governance · Point 02, Transparency &amp; Point 03, Accountability</div>
+    <h1 class="display">NYS Board of Elections Dashboard</h1>
+    <p class="hero-sub">
+      Statewide campaign finance activity, reported directly from the New York
+      State Board of Elections. See who's raising and spending, then jump into
+      the state's own live search tools to look up a specific candidate,
+      committee, or elected official.
+    </p>
+    <p class="source-line">
+      Data refreshed weekly from
+      <a href="https://publicreporting.elections.ny.gov/DownloadCampaignFinanceData/DownloadCampaignFinanceData" target="_blank" rel="noopener">
+        NYSBOE's Campaign Finance Bulk Download</a>. Not affiliated with or endorsed by the Board of Elections.
+    </p>
+  </div>
+</header>
+
+<main>
+
+  <div class="stat-grid" id="stat-grid">
+    <div class="stat-card">
+      <div class="stat-value" id="stat-receipts">—</div>
+      <div class="stat-label">Total reported receipts, statewide (current filing year)</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="stat-expenditures">—</div>
+      <div class="stat-label">Total reported expenditures, statewide (current filing year)</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="stat-records">—</div>
+      <div class="stat-label">Disclosure line items processed</div>
+    </div>
+  </div>
+
+  <section>
+    <h2>Top Committees by Receipts</h2>
+    <table id="top-table">
+      <thead>
+        <tr><th>Committee / Filer</th><th class="num">Receipts</th><th class="num">Expenditures</th></tr>
+      </thead>
+      <tbody id="top-table-body">
+        <tr><td colspan="3">Loading…</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Look Up a Candidate, Committee, or Official</h2>
+    <div class="tool-grid" id="tool-grid">
+      <!-- populated from links in boe-data.json, with fallbacks below -->
+    </div>
+  </section>
+
+  <section>
+    <div class="note">
+      NYSBOE does not provide a live API, so the totals above are a periodic
+      snapshot rather than real-time. For the most current, itemized, and
+      legally authoritative record, always use the Board's own search tools
+      linked above.
+    </div>
+  </section>
+
+</main>
+
+<script>
+(async function () {
+  const fmt = (n) => "$" + Number(n).toLocaleString("en-US", { maximumFractionDigits: 0 });
+
+  const fallbackLinks = {
+    searchContributions: {
+      url: "https://publicreporting.elections.ny.gov/Contributions/Contributions",
+      title: "Search Contributions",
+      desc: "Find contributions by contributor name or recipient committee.",
+      cls: ""
+    },
+    searchExpenditures: {
+      url: "https://publicreporting.elections.ny.gov/ExpenditureByExpender/ExpenditureByExpender",
+      title: "Search Expenditures",
+      desc: "See how a committee spent its funds, itemized by payee.",
+      cls: "green"
+    },
+    candidateCommitteeDisclosures: {
+      url: "https://publicreporting.elections.ny.gov/CandidateCommitteeDisclosure/CandidateCommitteeDisclosure",
+      title: "Candidate & Committee Disclosures",
+      desc: "Full filing history for a specific candidate or committee.",
+      cls: ""
+    },
+    electedOfficials: {
+      url: "https://publicreporting.elections.ny.gov/ElectedOfficials/ElectedOfficials",
+      title: "Elected Officials Lookup",
+      desc: "Find who currently holds a given elected office in NYS.",
+      cls: "gold"
+    },
+    listOfFilers: {
+      url: "https://publicreporting.elections.ny.gov/ActiveDeactiveFiler/ActiveDeactiveFiler",
+      title: "List of Filers",
+      desc: "Browse all registered campaign finance filers statewide.",
+      cls: "green"
+    }
+  };
+
+  function renderTools(links) {
+    const grid = document.getElementById("tool-grid");
+    grid.innerHTML = "";
+    Object.entries(fallbackLinks).forEach(([key, fallback]) => {
+      const url = (links && links[key]) || fallback.url;
+      const a = document.createElement("a");
+      a.className = "tool-card" + (fallback.cls ? " " + fallback.cls : "");
+      a.href = url;
+      a.target = "_blank";
+      a.rel = "noopener";
+      a.innerHTML = `<h3>${fallback.title}</h3><p>${fallback.desc}</p><span class="arrow">Open on elections.ny.gov →</span>`;
+      grid.appendChild(a);
+    });
+  }
+
+  try {
+    const res = await fetch("/data/boe-data.json", { cache: "no-store" });
+    if (!res.ok) throw new Error("data file not found");
+    const data = await res.json();
+
+    document.getElementById("stat-receipts").textContent = fmt(data.statewide.totalReceipts);
+    document.getElementById("stat-expenditures").textContent = fmt(data.statewide.totalExpenditures);
+    document.getElementById("stat-records").textContent = Number(data.statewide.recordCount).toLocaleString("en-US");
+
+    const tbody = document.getElementById("top-table-body");
+    tbody.innerHTML = "";
+    (data.topCommitteesByReceipts || []).forEach((row) => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `<td>${row.name}</td><td class="num">${fmt(row.receipts)}</td><td class="num">${fmt(row.expenditures)}</td>`;
+      tbody.appendChild(tr);
+    });
+
+    renderTools(data.links);
+  } catch (err) {
+    document.getElementById("top-table-body").innerHTML =
+      '<tr><td colspan="3">Data hasn\'t been generated yet — run the update script, or check back after the next scheduled refresh.</td></tr>';
+    renderTools(null);
+    console.warn("BOE dashboard: could not load data/boe-data.json", err);
+  }
+})();
+</script>
+
+</body>
+</html>
