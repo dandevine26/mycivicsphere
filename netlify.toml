@@ -1,19 +1,87 @@
-[build]
-  publish = "site"
+redirectsOrigin = "config"
+plugins = []
 
-[build.processing]
+[build]
+publish = "site"
+publishOrigin = "config"
+commandOrigin = "ui"
+command = "npm run build"
+functions = "netlify/functions"
+
+  [build.environment]
+
+  [build.processing]
   skip_processing = true
 
-[[redirects]]
-  from = "/tax-analyzer.html"
-  to = "/tax-analyzer.html"
-  status = 200
+    [build.processing.css]
 
-[[redirects]]
-  from = "/*"
-  to = "/home.html"
-  status = 200
+    [build.processing.html]
+
+    [build.processing.images]
+
+    [build.processing.js]
+
+  [build.services]
 
 [functions]
+
+  [functions."*"]
+  external_node_modules = [
+    "@sparticuz/chromium"
+  ]
   node_bundler = "esbuild"
-  external_node_modules = ["@sparticuz/chromium"]
+
+[[headers]]
+for = "/*"
+
+  [headers.values]
+  X-Robots-Tag = "all"
+  Cache-Control = "no-cache"
+
+[[redirects]]
+from = "/tax-analyzer.html"
+to = "/tax-analyzer.html"
+status = 200
+force = false
+
+  [redirects.query]
+
+  [redirects.conditions]
+
+  [redirects.headers]
+
+[[redirects]]
+from = "https://democracythrives.com/*"
+to = "https://mycivicsphere.com/:splat"
+status = 301
+force = true
+
+  [redirects.query]
+
+  [redirects.conditions]
+
+  [redirects.headers]
+
+[[redirects]]
+from = "https://www.democracythrives.com/*"
+to = "https://mycivicsphere.com/:splat"
+status = 301
+force = true
+
+  [redirects.query]
+
+  [redirects.conditions]
+
+  [redirects.headers]
+
+[[redirects]]
+from = "/*"
+to = "/home.html"
+status = 200
+force = false
+
+  [redirects.query]
+
+  [redirects.conditions]
+
+  [redirects.headers]
