@@ -22,50 +22,8 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'DM Sans', sans-serif; background: var(--light); color: var(--navy); min-height: 100vh; }
 
-    /* ── NAV (matches mycivicsphere.com) ── */
-    nav {
-      background: var(--navy);
-      padding: 0 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 64px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    }
-    .nav-logo {
-      font-family: 'DM Serif Display', serif;
-      color: var(--white);
-      font-size: 1.25rem;
-      text-decoration: none;
-      letter-spacing: 0.02em;
-    }
-    .nav-logo span { color: var(--gold); }
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 0.25rem;
-      list-style: none;
-    }
-    .nav-links a {
-      color: rgba(255,255,255,0.82);
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 500;
-      padding: 0.4rem 0.75rem;
-      border-radius: 6px;
-      transition: background 0.15s, color 0.15s;
-    }
-    .nav-links a:hover { background: rgba(255,255,255,0.1); color: #fff; }
-    .nav-links a.active { background: var(--red); color: #fff; }
-    .nav-links a.nav-cta {
-      background: var(--red);
-      color: #fff;
-      margin-left: 0.5rem;
-    }
-    .nav-links a.nav-cta:hover { background: #a93226; }
+    /* Old page-specific nav rules removed — site nav now styled by the
+       shared site-nav-base / site-nav-shared blocks injected in <head>. */
 
     /* ── HERO BANNER ── */
     .page-hero {
@@ -452,24 +410,302 @@
       .nav-toggle { display: block; }
     }
   </style>
+<style id="site-nav-base">
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.9rem 3rem;
+    background: #0D1F3C;
+    backdrop-filter: blur(10px);
+  }
+  .nav-rainbow {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(to right,
+      #1A8A7B 8.33%, #27AE60 16.66%, #7D9B3A 25%, #E67E22 33.33%,
+      #E05A3A 41.66%, #7D3C98 50%, #A93226 58.33%, #7B8EC8 66.66%,
+      #7D6608 75%, #D4AC0D 83.33%, #1A3A5C 91.66%, #2E86C1 100%
+    );
+  }
+  .nav-brand { display: flex; align-items: center; gap: 0.85rem; text-decoration: none; }
+  .nav-brand-logo { width: 38px; height: 38px; flex-shrink: 0; }
+  .nav-brand-logo svg { width: 100%; height: 100%; }
+  .nav-brand-info { display: flex; flex-direction: column; gap: 0; }
+  .nav-brand-name {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.05rem; font-weight: 500;
+    color: white; letter-spacing: 0.02em;
+    line-height: 1.2;
+  }
+  .nav-brand-sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.6rem; font-weight: 400;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.2;
+  }
+  .nav-links { display: flex; gap: 2.2rem; list-style: none; align-items: center; }
+  .nav-links a {
+    font-size: 0.82rem; font-weight: 400;
+    color: rgba(255,255,255,0.85); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: white; }
+  .nav-vote {
+    padding: 0.55rem 1.4rem;
+    background: #C8A84B; color: #0D1F3C;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem; font-weight: 500;
+    border-radius: 4px;
+    text-decoration: none; white-space: nowrap;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .nav-vote:hover { background: #d4b060; transform: translateY(-1px); }
+  .site-nav-spacer { height: 66px; }
+  @media (max-width: 900px) {
+    nav { padding: 0.9rem 1.5rem; }
+    .nav-links { display: none; }
+  }
+</style>
+<style id="site-nav-shared">
+  /* ── SITE NAV: SERVICES DROPDOWN (shared across pages) ── */
+  .nav-dropdown { position: relative; }
+  .nav-dropdown-trigger {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem; font-weight: 400;
+    color: rgba(255,255,255,0.85);
+    padding: 0;
+    letter-spacing: 0;
+    transition: color 0.2s;
+    display: flex; align-items: center; gap: 0.35rem;
+  }
+  .nav-dropdown-trigger:hover { color: white; }
+  .nav-dropdown.open .nav-dropdown-trigger { color: #C8A84B; }
+  .nav-dropdown-menu {
+    display: none;
+    position: absolute; top: calc(100% + 8px); left: 50%;
+    transform: translateX(-50%);
+    background: #0D1F3C;
+    border: 1px solid rgba(200,168,75,0.2);
+    border-top: 2px solid #C8A84B;
+    min-width: 230px;
+    z-index: 200;
+    padding: 0.5rem 0;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  }
+  .nav-dropdown.open .nav-dropdown-menu { display: block; }
+  .nav-dropdown-menu a {
+    display: block;
+    padding: 0.6rem 1.25rem;
+    font-size: 0.78rem; font-weight: 400;
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+    border-left: 2px solid transparent;
+  }
+  .nav-dropdown-menu a:hover {
+    background: rgba(200,168,75,0.08);
+    color: #C8A84B;
+    border-left-color: #C8A84B;
+  }
+  .nav-dropdown-divider {
+    height: 1px;
+    background: rgba(200,168,75,0.15);
+    margin: 0.4rem 0;
+  }
+  .nav-dropdown-label {
+    padding: 0.3rem 1.25rem 0.1rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.6rem; letter-spacing: 0.3em;
+    color: rgba(200,168,75,0.5);
+  }
+
+  /* ── SITE NAV: HAMBURGER / MOBILE DRAWER (shared across pages) ── */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    z-index: 110;
+  }
+  .hamburger span {
+    display: block;
+    width: 24px; height: 2px;
+    background: white;
+    border-radius: 2px;
+    transition: transform 0.3s, opacity 0.3s;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: #0D1F3C;
+    z-index: 999;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    overflow-y: auto;
+    padding: 5rem 2rem 3rem;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a,
+  .mobile-menu button.mobile-services-toggle {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 400;
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    padding: 0.85rem 0;
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid rgba(200,168,75,0.1);
+    background: transparent;
+    border-left: none; border-right: none; border-top: none;
+    cursor: pointer;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+  .mobile-menu a:first-child { border-top: 1px solid rgba(200,168,75,0.1); }
+  .mobile-menu a:hover,
+  .mobile-menu button.mobile-services-toggle:hover { color: #C8A84B; }
+  .mobile-menu .mobile-vote {
+    margin-top: 1.5rem;
+    padding: 0.85rem 2.5rem;
+    background: #C8A84B;
+    color: #0D1F3C;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border-radius: 4px;
+    border-bottom: none !important;
+  }
+  .mobile-submenu {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    background: rgba(26,58,107,0.4);
+    padding: 0.25rem 0;
+    margin-bottom: 0.25rem;
+  }
+  .mobile-submenu.open { display: flex; }
+  .mobile-submenu a {
+    font-size: 0.9rem !important;
+    color: rgba(255,255,255,0.65) !important;
+    padding: 0.6rem 0 !important;
+    border-bottom: 1px solid rgba(200,168,75,0.06) !important;
+    border-top: none !important;
+  }
+  @media (max-width: 900px) {
+    .hamburger { display: flex; }
+  }
+</style>
 </head>
 <body>
 
 <!-- NAV -->
+<!-- SITE NAV -->
 <nav>
-  <a href="/" class="nav-logo">Civic<span>Sphere</span></a>
-  <button class="nav-toggle" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
+  <div class="nav-rainbow"></div>
+  <a href="https://www.mycivicsphere.com" class="nav-brand">
+    <div class="nav-brand-logo">
+      <svg viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="19,2 34,10.5 34,27.5 19,36 4,27.5 4,10.5" fill="#1A3A6B" stroke="#2E6FBB" stroke-width="1"/>
+        <line x1="19" y1="8" x2="19" y2="30" stroke="rgba(200,168,75,0.5)" stroke-width="0.5"/>
+        <line x1="8" y1="14" x2="30" y2="24" stroke="rgba(200,168,75,0.5)" stroke-width="0.5"/>
+        <line x1="30" y1="14" x2="8" y2="24" stroke="rgba(200,168,75,0.5)" stroke-width="0.5"/>
+        <circle cx="19" cy="4"  r="2.5" fill="#1A8A7B"/>
+        <circle cx="30" cy="10" r="2.5" fill="#27AE60"/>
+        <circle cx="33" cy="19" r="2.5" fill="#E67E22"/>
+        <circle cx="30" cy="28" r="2.5" fill="#7D3C98"/>
+        <circle cx="19" cy="34" r="2.5" fill="#7B8EC8"/>
+        <circle cx="8"  cy="28" r="2.5" fill="#D4AC0D"/>
+        <circle cx="5"  cy="19" r="2.5" fill="#1A3A5C"/>
+        <circle cx="8"  cy="10" r="2.5" fill="#2E86C1"/>
+        <circle cx="19" cy="19" r="3" fill="white"/>
+      </svg>
+    </div>
+    <div class="nav-brand-info">
+      <span class="nav-brand-name">CivicSphere</span>
+      <span class="nav-brand-sub">Direct Democracy Platform</span>
+    </div>
+  </a>
   <ul class="nav-links">
     <li><a href="/#points">Governance</a></li>
     <li><a href="/#slides">Framework</a></li>
+    <li><a href="/#about">About</a></li>
+    <li><a href="/#contact">Contact</a></li>
+    <li class="nav-dropdown">
+      <button class="nav-dropdown-trigger" onclick="toggleDropdown(this)" type="button">Services ▾</button>
+      <div class="nav-dropdown-menu">
+        <div class="nav-dropdown-label">For Campaigns</div>
+        <a href="/civicsphere-campaigns.html">Campaign Services</a>
+        <div class="nav-dropdown-divider"></div>
+        <div class="nav-dropdown-label">For Nonprofits</div>
+        <a href="/civicsphere-nonprofits.html">Nonprofit Services</a>
+        <div class="nav-dropdown-divider"></div>
+        <div class="nav-dropdown-label">Client Tools</div>
+        <a href="/civicsphere-portal.html">Client Portal</a>
+        <a href="/governance-assessment-landing.html">Governance Assessment</a>
+        <div class="nav-dropdown-divider"></div>
+        <div class="nav-dropdown-label">Documents</div>
+        <a href="/civic-dual-entity-structure.html">Entity Structure</a>
+        <div class="nav-dropdown-divider"></div>
+        <div class="nav-dropdown-label">Board</div>
+        <a href="https://board.mycivicsphere.com" target="_blank">Board Recruitment Suite</a>
+      </div>
+    </li>
+    <li><a href="/content">Content</a></li>
     <li><a href="/civestor">Civestor</a></li>
     <li><a href="/contact-your-rep">Contact Your Rep</a></li>
-    <li><a href="/civicsphere_app.html" class="active">Active Legislation</a></li>
-    <li><a href="https://vote.gov" target="_blank" rel="noopener" class="nav-cta">Vote Now →</a></li>
+    <li><a href="/civicsphere_app.html">Active Legislation</a></li>
+    <li><a href="/payroll.html">Payroll</a></li>
+    <li><a href="/tax-analyzer.html">Tax Analyzer</a></li>
+    <li><a href="/boe.html">Board of Elections</a></li>
+    <li><a href="https://vote.gov" target="_blank" class="nav-vote">Vote Now →</a></li>
   </ul>
+  <button class="hamburger" id="hamburger" aria-label="Open menu" onclick="toggleMobileMenu()">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+<!-- MOBILE MENU DRAWER -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="/#points" onclick="closeMobileMenu()">Governance</a>
+  <a href="/#slides" onclick="closeMobileMenu()">Framework</a>
+  <a href="/#about" onclick="closeMobileMenu()">About</a>
+  <a href="/#contact" onclick="closeMobileMenu()">Contact</a>
+  <button class="mobile-services-toggle" onclick="toggleMobileServices()">Services ▾</button>
+  <div class="mobile-submenu" id="mobileServices">
+    <a href="/civicsphere-campaigns.html" onclick="closeMobileMenu()">Campaign Services</a>
+    <a href="/civicsphere-nonprofits.html" onclick="closeMobileMenu()">Nonprofit Services</a>
+    <a href="/civicsphere-portal.html" onclick="closeMobileMenu()">Client Portal</a>
+    <a href="/governance-assessment-landing.html" onclick="closeMobileMenu()">Governance Assessment</a>
+    <a href="/civic-dual-entity-structure.html" onclick="closeMobileMenu()">Entity Structure</a>
+  </div>
+  <a href="/content" onclick="closeMobileMenu()">Content</a>
+  <a href="/civestor" onclick="closeMobileMenu()">Civestor</a>
+  <a href="/contact-your-rep" onclick="closeMobileMenu()">Contact Your Rep</a>
+  <a href="/civicsphere_app.html" onclick="closeMobileMenu()">Active Legislation</a>
+  <a href="/payroll.html" onclick="closeMobileMenu()">Payroll</a>
+  <a href="/tax-analyzer.html" onclick="closeMobileMenu()">Tax Analyzer</a>
+  <a href="/boe.html" onclick="closeMobileMenu()">Board of Elections</a>
+  <a href="https://vote.gov" target="_blank" class="mobile-vote">Vote Now →</a>
+</div>
+
+<div class="site-nav-spacer" aria-hidden="true"></div>
 
 <!-- HERO -->
 <section class="page-hero">
@@ -951,6 +1187,40 @@ async function init() {
 }
 
 init();
+</script>
+<script>
+function toggleMobileMenu() {
+  var menu = document.getElementById('mobileMenu');
+  var btn  = document.getElementById('hamburger');
+  menu.classList.toggle('open');
+  btn.classList.toggle('open');
+  document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+}
+function closeMobileMenu() {
+  var menu = document.getElementById('mobileMenu');
+  var btn  = document.getElementById('hamburger');
+  menu.classList.remove('open');
+  btn.classList.remove('open');
+  document.body.style.overflow = '';
+}
+function toggleMobileServices() {
+  document.getElementById('mobileServices').classList.toggle('open');
+}
+function toggleDropdown(btn) {
+  var li = btn.closest('.nav-dropdown');
+  var isOpen = li.classList.contains('open');
+  document.querySelectorAll('.nav-dropdown').forEach(function(d) {
+    d.classList.remove('open');
+  });
+  if (!isOpen) li.classList.add('open');
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.nav-dropdown')) {
+    document.querySelectorAll('.nav-dropdown').forEach(function(d) {
+      d.classList.remove('open');
+    });
+  }
+});
 </script>
 </body>
 </html>
